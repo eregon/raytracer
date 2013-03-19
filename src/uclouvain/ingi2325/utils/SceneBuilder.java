@@ -387,6 +387,8 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startFileGeometry(String filename, String name)
 			throws Exception {
+		File file = new File(path, filename);
+		new FileGeometryParser(file).parse();
 	}
 
 	/*
