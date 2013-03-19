@@ -16,26 +16,15 @@ public class RayTracer {
 	}
 
 	public void render() {
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				renderPixel(i, j);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				renderPixel(x, y);
 			}
 		}
 	}
 
-	private void renderPixel(int i, int j) {
-		int x = j, y = i;
-		if ((x / 20) % 2 == 0) {
-			if ((y / 20) % 2 == 0)
-				panel.drawPixel(x, y, 1, 0, 0);
-			else
-				panel.drawPixel(x, y, 0.5f, 0, 0);
-		} else {
-			if ((y / 20) % 2 == 0)
-				panel.drawPixel(x, y, 1, 0.5f, 0);
-			else
-				panel.drawPixel(x, y, 0.5f, 0.25f, 0);
-		}
+	private void renderPixel(int x, int y) {
+		panel.drawPixel(x, y, 1f - (float) (y) / height, 0, (float) (x) / width);
 		panel.repaint();
 	}
 }
