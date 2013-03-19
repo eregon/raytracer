@@ -25,8 +25,7 @@ public class Demo {
 	private RayTracer tracer;
 
 	public Demo() throws FileNotFoundException {
-		SceneBuilder sceneBuilder = new SceneBuilder();
-		Scene scene = sceneBuilder.loadScene("XML/example.sdl");
+		Scene scene = new SceneBuilder().loadScene("XML/example.sdl");
 
 		panel = new PixelPanel(640, 480);
 		tracer = new RayTracer(scene, panel);
