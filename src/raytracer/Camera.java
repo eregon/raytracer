@@ -8,14 +8,12 @@ public class Camera {
 	Vector3D direction;
 	Vector3D up;
 	float fovy;
-	String name;
 
-	public Camera(Point3D position, Vector3D direction, Vector3D up, float fovy, String name) {
+	public Camera(Point3D position, Vector3D direction, Vector3D up, float fovy) {
 		this.position = position;
 		this.direction = direction.normalize();
 		this.up = up.normalize();
 		this.fovy = fovy;
-		this.name = name;
 	}
 
 }
