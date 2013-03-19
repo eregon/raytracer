@@ -13,7 +13,8 @@ import uclouvain.ingi2325.utils.SceneBuilder;
 public class Demo {
 
 	public static void main(String[] args) {
-		new Demo();
+		Demo demo = new Demo();
+		demo.draw();
 	}
 
 	private JFrame frame;
@@ -33,7 +34,6 @@ public class Demo {
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		draw();
 	}
 
 	public void drawPixels() {
