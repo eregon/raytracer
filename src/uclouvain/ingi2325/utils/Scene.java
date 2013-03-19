@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import raytracer.Camera;
-import raytracer.Geometry;
+import raytracer.Shape;
 
 /**
  * Represents a scene
@@ -14,5 +14,5 @@ import raytracer.Geometry;
  */
 public class Scene {
 	public Camera camera;
-	public List<Geometry> objects = new ArrayList<Geometry>();
+	public List<Shape> objects = new ArrayList<Shape>();
 }

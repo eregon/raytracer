@@ -10,6 +10,8 @@ import org.xml.sax.InputSource;
 
 import raytracer.Camera;
 import raytracer.Geometry;
+import raytracer.Material;
+import raytracer.Shape;
 import raytracer.Triangle;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
@@ -29,6 +31,7 @@ public class SceneBuilder implements ParserHandler {
 
 	Map<String, Camera> cameras = new HashMap<String, Camera>();
 	Map<String, Geometry> geometries = new HashMap<String, Geometry>();
+	Map<String, Material> materials = new HashMap<String, Material>();
 
 	/**
 	 * Returns the build scene
@@ -460,7 +463,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startDiffuseMaterial(Color color, String name) throws Exception {
-
+		materials.put(name, new Material(color));
 	}
 
 	/*
@@ -546,7 +549,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startShape(String geometryName, String materialName,
 			String textureName) throws Exception {
-		scene.objects.add(geometries.get(geometryName));
+		scene.objects.add(new Shape(geometries.get(geometryName), materials.get(materialName)));
 	}
 
 	/*
