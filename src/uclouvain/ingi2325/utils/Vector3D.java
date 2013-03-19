@@ -38,4 +38,20 @@ public class Vector3D extends Tuple3 {
 		float norm = norm();
 		return new Vector3D(x / norm, y / norm, z / norm);
 	}
+
+	public Vector3D opposite() {
+		return new Vector3D(-x, -y, -z);
+	}
+
+	public Vector3D crossProduct(Vector3D b) {
+		return new Vector3D(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
+	}
+
+	public Vector3D mul(float n) {
+		return new Vector3D(n * x, n * y, n * z);
+	}
+
+	public Vector3D add(Vector3D v) {
+		return new Vector3D(x + v.x, y + v.y, z + v.z);
+	}
 }

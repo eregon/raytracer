@@ -30,4 +30,8 @@ public class Point3D extends Tuple3 {
 	public static Point3D valueOf(String string) throws ParseException {
 		return valueOf(string, new Point3D());
 	}
+
+	public Vector3D sub(Point3D p) {
+		return new Vector3D(x - p.x, y - p.y, z - p.z);
+	}
 }
