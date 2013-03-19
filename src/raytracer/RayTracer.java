@@ -1,6 +1,5 @@
 package raytracer;
 
-import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
@@ -38,16 +37,25 @@ public class RayTracer {
 		}
 	}
 
-	private void renderPixel(int x, int y) {
-		// panel.drawPixel(x, y, 1f - (float) (y) / height, 0, (float) (x) / width);
-		Color color = Color.BLACK;
-
+	Shape findClosestShape() {
+		float min_dist = Float.MAX_VALUE;
+		Shape closest = null;
 		for (Shape shape : scene.objects) {
-			if (shape.geometry.intersection(ray)) {
-				color = shape.material.color;
+			float dist = shape.geometry.intersection(ray);
+			if (dist > 0f && dist < min_dist) {
+				min_dist = dist;
+				closest = shape;
 			}
 		}
-		panel.drawPixel(x, y, color);
-		panel.repaint();
+		return closest;
+	}
+
+	private void renderPixel(int x, int y) {
+		Shape closest = findClosestShape();
+
+		if (closest != null) {
+			panel.drawPixel(x, y, closest.material.color);
+			panel.repaint();
+		}
 	}
 }

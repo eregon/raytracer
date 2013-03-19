@@ -14,7 +14,7 @@ public class Triangle implements Geometry {
 	}
 
 	@Override
-	public boolean intersection(Ray ray) {
+	public float intersection(Ray ray) {
 		float a = _a.x - _b.x;
 		float b = _a.y - _b.y;
 		float c = _a.z - _b.z;
@@ -41,16 +41,16 @@ public class Triangle implements Geometry {
 		float m = a * ei_hf + b * gf_di + c * dh_eg;
 		float t = -(f * ak_jb + e * jc_al + d * bl_kc) / m;
 		if (t <= 0) // TODO: validate t max
-			return false;
+			return -1;
 
 		float gamma = (i * ak_jb + h * jc_al + g * bl_kc) / m;
 		if (gamma < 0 || gamma > 1)
-			return false;
+			return -1;
 
 		float beta = (j * ei_hf + k * gf_di + l * dh_eg) / m;
 		if (beta < 0 || beta > 1 - gamma)
-			return false;
+			return -1;
 
-		return true;
+		return t;
 	}
 }
