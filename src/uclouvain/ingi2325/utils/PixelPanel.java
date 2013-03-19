@@ -1,11 +1,15 @@
 package uclouvain.ingi2325.utils;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.imageio.*;
-import java.io.*;
+import javax.imageio.ImageIO;
 
 /**
  * Represents a canvas you can draw on.
@@ -60,6 +64,11 @@ public class PixelPanel extends Canvas implements ComponentListener {
 		if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight())
 			image.setRGB(x, y, (int) (255 * r) << 16 | (int) (255 * g) << 8
 					| (int) (255 * b));
+	}
+
+	public void drawPixel(int x, int y, Color color) {
+		if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight())
+			image.setRGB(x, y, color.intValue());
 	}
 
 	/**

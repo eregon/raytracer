@@ -549,7 +549,10 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startShape(String geometryName, String materialName,
 			String textureName) throws Exception {
-		scene.objects.add(new Shape(geometries.get(geometryName), materials.get(materialName)));
+		Geometry g = geometries.get(geometryName);
+		Material m = materials.get(materialName);
+		if (g != null && m != null)
+			scene.objects.add(new Shape(g, m));
 	}
 
 	/*

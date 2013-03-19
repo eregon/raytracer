@@ -1,6 +1,6 @@
 package uclouvain.ingi2325.utils;
 
-import uclouvain.ingi2325.exception.*;
+import uclouvain.ingi2325.exception.ParseException;
 import uclouvain.ingi2325.math.Tuple3;
 
 /**
@@ -11,6 +11,8 @@ import uclouvain.ingi2325.math.Tuple3;
  * @author Sébastien Doeraene <sjrdoeraene@gmail.com>
  */
 public class Color extends Tuple3 {
+
+	public static final Color BLACK = new Color(0, 0, 0);
 
 	/**
 	 * Constructs and initializes a color from the three given values.
@@ -42,6 +44,10 @@ public class Color extends Tuple3 {
 	 */
 	public Color() {
 		super(0, 0, 0);
+	}
+
+	public int intValue() {
+		return (int) (255 * x) << 16 | (int) (255 * y) << 8 | (int) (255 * z);
 	}
 
 	/**
