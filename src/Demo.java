@@ -1,5 +1,8 @@
+import java.io.FileNotFoundException;
+
 import javax.swing.JFrame;
 
+import raytracer.RayTracer;
 import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.SceneBuilder;
@@ -12,23 +15,22 @@ import uclouvain.ingi2325.utils.SceneBuilder;
  */
 public class Demo {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Demo demo = new Demo();
 		demo.draw();
 	}
 
 	private JFrame frame;
 	private PixelPanel panel;
+	private RayTracer tracer;
 
-	public Demo() {
-		try {
-			SceneBuilder sceneBuilder = new SceneBuilder();
-			Scene scene = sceneBuilder.loadScene("XML/example.sdl");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public Demo() throws FileNotFoundException {
+		SceneBuilder sceneBuilder = new SceneBuilder();
+		Scene scene = sceneBuilder.loadScene("XML/example.sdl");
 
 		panel = new PixelPanel(640, 480);
+		tracer = new RayTracer(scene, panel);
+
 		frame = new JFrame();
 		frame.getContentPane().add(panel);
 		frame.pack();
@@ -36,28 +38,9 @@ public class Demo {
 		frame.setVisible(true);
 	}
 
-	public void drawPixels() {
-		panel.clear(0, 0, 1);
-		for (int y = 10; y < panel.getHeight() - 10; y++) {
-			for (int x = 10; x < panel.getWidth() - 10; x++) {
-				if ((x / 20) % 2 == 0) {
-					if ((y / 20) % 2 == 0)
-						panel.drawPixel(x, y, 1, 0, 0);
-					else
-						panel.drawPixel(x, y, 0.5f, 0, 0);
-				} else {
-					if ((y / 20) % 2 == 0)
-						panel.drawPixel(x, y, 1, 0.5f, 0);
-					else
-						panel.drawPixel(x, y, 0.5f, 0.25f, 0);
-				}
-				panel.repaint();
-			}
-		}
-	}
-
 	public void draw() {
-		drawPixels();
+		panel.clear(0, 0, 1);
+		tracer.render();
 		panel.repaint();
 		panel.saveImage("image.png");
 	}
