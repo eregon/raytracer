@@ -1,7 +1,7 @@
 package uclouvain.ingi2325.utils;
 
-import uclouvain.ingi2325.exception.*;
-import uclouvain.ingi2325.math.*;
+import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.math.Tuple3;
 
 /**
  * Represents a 3D point by its three x, y, z components
@@ -11,6 +11,14 @@ import uclouvain.ingi2325.math.*;
  * @author Sébastien Doeraene <sjrdoeraene@gmail.com>
  */
 public class Point3D extends Tuple3 {
+
+	public Point3D() {
+		super();
+	}
+
+	public Point3D(float x, float y, float z) {
+		super(x, y, z);
+	}
 
 	/**
 	 * Parse a Point3D from a string

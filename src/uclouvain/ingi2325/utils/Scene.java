@@ -1,5 +1,7 @@
 package uclouvain.ingi2325.utils;
 
+import raytracer.Camera;
+
 /**
  * Represents a scene
  * 
@@ -7,5 +9,5 @@ package uclouvain.ingi2325.utils;
  * @author Julien Dupuis
  */
 public class Scene {
-
+	public Camera camera;
 }

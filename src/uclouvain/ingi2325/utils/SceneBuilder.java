@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 
 import org.xml.sax.InputSource;
 
+import raytracer.Camera;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
 
@@ -71,7 +72,7 @@ public class SceneBuilder implements ParserHandler {
 		Parser parser = new Parser();
 		parser.addHandler(this);
 
-		if (!parser.parse(inputSource, /* validate */ true, /* echo */ false)) {
+		if (!parser.parse(inputSource, /* validate */true, /* echo */false)) {
 			scene = null;
 		}
 
@@ -125,6 +126,9 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startCamera(Point3D position, Vector3D direction, Vector3D up,
 			float fovy, String name) throws Exception {
+		if (scene.camera == null) { // TODO what about other cameras?
+			scene.camera = new Camera(position, direction, up, fovy, name);
+		}
 	}
 
 	/*

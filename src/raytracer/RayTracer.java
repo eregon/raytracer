@@ -8,6 +8,8 @@ public class RayTracer {
 	PixelPanel panel;
 	int height, width;
 
+	Ray ray;
+
 	public RayTracer(Scene scene, PixelPanel panel) {
 		this.scene = scene;
 		this.panel = panel;
@@ -16,6 +18,7 @@ public class RayTracer {
 	}
 
 	public void render() {
+		ray = new Ray(scene.camera.position);
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				renderPixel(x, y);
