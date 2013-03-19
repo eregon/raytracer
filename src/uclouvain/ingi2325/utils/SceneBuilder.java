@@ -3,10 +3,14 @@ package uclouvain.ingi2325.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.xml.sax.InputSource;
 
 import raytracer.Camera;
+import raytracer.Geometry;
+import raytracer.Triangle;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
 
@@ -22,6 +26,9 @@ public class SceneBuilder implements ParserHandler {
 	 * The scene being build
 	 */
 	private Scene scene = null;
+
+	Map<String, Camera> cameras = new HashMap<String, Camera>();
+	Map<String, Geometry> geometries = new HashMap<String, Geometry>();
 
 	/**
 	 * Returns the build scene
@@ -126,9 +133,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startCamera(Point3D position, Vector3D direction, Vector3D up,
 			float fovy, String name) throws Exception {
-		if (scene.camera == null) { // TODO what about other cameras?
-			scene.camera = new Camera(position, direction, up, fovy, name);
-		}
+		cameras.put(name, new Camera(position, direction, up, fovy, name));
 	}
 
 	/*
@@ -354,6 +359,10 @@ public class SceneBuilder implements ParserHandler {
 			Vector3D[] normals, TextureCoordinates[] textureCoordinates,
 			int[] coordinateIndices, int[] normalIndices,
 			int[] textureCoordinateIndices, String name) throws Exception {
+		for (int i = 0; i < coordinateIndices.length; i += 3) {
+			geometries.put(name, new Triangle(name,
+					coordinates[i], coordinates[i + 1], coordinates[i + 2]));
+		}
 	}
 
 	/*
@@ -516,6 +525,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startScene(String cameraName, String[] lightNames,
 			Color background) throws Exception {
+		scene.camera = cameras.get(cameraName);
 	}
 
 	/*
@@ -536,6 +546,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startShape(String geometryName, String materialName,
 			String textureName) throws Exception {
+		scene.objects.add(geometries.get(geometryName));
 	}
 
 	/*
