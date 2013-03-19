@@ -1,4 +1,4 @@
-import javax.swing.*;
+import javax.swing.JFrame;
 
 import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
@@ -51,6 +51,7 @@ public class Demo {
 					else
 						panel.drawPixel(x, y, 0.5f, 0.25f, 0);
 				}
+				panel.repaint();
 			}
 		}
 	}
