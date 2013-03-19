@@ -17,7 +17,7 @@ public class Demo {
 
 	public static void main(String[] args) throws Exception {
 		Demo demo = new Demo();
-		demo.draw();
+		demo.render();
 	}
 
 	private JFrame frame;
@@ -35,10 +35,10 @@ public class Demo {
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		panel.clear(scene.background);
 	}
 
-	public void draw() {
-		panel.clear(0, 0, 1);
+	public void render() {
 		tracer.render();
 		panel.repaint();
 		panel.saveImage("image.png");

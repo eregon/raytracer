@@ -529,6 +529,7 @@ public class SceneBuilder implements ParserHandler {
 	public void startScene(String cameraName, String[] lightNames,
 			Color background) throws Exception {
 		scene.camera = cameras.get(cameraName);
+		scene.background = background;
 	}
 
 	/*

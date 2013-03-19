@@ -53,18 +53,7 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	 *            the x coordinate
 	 * @param y
 	 *            the y coordinate
-	 * @param r
-	 *            the red coordinate
-	 * @param g
-	 *            the green coordinate
-	 * @param b
-	 *            the blue coordinate
 	 */
-	public void drawPixel(int x, int y, float r, float g, float b) {
-		if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight())
-			image.setRGB(x, y, (int) (255 * r) << 16 | (int) (255 * g) << 8
-					| (int) (255 * b));
-	}
 
 	public void drawPixel(int x, int y, Color color) {
 		if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight())
@@ -72,25 +61,10 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	}
 
 	/**
-	 * Clear the buffer with a black color.
-	 */
-	public void clear() {
-		clear(0, 0, 0);
-	}
-
-	/**
 	 * Clear the buffer with the given color.
-	 * 
-	 * @param r
-	 *            the red coordinate
-	 * @param g
-	 *            the green coordinate
-	 * @param b
-	 *            the blue coordinate
 	 */
-	public void clear(float r, float g, float b) {
-		int color = (int) (255 * r) << 16 | (int) (255 * g) << 8
-				| (int) (255 * b);
+	public void clear(Color c) {
+		int color = c.intValue();
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
 				image.setRGB(x, y, color);

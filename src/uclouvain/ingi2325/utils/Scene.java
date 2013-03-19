@@ -15,4 +15,5 @@ import raytracer.Shape;
 public class Scene {
 	public Camera camera;
 	public List<Shape> objects = new ArrayList<Shape>();
+	public Color background;
 }
