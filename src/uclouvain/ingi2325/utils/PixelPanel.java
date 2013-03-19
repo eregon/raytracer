@@ -94,7 +94,7 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	 * 
 	 * @param file
 	 *            the filename used to save the file.
-	 * @return true if image was successfully writen, false otherwise
+	 * @return true if image was successfully written, false otherwise
 	 */
 	public boolean saveImage(String file) {
 		try {
