@@ -3,11 +3,9 @@ package raytracer;
 import uclouvain.ingi2325.utils.Point3D;
 
 public class Triangle implements Geometry {
-	String name;
 	Point3D _a, _b, _c;
 
-	public Triangle(String name, Point3D a, Point3D b, Point3D c) {
-		this.name = name;
+	public Triangle(Point3D a, Point3D b, Point3D c) {
 		_a = a;
 		_b = b;
 		_c = c;

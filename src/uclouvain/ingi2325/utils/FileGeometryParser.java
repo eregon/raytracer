@@ -34,7 +34,7 @@ public class FileGeometryParser {
 					points[i] = vertices.get(Integer.valueOf(triplets[i].split("/")[0]));
 				}
 				if (points.length == 3) {
-					Triangle t = new Triangle("", points[0], points[1], points[2]);
+					Triangle t = new Triangle(points[0], points[1], points[2]);
 				} else {
 					System.err.println("Unhandled polygon with " + points.length + " vertices");
 				}

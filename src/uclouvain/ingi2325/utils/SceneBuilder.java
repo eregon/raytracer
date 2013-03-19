@@ -363,8 +363,7 @@ public class SceneBuilder implements ParserHandler {
 			int[] coordinateIndices, int[] normalIndices,
 			int[] textureCoordinateIndices, String name) throws Exception {
 		for (int i = 0; i < coordinateIndices.length; i += 3) {
-			geometries.put(name, new Triangle(name,
-					coordinates[i], coordinates[i + 1], coordinates[i + 2]));
+			geometries.put(name, new Triangle(coordinates[i], coordinates[i + 1], coordinates[i + 2]));
 		}
 	}
 
