@@ -36,6 +36,7 @@ public class Demo {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		panel.clear(scene.background);
+		panel.repaint();
 	}
 
 	public void render() {
