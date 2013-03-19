@@ -1,6 +1,6 @@
 package uclouvain.ingi2325.utils;
 
-import uclouvain.ingi2325.exception.*;
+import uclouvain.ingi2325.exception.ParseException;
 import uclouvain.ingi2325.math.Tuple3;
 
 /**
@@ -12,6 +12,13 @@ import uclouvain.ingi2325.math.Tuple3;
  */
 public class Vector3D extends Tuple3 {
 
+	public Vector3D() {
+	}
+
+	public Vector3D(float x, float y, float z) {
+		super(x, y, z);
+	}
+
 	/**
 	 * Parse a Vector3D from a string
 	 * @param string   String representation
@@ -21,5 +28,14 @@ public class Vector3D extends Tuple3 {
 	 */
 	public static Vector3D valueOf(String string) throws ParseException {
 		return valueOf(string, new Vector3D());
+	}
+
+	public float norm() {
+		return (float) Math.sqrt(x * x + y * y + z * z);
+	}
+
+	public Vector3D normalize() {
+		float norm = norm();
+		return new Vector3D(x / norm, y / norm, z / norm);
 	}
 }
