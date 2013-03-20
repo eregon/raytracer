@@ -1,5 +1,7 @@
 package raytracer;
 
+import java.lang.management.ManagementFactory;
+
 import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
@@ -27,7 +29,7 @@ public class RayTracer {
 		// projection distance
 		float d = (float) (height / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
 
-		long t0 = System.currentTimeMillis();
+		long t0 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				float a = x + 0.5f - width / 2f;
@@ -36,8 +38,8 @@ public class RayTracer {
 				renderPixel(x, y);
 			}
 		}
-		long t1 = System.currentTimeMillis();
-		System.out.println("Rendered in " + (t1 - t0) / 1000f + "s");
+		long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
+		System.out.println("Rendered in " + String.format("%.3f", (t1 - t0) / 1e9) + "s");
 	}
 
 	private Shape findClosestShape() {
