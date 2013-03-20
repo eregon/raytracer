@@ -27,6 +27,7 @@ public class RayTracer {
 		// projection distance
 		float d = (float) (height / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
 
+		long t0 = System.currentTimeMillis();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				float a = x + 0.5f - width / 2f;
@@ -35,6 +36,8 @@ public class RayTracer {
 				renderPixel(x, y);
 			}
 		}
+		long t1 = System.currentTimeMillis();
+		System.out.println("Rendered in " + (t1 - t0) / 1000f + "s");
 	}
 
 	private Shape findClosestShape() {
