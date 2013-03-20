@@ -55,7 +55,9 @@ public class RayTracer {
 
 		if (closest != null) {
 			panel.drawPixel(x, y, closest.material.color);
-			panel.repaint();
+		} else {
+			panel.drawPixel(x, y, scene.background);
 		}
+		panel.repaint();
 	}
 }
