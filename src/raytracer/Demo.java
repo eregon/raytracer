@@ -1,8 +1,8 @@
+package raytracer;
 import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
 
-import raytracer.RayTracer;
 import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.SceneBuilder;
