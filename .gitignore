@@ -1,6 +1,10 @@
 /.project
 /.classpath
 /.settings
+/nbproject
+
 /bin
+/build
+/build.xml
 
 /image.png
