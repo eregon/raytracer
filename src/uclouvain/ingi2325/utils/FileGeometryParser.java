@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
+import raytracer.Geometry;
 import raytracer.Triangle;
 
 public class FileGeometryParser {
@@ -19,7 +21,9 @@ public class FileGeometryParser {
 		vertices.add(null); // Indexes start at 1
 	}
 
-	public void parse() throws Exception {
+	public List<Geometry> parse() throws Exception {
+		List<Geometry> geoms = new ArrayList<Geometry>();
+
 		while ((line = io.readLine()) != null) {
 			String[] parts = line.trim().split(" ", 2);
 			String type = parts[0].intern();
@@ -34,11 +38,12 @@ public class FileGeometryParser {
 					points[i] = vertices.get(Integer.valueOf(triplets[i].split("/")[0]));
 				}
 				if (points.length == 3) {
-					Triangle t = new Triangle(points[0], points[1], points[2]);
+					geoms.add(new Triangle(points[0], points[1], points[2]));
 				} else {
 					System.err.println("Unhandled polygon with " + points.length + " vertices");
 				}
 			}
 		}
+		return geoms;
 	}
 }
