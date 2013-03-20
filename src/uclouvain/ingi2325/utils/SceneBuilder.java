@@ -3,7 +3,9 @@ package uclouvain.ingi2325.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.xml.sax.InputSource;
@@ -30,7 +32,7 @@ public class SceneBuilder implements ParserHandler {
 	private Scene scene = null;
 
 	Map<String, Camera> cameras = new HashMap<String, Camera>();
-	Map<String, Geometry> geometries = new HashMap<String, Geometry>();
+	Map<String, List<Geometry>> geometries = new HashMap<String, List<Geometry>>();
 	Map<String, Material> materials = new HashMap<String, Material>();
 
 	/**
@@ -362,9 +364,11 @@ public class SceneBuilder implements ParserHandler {
 			Vector3D[] normals, TextureCoordinates[] textureCoordinates,
 			int[] coordinateIndices, int[] normalIndices,
 			int[] textureCoordinateIndices, String name) throws Exception {
+		List<Geometry> geoms = new ArrayList<Geometry>();
 		for (int i = 0; i < coordinateIndices.length; i += 3) {
-			geometries.put(name, new Triangle(coordinates[i], coordinates[i + 1], coordinates[i + 2]));
+			geoms.add(new Triangle(coordinates[i], coordinates[i + 1], coordinates[i + 2]));
 		}
+		geometries.put(name, geoms);
 	}
 
 	/*
@@ -551,10 +555,13 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startShape(String geometryName, String materialName,
 			String textureName) throws Exception {
-		Geometry g = geometries.get(geometryName);
+		List<Geometry> geoms = geometries.get(geometryName);
 		Material m = materials.get(materialName);
-		if (g != null && m != null)
-			scene.objects.add(new Shape(g, m));
+		if (geoms != null && m != null) {
+			for (Geometry g : geoms) {
+				scene.objects.add(new Shape(g, m));
+			}
+		}
 	}
 
 	/*
