@@ -47,6 +47,10 @@ public class Vector3D extends Tuple3 {
 		return new Vector3D(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
 	}
 
+	public float dotProduct(Vector3D v) {
+		return x * v.x + y * v.y + z * v.z;
+	}
+
 	public Vector3D mul(float n) {
 		return new Vector3D(n * x, n * y, n * z);
 	}
