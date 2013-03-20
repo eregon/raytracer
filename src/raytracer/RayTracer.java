@@ -37,7 +37,7 @@ public class RayTracer {
 		}
 	}
 
-	Shape findClosestShape() {
+	private Shape findClosestShape() {
 		float min_dist = Float.MAX_VALUE;
 		Shape closest = null;
 		for (Shape shape : scene.objects) {
