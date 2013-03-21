@@ -34,7 +34,7 @@ public class RayTracer {
 				public void run() {
 					Ray ray = new Ray(scene.camera.position);
 					Enumerator iter = new SkippingEnumerator(
-							new SpiralEnumerator(height, width), offset, nThreads);
+							new CircleEnumerator(height, width), offset, nThreads);
 					for (int xy : iter) {
 						int x = xy % width, y = xy / width;
 						float a = x + 0.5f - width / 2f;
