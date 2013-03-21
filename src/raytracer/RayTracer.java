@@ -24,23 +24,23 @@ public class RayTracer {
 		// projection distance
 		final float d = (float) (height / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
 
-		int nThreads = Runtime.getRuntime().availableProcessors();
+		final int nThreads = Runtime.getRuntime().availableProcessors();
 		Thread[] threads = new Thread[nThreads];
 		for (int i = 0; i < nThreads; i++) {
-			final int from = i * height / nThreads;
-			final int to = (i == nThreads - 1) ? height - 1 : (i + 1) * height / nThreads;
+			final int offset = i;
 
 			Runnable task = new Runnable() {
 				@Override
 				public void run() {
 					Ray ray = new Ray(scene.camera.position);
-					for (int y = from; y < to; y++) {
-						for (int x = 0; x < width; x++) {
-							float a = x + 0.5f - width / 2f;
-							float b = y + 0.5f - height / 2f;
-							ray.direction = w.mul(d).opposite().add(u.mul(a)).add(v.mul(b)); // −dW + aU + bV
-							renderPixel(x, y, ray);
-						}
+					Enumerator iter = new SkippingEnumerator(
+							new SpiralEnumerator(height, width), offset, nThreads);
+					for (int xy : iter) {
+						int x = xy % width, y = xy / width;
+						float a = x + 0.5f - width / 2f;
+						float b = y + 0.5f - height / 2f;
+						ray.direction = w.mul(d).opposite().add(u.mul(a)).add(v.mul(b)); // −dW + aU + bV
+						renderPixel(x, y, ray);
 					}
 				}
 			};
@@ -85,4 +85,5 @@ public class RayTracer {
 		}
 		panel.repaint();
 	}
+
 }
