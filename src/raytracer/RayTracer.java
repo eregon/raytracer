@@ -1,7 +1,5 @@
 package raytracer;
 
-import java.lang.management.ManagementFactory;
-
 import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
@@ -11,8 +9,6 @@ public class RayTracer {
 	PixelPanel panel;
 	int height, width;
 
-	Ray ray;
-
 	public RayTracer(Scene scene, PixelPanel panel) {
 		this.scene = scene;
 		this.panel = panel;
@@ -21,28 +17,52 @@ public class RayTracer {
 	}
 
 	public void render() {
-		ray = new Ray(scene.camera.position);
 		// Camera coordinate system induced from direction and up
-		Vector3D w = scene.camera.direction.opposite();
-		Vector3D v = scene.camera.up.crossProduct(w).normalize();
-		Vector3D u = v.crossProduct(w);
+		final Vector3D w = scene.camera.direction.opposite();
+		final Vector3D v = scene.camera.up.crossProduct(w).normalize();
+		final Vector3D u = v.crossProduct(w);
 		// projection distance
-		float d = (float) (height / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
+		final float d = (float) (height / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
 
-		long t0 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				float a = x + 0.5f - width / 2f;
-				float b = y + 0.5f - height / 2f;
-				ray.direction = w.mul(d).opposite().add(u.mul(a)).add(v.mul(b)); // −dW + aU + bV
-				renderPixel(x, y);
-			}
+		int nThreads = Runtime.getRuntime().availableProcessors();
+		Thread[] threads = new Thread[nThreads];
+		for (int i = 0; i < nThreads; i++) {
+			final int from = i * height / nThreads;
+			final int to = (i == nThreads - 1) ? height - 1 : (i + 1) * height / nThreads;
+
+			Runnable task = new Runnable() {
+				@Override
+				public void run() {
+					Ray ray = new Ray(scene.camera.position);
+					for (int y = from; y < to; y++) {
+						for (int x = 0; x < width; x++) {
+							float a = x + 0.5f - width / 2f;
+							float b = y + 0.5f - height / 2f;
+							ray.direction = w.mul(d).opposite().add(u.mul(a)).add(v.mul(b)); // −dW + aU + bV
+							renderPixel(x, y, ray);
+						}
+					}
+				}
+			};
+
+			threads[i] = new Thread(task);
 		}
-		long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
-		System.out.println("Rendered in " + String.format("%.3f", (t1 - t0) / 1e9) + "s");
+
+		long t0 = System.currentTimeMillis();
+		for (Thread thread : threads)
+			thread.start();
+		try {
+			for (Thread thread : threads)
+				thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		long t1 = System.currentTimeMillis();
+		System.out.println("Rendered in " + String.format("%.3f", (t1 - t0) / 1e3) + "s");
+
 	}
 
-	private Shape findClosestShape() {
+	private Shape findClosestShape(Ray ray) {
 		float min_dist = Float.MAX_VALUE;
 		Shape closest = null;
 		for (Shape shape : scene.objects) {
@@ -55,8 +75,8 @@ public class RayTracer {
 		return closest;
 	}
 
-	private void renderPixel(int x, int y) {
-		Shape closest = findClosestShape();
+	private void renderPixel(int x, int y, Ray ray) {
+		Shape closest = findClosestShape(ray);
 
 		if (closest != null) {
 			panel.drawPixel(x, y, closest.material.color);
