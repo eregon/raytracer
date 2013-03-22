@@ -19,8 +19,8 @@ public class RayTracer {
 	public void render() {
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
-		final Vector3D v = scene.camera.up.crossProduct(w).normalize();
-		final Vector3D u = v.crossProduct(w);
+		final Vector3D u = scene.camera.up.crossProduct(w).normalize();
+		final Vector3D v = u.crossProduct(w);
 		// projection distance
 		final float d = (float) (width / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
 
