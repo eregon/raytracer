@@ -87,7 +87,7 @@ public class RayTracer {
 			float diffuse = 0f;
 			for (Light light : scene.lights) {
 				Vector3D l = light.l(hit);
-				diffuse += n.dotProduct(l);
+				diffuse += n.dotProduct(l) * light.intensity;
 			}
 			diffuse /= 10; // TODO: hack
 			if (diffuse < 0f)
