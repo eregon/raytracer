@@ -33,8 +33,8 @@ public class RayTracer {
 				@Override
 				public void run() {
 					Ray ray = new Ray(scene.camera.position);
-					Enumerator iter = new SkippingEnumerator(
-							new CircleEnumerator(height, width), offset, nThreads);
+					Enumerator iter = new RadialEnumerator(
+							new CircleEnumerator(height, width), offset, nThreads, height, width);
 					for (int xy : iter) {
 						int x = xy % width, y = xy / width;
 						float a = x + 0.5f - width / 2f;
