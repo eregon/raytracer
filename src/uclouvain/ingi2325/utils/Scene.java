@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import raytracer.Camera;
+import raytracer.Light;
 import raytracer.Shape;
 
 /**
@@ -15,5 +16,6 @@ import raytracer.Shape;
 public class Scene {
 	public Camera camera;
 	public List<Shape> objects = new ArrayList<Shape>();
+	public List<Light> lights = new ArrayList<Light>();
 	public Color background;
 }

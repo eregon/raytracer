@@ -12,7 +12,9 @@ import org.xml.sax.InputSource;
 
 import raytracer.Camera;
 import raytracer.Geometry;
+import raytracer.Light;
 import raytracer.Material;
+import raytracer.PointLight;
 import raytracer.Shape;
 import raytracer.Triangle;
 import uclouvain.ingi2325.parser.Parser;
@@ -34,6 +36,7 @@ public class SceneBuilder implements ParserHandler {
 	Map<String, Camera> cameras = new HashMap<String, Camera>();
 	Map<String, List<Geometry>> geometries = new HashMap<String, List<Geometry>>();
 	Map<String, Material> materials = new HashMap<String, Material>();
+	Map<String, Light> lights = new HashMap<String, Light>();
 
 	/**
 	 * Returns the build scene
@@ -200,6 +203,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startPointLight(Point3D position, float intensity, Color color,
 			String name) throws Exception {
+		lights.put(name, new PointLight(color, position, intensity));
 	}
 
 	/*
@@ -541,6 +545,8 @@ public class SceneBuilder implements ParserHandler {
 			Color background) throws Exception {
 		scene.camera = cameras.get(cameraName);
 		scene.background = background;
+		for (String lightName : lightNames)
+			scene.lights.add(lights.get(lightName));
 	}
 
 	/*

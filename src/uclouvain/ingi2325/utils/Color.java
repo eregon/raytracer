@@ -13,6 +13,7 @@ import uclouvain.ingi2325.math.Tuple3;
 public class Color extends Tuple3 {
 
 	public static final Color BLACK = new Color(0, 0, 0);
+	public static final Color WHITE = new Color(1, 1, 1);
 
 	/**
 	 * Constructs and initializes a color from the three given values.
@@ -84,5 +85,13 @@ public class Color extends Tuple3 {
 	 */
 	public static Color valueOf(String string) throws ParseException {
 		return valueOf(string, new Color());
+	}
+
+	public Color mul(float n) {
+		if (n == 0f)
+			return Color.BLACK;
+		if (n == 1f)
+			return this;
+		return new Color(x * n, y * n, z * n);
 	}
 }

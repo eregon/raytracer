@@ -1,6 +1,7 @@
 package raytracer;
 
 import uclouvain.ingi2325.utils.PixelPanel;
+import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
 
@@ -62,7 +63,7 @@ public class RayTracer {
 
 	}
 
-	private Shape findClosestShape(Ray ray) {
+	private Pair<Shape, Float> findClosestShape(Ray ray) {
 		float min_dist = Float.MAX_VALUE;
 		Shape closest = null;
 		for (Shape shape : scene.objects) {
@@ -72,14 +73,29 @@ public class RayTracer {
 				closest = shape;
 			}
 		}
-		return closest;
+		return new Pair<Shape, Float>(closest, min_dist);
 	}
 
 	private void renderPixel(int x, int y, Ray ray) {
-		Shape closest = findClosestShape(ray);
+		Pair<Shape, Float> pair = findClosestShape(ray);
+		Shape closest = pair.left;
+		float t = pair.right;
 
 		if (closest != null) {
-			panel.drawPixel(x, y, closest.material.color);
+			Point3D hit = ray.origin.add(ray.direction.mul(t));
+			Vector3D n = closest.geometry.normalAt(hit);
+			float diffuse = 0f;
+			for (Light light : scene.lights) {
+				Vector3D l = light.l(hit);
+				diffuse += n.dotProduct(l);
+			}
+			diffuse /= 10; // TODO: hack
+			if (diffuse < 0f)
+				diffuse = 0f;
+			if (diffuse > 1f)
+				diffuse = 1f;
+
+			panel.drawPixel(x, y, closest.material.color.mul(diffuse));
 		} else {
 			panel.drawPixel(x, y, scene.background);
 		}
