@@ -14,11 +14,14 @@ public class FileGeometryParser {
 	BufferedReader io;
 	String line;
 
-	ArrayList<Point3D> vertices = new ArrayList<Point3D>();
+	ArrayList<Point3D> _vertices = new ArrayList<Point3D>();
+	ArrayList<Vector3D> _normals = new ArrayList<Vector3D>();
 
 	public FileGeometryParser(File file) throws FileNotFoundException {
 		io = new BufferedReader(new FileReader(file));
-		vertices.add(null); // Indexes start at 1
+		// Indexes start at 1
+		_vertices.add(null);
+		_normals.add(null);
 	}
 
 	public List<Geometry> parse() throws Exception {
@@ -30,17 +33,25 @@ public class FileGeometryParser {
 			String value = parts[1];
 
 			if (type == "v") { // vertex
-				vertices.add(Point3D.valueOf(value));
+				_vertices.add(Point3D.valueOf(value));
+			} else if (type == "vn") {
+				_normals.add(Vector3D.valueOf(value));
 			} else if (type == "f") { // surface
 				String[] triplets = value.split(" ");
-				Point3D[] points = new Point3D[triplets.length];
+				Point3D[] vertices = new Point3D[triplets.length];
+				Vector3D[] normals = new Vector3D[triplets.length];
 				for (int i = 0; i < triplets.length; i++) {
-					points[i] = vertices.get(Integer.valueOf(triplets[i].split("/")[0]));
+					String[] indexes = triplets[i].split("/");
+					vertices[i] = _vertices.get(Integer.valueOf(indexes[0]));
+					if (indexes.length >= 3)
+						normals[i] = _normals.get(Integer.valueOf(indexes[2]));
+					else
+						normals[i] = null;
 				}
-				if (points.length == 3) {
-					geoms.add(new Triangle(points[0], points[1], points[2]));
+				if (vertices.length == 3) {
+					geoms.add(new Triangle(vertices, normals));
 				} else {
-					System.err.println("Unhandled polygon with " + points.length + " vertices");
+					System.err.println("Unhandled polygon with " + vertices.length + " vertices");
 				}
 			}
 		}

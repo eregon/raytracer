@@ -1,14 +1,21 @@
 package raytracer;
 
 import uclouvain.ingi2325.utils.Point3D;
+import uclouvain.ingi2325.utils.Vector3D;
 
 public class Triangle implements Geometry {
 	Point3D _a, _b, _c;
+	Vector3D na, nb, nc;
 
-	public Triangle(Point3D a, Point3D b, Point3D c) {
-		_a = a;
-		_b = b;
-		_c = c;
+	public Triangle(Point3D[] vertices, Vector3D[] normals) {
+		super();
+		_a = vertices[0];
+		_b = vertices[1];
+		_c = vertices[2];
+		// TODO: handle null normals
+		na = normals[0];
+		nb = normals[1];
+		nc = normals[2];
 	}
 
 	@Override
