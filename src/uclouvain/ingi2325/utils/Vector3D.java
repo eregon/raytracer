@@ -34,6 +34,14 @@ public class Vector3D extends Tuple3 {
 		return (float) Math.sqrt(x * x + y * y + z * z);
 	}
 
+	public Vector3D normalized() {
+		float norm = norm();
+		x /= norm;
+		y /= norm;
+		z /= norm;
+		return this;
+	}
+
 	public Vector3D normalize() {
 		float norm = norm();
 		return new Vector3D(x / norm, y / norm, z / norm);

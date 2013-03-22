@@ -20,6 +20,11 @@ public class Point3D extends Tuple3 {
 		super(x, y, z);
 	}
 
+	@Override
+	public Point3D clone() {
+		return new Point3D(x, y, z);
+	}
+
 	/**
 	 * Parse a Point3D from a string
 	 * @param string   String representation

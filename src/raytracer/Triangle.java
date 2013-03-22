@@ -19,12 +19,7 @@ public class Triangle implements Geometry {
 	}
 
 	@Override
-	public Vector3D normalAt(Point3D p) {
-		return na; // TODO: interpolate
-	}
-
-	@Override
-	public float intersection(Ray ray) {
+	public Intersection intersection(Ray ray) {
 		float a = _a.x - _b.x;
 		float b = _a.y - _b.y;
 		float c = _a.z - _b.z;
@@ -51,16 +46,25 @@ public class Triangle implements Geometry {
 		float m = a * ei_hf + b * gf_di + c * dh_eg;
 		float t = -(f * ak_jb + e * jc_al + d * bl_kc) / m;
 		if (t <= 0) // TODO: validate t max
-			return -1;
+			return null;
 
 		float gamma = (i * ak_jb + h * jc_al + g * bl_kc) / m;
 		if (gamma < 0 || gamma > 1)
-			return -1;
+			return null;
 
 		float beta = (j * ei_hf + k * gf_di + l * dh_eg) / m;
 		if (beta < 0 || beta > 1 - gamma)
-			return -1;
+			return null;
 
-		return t;
+		Intersection inter = new Intersection();
+		inter.distance = t;
+		// _a + beta*u + gamma*v
+		inter.point = _a.clone(); //ray.origin.add(ray.direction.mul(t));
+		inter.point.x += beta * (-a) + gamma * (-d);
+		inter.point.y += beta * (-b) + gamma * (-e);
+		inter.point.z += beta * (-c) + gamma * (-f);
+		// (1.0 - (u + v)) * nb + na * u + nc * v
+		inter.normal = (nb.mul(1f - (beta + gamma)).add(na.mul(beta).add(nc.mul(gamma)))).normalized();
+		return inter;
 	}
 }

@@ -63,27 +63,29 @@ public class RayTracer {
 
 	}
 
-	private Pair<Shape, Float> findClosestShape(Ray ray) {
+	private Pair<Shape, Intersection> findClosestShape(Ray ray) {
 		float min_dist = Float.MAX_VALUE;
 		Shape closest = null;
+		Intersection inter = null;
 		for (Shape shape : scene.objects) {
-			float dist = shape.geometry.intersection(ray);
-			if (dist > 0f && dist < min_dist) {
-				min_dist = dist;
+			Intersection i = shape.geometry.intersection(ray);
+			if (i != null && i.distance > 0f && i.distance < min_dist) {
+				min_dist = i.distance;
+				inter = i;
 				closest = shape;
 			}
 		}
-		return new Pair<Shape, Float>(closest, min_dist);
+		return new Pair<Shape, Intersection>(closest, inter);
 	}
 
 	private void renderPixel(int x, int y, Ray ray) {
-		Pair<Shape, Float> pair = findClosestShape(ray);
+		Pair<Shape, Intersection> pair = findClosestShape(ray);
 		Shape closest = pair.left;
-		float t = pair.right;
+		Intersection inter = pair.right;
 
 		if (closest != null) {
-			Point3D hit = ray.origin.add(ray.direction.mul(t));
-			Vector3D n = closest.geometry.normalAt(hit);
+			Point3D hit = inter.point;//ray.origin.add(ray.direction.mul(t));
+			Vector3D n = inter.normal;//closest.geometry.normalAt(hit);
 			float diffuse = 0f;
 			for (Light light : scene.lights) {
 				Vector3D l = light.l(hit);
