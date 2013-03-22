@@ -19,6 +19,11 @@ public class Triangle implements Geometry {
 	}
 
 	@Override
+	public Vector3D normalAt(Point3D p) {
+		return na; // TODO: interpolate
+	}
+
+	@Override
 	public float intersection(Ray ray) {
 		float a = _a.x - _b.x;
 		float b = _a.y - _b.y;
