@@ -9,12 +9,14 @@ public class RayTracer {
 	Scene scene;
 	Image image;
 	int height, width;
+	Runnable onPixelRendered;
 
-	public RayTracer(Scene scene, Image image) {
+	public RayTracer(Scene scene, Image image, Runnable onPixelRendered) {
 		this.scene = scene;
 		this.image = image;
 		height = image.getHeight();
 		width = image.getWidth();
+		this.onPixelRendered = onPixelRendered;
 	}
 
 	public void render() {
@@ -100,7 +102,8 @@ public class RayTracer {
 		} else {
 			image.drawPixel(x, y, scene.background);
 		}
-		// TODO: panel.repaint();
+		if (onPixelRendered != null)
+			onPixelRendered.run();
 	}
 
 }

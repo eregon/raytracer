@@ -29,7 +29,12 @@ public class Demo {
 		Scene scene = new SceneBuilder().loadScene("XML/simple5.sdl");
 
 		panel = new PixelPanel(512, 512);
-		tracer = new RayTracer(scene, panel.image);
+		tracer = new RayTracer(scene, panel.image, new Runnable() {
+			@Override
+			public void run() {
+				panel.repaint();
+			}
+		});
 
 		frame = new JFrame();
 		frame.getContentPane().add(panel);
