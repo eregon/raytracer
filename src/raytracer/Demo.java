@@ -29,7 +29,7 @@ public class Demo {
 		Scene scene = new SceneBuilder().loadScene("XML/simple5.sdl");
 
 		panel = new PixelPanel(512, 512);
-		tracer = new RayTracer(scene, panel);
+		tracer = new RayTracer(scene, panel.image);
 
 		frame = new JFrame();
 		frame.getContentPane().add(panel);
@@ -43,6 +43,6 @@ public class Demo {
 	public void render() {
 		tracer.render();
 		panel.repaint();
-		panel.saveImage("image.png");
+		panel.image.saveImage("image.png");
 	}
 }

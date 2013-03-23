@@ -3,13 +3,8 @@ package uclouvain.ingi2325.utils;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 
 /**
  * Represents a canvas you can draw on.
@@ -28,7 +23,7 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	/**
 	 * The image displayed in this canvas
 	 */
-	BufferedImage image;
+	public Image image;
 
 	/**
 	 * Construct a new CgPanel.
@@ -36,61 +31,10 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	public PixelPanel(int width, int height) {
 		setSize(new Dimension(width, height));
 		setPreferredSize(new Dimension(width, height));
-		image = new BufferedImage(getWidth(), getHeight(),
-				BufferedImage.TYPE_INT_RGB);
+		image = new Image(width, height);
 		addComponentListener(this);
 		componentResized(new ComponentEvent(this,
 				ComponentEvent.COMPONENT_RESIZED));
-	}
-
-	/**
-	 * Draw a pixel at window location x,y with color r,g,b. The coordinates x,y
-	 * are supposed to be in the range [0...getWidth()[ and [0...getHeight()[
-	 * respectively. The color channels r,g and b are supposed to be in the
-	 * range [0...1]
-	 * 
-	 * @param x
-	 *            the x coordinate
-	 * @param y
-	 *            the y coordinate
-	 */
-
-	public void drawPixel(int x, int y, Color color) {
-		if (x >= 0 && x < image.getWidth() && y >= 0 && y < image.getHeight())
-			image.setRGB(x, y, color.intValue());
-	}
-
-	/**
-	 * Clear the buffer with the given color.
-	 */
-	public void clear(Color c) {
-		int color = c.intValue();
-		for (int x = 0; x < image.getWidth(); x++) {
-			for (int y = 0; y < image.getHeight(); y++) {
-				image.setRGB(x, y, color);
-			}
-		}
-	}
-
-	/**
-	 * Save the buffer to a file.
-	 * 
-	 * @param file
-	 *            the filename used to save the file.
-	 * @return true if image was successfully written, false otherwise
-	 */
-	public boolean saveImage(String file) {
-		try {
-			Graphics2D g2;
-			g2 = image.createGraphics();
-			g2.drawImage(image, null, null);
-			ImageIO.write(image, "png", new File(file));
-			return true;
-
-		} catch (Exception e) {
-			return false;
-
-		}
 	}
 
 	/*
@@ -122,8 +66,8 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	@Override
 	public void componentResized(ComponentEvent e) {
 		System.out.println("Resized");
-		image = new BufferedImage(getWidth(), getHeight(),
-				BufferedImage.TYPE_INT_RGB);
+		// TODO: Should recall RayTracer?
+		// image = new Image(getWidth(), getHeight());
 	}
 
 	/*

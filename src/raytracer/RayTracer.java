@@ -1,20 +1,20 @@
 package raytracer;
 
-import uclouvain.ingi2325.utils.PixelPanel;
+import uclouvain.ingi2325.utils.Image;
 import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
 
 public class RayTracer {
 	Scene scene;
-	PixelPanel panel;
+	Image image;
 	int height, width;
 
-	public RayTracer(Scene scene, PixelPanel panel) {
+	public RayTracer(Scene scene, Image image) {
 		this.scene = scene;
-		this.panel = panel;
-		height = panel.getHeight();
-		width = panel.getWidth();
+		this.image = image;
+		height = image.getHeight();
+		width = image.getWidth();
 	}
 
 	public void render() {
@@ -96,11 +96,11 @@ public class RayTracer {
 			if (diffuse > 1f)
 				diffuse = 1f;
 
-			panel.drawPixel(x, y, closest.material.color.mul(diffuse));
+			image.drawPixel(x, y, closest.material.color.mul(diffuse));
 		} else {
-			panel.drawPixel(x, y, scene.background);
+			image.drawPixel(x, y, scene.background);
 		}
-		panel.repaint();
+		// TODO: panel.repaint();
 	}
 
 }
