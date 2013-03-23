@@ -11,7 +11,7 @@
    </Lights>
 
    <Geometry>
-      <FileGeometry filename="sphere.obj" name="subject" />
+      <FileGeometry filename="teapot.obj" name="subject" />
    </Geometry>
 
    <Materials>

@@ -63,8 +63,8 @@ public class Triangle implements Geometry {
 		inter.point.x += beta * (-a) + gamma * (-d);
 		inter.point.y += beta * (-b) + gamma * (-e);
 		inter.point.z += beta * (-c) + gamma * (-f);
-		// (1.0 - (u + v)) * nb + na * u + nc * v
-		inter.normal = (nb.mul(1f - (beta + gamma)).add(na.mul(beta).add(nc.mul(gamma)))).normalized();
+		// (1.0 - (u + v)) * na + nb * u + nc * v
+		inter.normal = (na.mul(1f - (beta + gamma)).add(nb.mul(beta).add(nc.mul(gamma)))).normalized();
 		return inter;
 	}
 }
