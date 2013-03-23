@@ -58,10 +58,7 @@ public class Triangle implements Geometry {
 
 		Intersection inter = new Intersection();
 		inter.distance = t;
-		//ray.origin.add(ray.direction.mul(t));
-		Vector3D u = _b.sub(_a), v = _c.sub(_a);
-		// _a + beta*u + gamma*v
-		inter.point = _a.add(u.mul(beta)).add(v.mul(gamma));
+		inter.point = ray.origin.add(ray.direction.mul(t));
 		// (1.0 - (u + v)) * na + nb * u + nc * v
 		inter.normal = (na.mul(1f - (beta + gamma)).add(nb.mul(beta).add(nc.mul(gamma)))).normalized();
 		return inter;
