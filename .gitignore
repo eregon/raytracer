@@ -8,3 +8,6 @@
 /build.xml
 
 /image.png
+
+XML/*.obj
+XML/*.obj.gz
