@@ -60,9 +60,9 @@ public class Triangle implements Geometry {
 		inter.distance = t;
 		// _a + beta*u + gamma*v
 		inter.point = _a.clone(); //ray.origin.add(ray.direction.mul(t));
-		inter.point.x += beta * (-a) + gamma * (-d);
-		inter.point.y += beta * (-b) + gamma * (-e);
-		inter.point.z += beta * (-c) + gamma * (-f);
+		inter.point.x -= beta * a + gamma * d;
+		inter.point.y -= beta * b + gamma * e;
+		inter.point.z -= beta * c + gamma * f;
 		// (1.0 - (u + v)) * na + nb * u + nc * v
 		inter.normal = (na.mul(1f - (beta + gamma)).add(nb.mul(beta).add(nc.mul(gamma)))).normalized();
 		return inter;
