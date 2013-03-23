@@ -15,8 +15,7 @@ public class PointLight extends Light {
 
 	@Override
 	public Vector3D l(Point3D hit) {
-		return position.sub(hit);
-		//return hit.sub(position);
+		return position.sub(hit).normalized();
 	}
 
 }

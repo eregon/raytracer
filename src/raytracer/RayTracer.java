@@ -91,7 +91,6 @@ public class RayTracer {
 				Vector3D l = light.l(hit);
 				diffuse += n.dotProduct(l) * light.intensity;
 			}
-			diffuse /= 30; // TODO: hack
 			if (diffuse < 0f)
 				diffuse = 0f;
 			if (diffuse > 1f)
