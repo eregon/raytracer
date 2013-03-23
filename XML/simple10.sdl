@@ -3,15 +3,15 @@
 
 <Sdl>
    <Cameras>
-      <Camera position="5 5 5" direction="-0.5 -0.5 -0.5" up="0 1 0" fovy="45" name="cam0" />
+      <Camera position="10 10 10" direction="-0.5 -0.5 -0.5" up="0 1 0" fovy="45" name="cam0" />
    </Cameras>
 
    <Lights>
-      <PointLight position="5 5 5" intensity="1" color="1 1 1" name="light0" />
+      <PointLight position="10 10 10" intensity="1" color="1 1 1" name="light0" />
    </Lights>
 
    <Geometry>
-      <FileGeometry filename="torus.obj" name="subject" />
+      <FileGeometry filename="venus.obj" name="subject" />
    </Geometry>
 
    <Materials>
