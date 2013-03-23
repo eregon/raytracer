@@ -2,10 +2,13 @@ package uclouvain.ingi2325.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 import raytracer.Geometry;
 import raytracer.Triangle;
@@ -17,8 +20,12 @@ public class FileGeometryParser {
 	ArrayList<Point3D> _vertices = new ArrayList<Point3D>();
 	ArrayList<Vector3D> _normals = new ArrayList<Vector3D>();
 
-	public FileGeometryParser(File file) throws FileNotFoundException {
-		io = new BufferedReader(new FileReader(file));
+	public FileGeometryParser(File file) throws IOException {
+		InputStream is = new FileInputStream(file);
+		if (file.getName().endsWith(".gz"))
+			is = new GZIPInputStream(is);
+		io = new BufferedReader(new InputStreamReader(is));
+
 		// Indexes start at 1
 		_vertices.add(null);
 		_normals.add(null);
