@@ -106,4 +106,8 @@ public class Color extends Tuple3 {
 	public Color mul(float n) {
 		return new Color(x * n, y * n, z * n);
 	}
+
+	public Color div(float n) {
+		return new Color(x / n, y / n, z / n);
+	}
 }

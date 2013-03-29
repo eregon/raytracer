@@ -99,6 +99,7 @@ public class RayTracer {
 				color = color.add(light.color.mul(diffuse));
 			}
 
+			// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
 			color = closest.material.color.mul(color).normalize();
 		} else {
 			color = scene.background;
