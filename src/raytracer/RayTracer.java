@@ -86,8 +86,8 @@ public class RayTracer {
 		Intersection inter = pair.right;
 
 		if (closest != null) {
-			Point3D hit = inter.point;//ray.origin.add(ray.direction.mul(t));
-			Vector3D n = inter.normal;//closest.geometry.normalAt(hit);
+			Point3D hit = inter.point;
+			Vector3D n = inter.normal;
 			float diffuse = 0f;
 			for (Light light : scene.lights) {
 				Vector3D l = light.l(hit);
