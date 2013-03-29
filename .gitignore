@@ -8,6 +8,8 @@
 /build.xml
 
 /image.png
+/output
 
 XML/*.obj
 XML/*.obj.gz
+XML/tmp.sdl
