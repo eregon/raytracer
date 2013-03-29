@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<project name="RayTracer" default="run">
+	<target name="compile">
+		<mkdir dir="bin"/>
+		<javac srcdir="src" destdir="bin" includeantruntime="false"/>
+	</target>
+
+	<target name="run" depends="compile">
+		<java classname="raytracer.Demo" fork="true">
+			<classpath>
+				<pathelement path="bin"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="clean">
+		<delete dir="bin"/>
+	</target>
+</project>
