@@ -93,6 +93,9 @@ public class RayTracer {
 				Vector3D l = light.l(hit);
 				diffuse += n.dotProduct(l) * light.intensity;
 			}
+
+			diffuse = Math.abs(diffuse); // two-sided lighting
+
 			if (diffuse < 0f)
 				diffuse = 0f;
 			if (diffuse > 1f)
