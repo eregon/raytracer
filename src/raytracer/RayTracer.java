@@ -1,5 +1,6 @@
 package raytracer;
 
+import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
 import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Scene;
@@ -88,25 +89,22 @@ public class RayTracer {
 		if (closest != null) {
 			Point3D hit = inter.point;
 			Vector3D n = inter.normal;
-			float diffuse = 0f;
+			Color color = Color.BLACK;
+
 			for (Light light : scene.lights) {
 				Vector3D l = light.l(hit);
-				diffuse += n.dotProduct(l) * light.intensity;
+				// absolute value two-sided lighting
+				float diffuse = Math.abs(n.dotProduct(l)) * light.intensity;
+				color = color.add(light.color.mul(diffuse));
 			}
 
-			diffuse = Math.abs(diffuse); // two-sided lighting
+			color = closest.material.color.mul(color).normalize();
 
-			if (diffuse < 0f)
-				diffuse = 0f;
-			if (diffuse > 1f)
-				diffuse = 1f;
-
-			image.drawPixel(x, y, closest.material.color.mul(diffuse));
+			image.drawPixel(x, y, color);
 		} else {
 			image.drawPixel(x, y, scene.background);
 		}
 		if (onPixelRendered != null)
 			onPixelRendered.run();
 	}
-
 }

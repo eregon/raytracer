@@ -47,6 +47,14 @@ public class Color extends Tuple3 {
 		super(0, 0, 0);
 	}
 
+	public Color normalize() {
+		return new Color(clamp(x), clamp(y), clamp(z));
+	}
+
+	private float clamp(float f) {
+		return (f > 1f) ? 1f : (f < 0f) ? 0f : f;
+	}
+
 	public int intValue() {
 		return (int) (255 * x) << 16 | (int) (255 * y) << 8 | (int) (255 * z);
 	}
@@ -87,11 +95,15 @@ public class Color extends Tuple3 {
 		return valueOf(string, new Color());
 	}
 
+	public Color add(Color c) {
+		return new Color(x + c.x, x + c.y, z + c.z);
+	}
+
+	public Color mul(Color c) {
+		return new Color(x * c.x, x * c.y, z * c.z);
+	}
+
 	public Color mul(float n) {
-		if (n == 0f)
-			return Color.BLACK;
-		if (n == 1f)
-			return this;
 		return new Color(x * n, y * n, z * n);
 	}
 }
