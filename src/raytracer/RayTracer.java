@@ -85,11 +85,12 @@ public class RayTracer {
 		Pair<Shape, Intersection> pair = findClosestShape(ray);
 		Shape closest = pair.left;
 		Intersection inter = pair.right;
+		Color color;
 
 		if (closest != null) {
 			Point3D hit = inter.point;
 			Vector3D n = inter.normal;
-			Color color = Color.BLACK;
+			color = Color.BLACK;
 
 			for (Light light : scene.lights) {
 				Vector3D l = light.l(hit);
@@ -99,11 +100,11 @@ public class RayTracer {
 			}
 
 			color = closest.material.color.mul(color).normalize();
-
-			image.drawPixel(x, y, color);
 		} else {
-			image.drawPixel(x, y, scene.background);
+			color = scene.background;
 		}
+		image.drawPixel(x, y, color);
+
 		if (onPixelRendered != null)
 			onPixelRendered.run();
 	}
