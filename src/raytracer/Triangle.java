@@ -12,7 +12,6 @@ public class Triangle implements Geometry {
 		_a = vertices[0];
 		_b = vertices[1];
 		_c = vertices[2];
-		// TODO: handle null normals
 		na = normals[0];
 		nb = normals[1];
 		nc = normals[2];
