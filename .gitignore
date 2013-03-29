@@ -5,7 +5,7 @@
 
 /bin
 /build
-/build.xml
+/dist
 
 /image.png
 /output
