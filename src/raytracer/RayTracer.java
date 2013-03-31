@@ -38,14 +38,13 @@ public class RayTracer {
 		final int nThreads = numberOfThreads();
 		Thread[] threads = new Thread[nThreads];
 		for (int i = 0; i < nThreads; i++) {
-			final int offset = i;
+			final Ray ray = new Ray(scene.camera.position);
+			final Enumerator iter = new RadialEnumerator(
+					new CircleEnumerator(height, width), i, nThreads, height, width);
 
 			Runnable task = new Runnable() {
 				@Override
 				public void run() {
-					Ray ray = new Ray(scene.camera.position);
-					Enumerator iter = new RadialEnumerator(
-							new CircleEnumerator(height, width), offset, nThreads, height, width);
 					for (int xy : iter) {
 						int x = xy % width, y = xy / width;
 						float a = x + 0.5f - width / 2f;
