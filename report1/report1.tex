@@ -1,0 +1,73 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{alltt}
+
+\usepackage[top=30mm, bottom=30mm, left=25mm, right=25mm]{geometry}
+\setlength\parindent{0pt}
+\setlength{\parskip}{0.7em}
+
+%\usepackage{graphicx}
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+%\graphicspath{{./images/}}
+
+\title{INGI2325 Computer Graphics \\
+  Project -- First Report}
+\author{Benoit Daloze}
+
+\begin{document}
+\maketitle
+
+\section{Project architecture}
+
+\subsection{Main loop}
+
+The main loop is located in \texttt{src/raytracer/RayTracer.java}.
+The loop is parallelized and use all cores available.
+
+The loop actually iterates over an iterator of $(x,y)$ coordinates and
+by default draws first pixels from the center, which each thread (core) assigned an equal part (angle) of the circle around the center (thus making a nice thread visualization).
+
+\subsection{Shapes}
+
+The shapes are represented as a simple data class having a Material and a Geometry.
+
+\subsection{Lights}
+
+There is an abstract \texttt{Light} class, which requires an \emph{intensity} and a \emph{color} and ensures subclasses define \texttt{l(Point3D hit)}, which gives the $l$ normalized vector from the intersection directed to the light source used for shading.
+
+\texttt{PointLight} is the only subclass of \texttt{Light} at this time and only has an extra attribute \texttt{position}.
+
+The implementation supports multiple point lights and their colors, but it might result in too bright images as $c_l = 1$.
+
+\subsection{Material}
+
+The \texttt{Material} class is very simple and only has a (diffuse) \texttt{color} attribute.
+
+\section{How to run and compile your project}
+
+\begin{itemize}
+  \item To compile, just run \texttt{\$ ant compile} in the top-level directory.
+  \item To run the demo, type \texttt{\$ ant} in the top-level directory.
+  \item To remove compiled files, run \texttt{\$ ant clean}.
+\end{itemize}
+
+Of course, the project can be imported in Eclipse and ran from there.
+
+It also has a command-line interface:
+\begin{verbatim}
+$ java -cp bin raytracer.CLI <SCENE>.sdl <OUTPUT>.png
+\end{verbatim}
+
+\section{Other features}
+
+Produced images from the examples (by the script \texttt{run.rb}) are in \texttt{output/}.
+The script needs \texttt{.obj} and \texttt{.obj.gz} files to be in \texttt{XML/}.
+
+The \texttt{.obj.gz} files are decompressed on the fly by the \texttt{FileGeometryParser}, thus not needing explicit decompression.
+
+\end{document}
