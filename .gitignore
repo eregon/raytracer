@@ -13,3 +13,15 @@
 XML/*.obj
 XML/*.obj.gz
 XML/tmp.sdl
+
+# LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.pdf
+*.snm
+*.synctex.gz
+*.toc
