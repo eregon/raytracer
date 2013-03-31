@@ -20,6 +20,13 @@ public class RayTracer {
 		this.onPixelRendered = onPixelRendered;
 	}
 
+	private int numberOfThreads() {
+		if (System.getenv("THREADS") != null)
+			return Math.max(1, Integer.parseInt(System.getenv("THREADS")));
+		else
+			return Runtime.getRuntime().availableProcessors();
+	}
+
 	public void render() {
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
@@ -28,7 +35,7 @@ public class RayTracer {
 		// projection distance
 		final float d = (float) (width / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
 
-		final int nThreads = Runtime.getRuntime().availableProcessors();
+		final int nThreads = numberOfThreads();
 		Thread[] threads = new Thread[nThreads];
 		for (int i = 0; i < nThreads; i++) {
 			final int offset = i;
