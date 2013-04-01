@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import raytracer.Light;
 import raytracer.Material;
 import raytracer.PointLight;
 import raytracer.Shape;
+import raytracer.Sphere;
 import raytracer.Triangle;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
@@ -264,6 +266,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startSphere(float radius, String name) throws Exception {
+		geometries.put(name, Arrays.asList((Geometry) new Sphere(radius)));
 	}
 
 	/*

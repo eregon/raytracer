@@ -29,7 +29,8 @@
        textureCoordinateIndices="0, 1, 2"
        name="triangle2"
       />
-      <FileGeometry filename="sphere.obj" name="sphere" />
+      <FileGeometry filename="sphere.obj" name="triSphere" />
+      <Sphere radius="0.99" name="exactSphere"/>
    </Geometry>
    
    <Materials>
@@ -41,6 +42,7 @@
    <Scene camera="cam0" lights="light0" background="0.5 0.5 0.5">
       <Shape geometry="triangle1" material="yellow" />
       <Shape geometry="triangle2" material="red" />
-      <Shape geometry="sphere" material="blue" />
+      <Shape geometry="triSphere" material="blue" />
+      <Shape geometry="exactSphere" material="red" />
    </Scene>
 </Sdl>
