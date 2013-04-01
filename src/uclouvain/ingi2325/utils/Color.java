@@ -96,11 +96,11 @@ public class Color extends Tuple3 {
 	}
 
 	public Color add(Color c) {
-		return new Color(x + c.x, x + c.y, z + c.z);
+		return new Color(x + c.x, y + c.y, z + c.z);
 	}
 
 	public Color mul(Color c) {
-		return new Color(x * c.x, x * c.y, z * c.z);
+		return new Color(x * c.x, y * c.y, z * c.z);
 	}
 
 	public Color mul(float n) {
