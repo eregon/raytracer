@@ -1,11 +1,12 @@
 /.project
 /.classpath
 /.settings
-/nbproject
 
 /bin
 /build
 /dist
+/nb-build.xml
+/nbproject
 
 /image.png
 /output
