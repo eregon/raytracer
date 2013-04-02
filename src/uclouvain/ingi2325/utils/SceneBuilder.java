@@ -649,6 +649,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startScale(Vector3D scale) throws Exception {
+		transformations.push(Matrix4.scale(scale.inverse()).mul(transformations.peek()));
 	}
 
 	/*
@@ -658,6 +659,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endScale() throws Exception {
+		transformations.pop();
 	}
 
 }

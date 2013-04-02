@@ -51,6 +51,10 @@ public class Vector3D extends Tuple3 {
 		return new Vector3D(-x, -y, -z);
 	}
 
+	public Vector3D inverse() {
+		return new Vector3D(1f / x, 1f / y, 1f / z);
+	}
+
 	public Vector3D crossProduct(Vector3D b) {
 		return new Vector3D(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
 	}

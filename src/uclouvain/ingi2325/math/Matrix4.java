@@ -597,6 +597,13 @@ public class Matrix4 {
 		setColumn(columnIndex, vector.x, vector.y, vector.z, vector.w);
 	}
 
+	public final void setDiagonal(Vector4 v) {
+		m00 = v.x;
+		m11 = v.y;
+		m22 = v.z;
+		m33 = v.w;
+	}
+
 	/**
 	 * Sets this matrix to all zeros.
 	 */
@@ -696,8 +703,13 @@ public class Matrix4 {
 
 	public static Matrix4 translation(Vector3D t) {
 		Matrix4 m = Matrix4.identity();
-		Vector4 v = new Vector4(t, 1);
-		m.setColumn(3, v);
+		m.setColumn(3, new Vector4(t, 1));
+		return m;
+	}
+
+	public static Matrix4 scale(Vector3D s) {
+		Matrix4 m = Matrix4.identity();
+		m.setDiagonal(new Vector4(s, 1));
 		return m;
 	}
 
