@@ -641,7 +641,7 @@ public class Matrix4 {
 		m33 = 1.0F;
 	}
 
-	private static Matrix4 identity() {
+	public static Matrix4 identity() {
 		return new Matrix4(
 				1, 0, 0, 0,
 				0, 1, 0, 0,
