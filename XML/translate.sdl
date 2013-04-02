@@ -27,16 +27,16 @@
    <Materials>
       <DiffuseMaterial color="1 0 0" name="red" />
       <DiffuseMaterial color="1 1 0" name="yellow" />
-      <DiffuseMaterial color="0 0 0.5" name="blue" />
+      <DiffuseMaterial color="0 0 0.8" name="blue" />
    </Materials>
 
    <Scene camera="cam0" lights="light0" background="0.5 0.5 0.5">
       <Shape geometry="triangle1" material="yellow" />
-      <Scale scale="1.5 1.5 1.5">
-         <Translate vector="0 1 0">
+      <Translate vector="0 1.5 0">
+         <Scale scale="1.5 2 1.5">
             <Shape geometry="triSphere" material="blue" />
-         </Translate>
-      </Scale>
+         </Scale>
+      </Translate>
       <Translate vector="-3 0 0">
          <Translate vector="0 1.5 0">
             <Shape geometry="exactSphere" material="red" />
