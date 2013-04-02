@@ -659,7 +659,16 @@ public class Matrix4 {
 	public Matrix4 mul(Matrix4 m) {
 		if (m == Matrix4.IDENTITY)
 			return this;
-		return null;
+		Matrix4 r = new Matrix4();
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				float t = 0f;
+				for (int k = 0; k < 4; k++)
+					t += getElement(i, k) * m.getElement(k, j);
+				r.setElement(i, j, t);
+			}
+		}
+		return r;
 	}
 
 	public Point3D mul(Point3D p) {
