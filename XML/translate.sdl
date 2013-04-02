@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="0 0 10" direction="0 0 -1" up="0 1 0" fovy="60" name="cam0" />
+   </Cameras>
+
+   <Lights>
+      <PointLight position="10 10 10" intensity="1" color="1 1 1" name="light0" />
+   </Lights>
+
+   <Geometry>
+      <IndexedTriangleSet
+       coordinates="1 2.5 0, 1 3.5 0, -1 3.5 0"
+       normals="0 0 1, 0 0 1, 0 0 1"
+       textureCoordinates="0.0 0.0, 1.0 0.0, 0.0 1.0"
+       coordinateIndices="0, 1, 2"
+       normalIndices="0, 1, 2"
+       textureCoordinateIndices="0, 1, 2"
+       name="triangle1"
+      />
+      <FileGeometry filename="sphere.obj" name="triSphere" />
+      <Sphere radius="1.5" name="exactSphere"/>
+   </Geometry>
+
+   <Materials>
+      <DiffuseMaterial color="1 0 0" name="red" />
+      <DiffuseMaterial color="1 1 0" name="yellow" />
+      <DiffuseMaterial color="0 0 0.5" name="blue" />
+   </Materials>
+
+   <Scene camera="cam0" lights="light0" background="0.5 0.5 0.5">
+      <Shape geometry="triangle1" material="yellow" />
+      <Shape geometry="triSphere" material="blue" />
+      <Translate vector="-3 0 0">
+         <Shape geometry="exactSphere" material="red" />
+      </Translate>
+   </Scene>
+</Sdl>

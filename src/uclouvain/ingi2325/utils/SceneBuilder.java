@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.xml.sax.InputSource;
 
@@ -19,6 +20,7 @@ import raytracer.PointLight;
 import raytracer.Shape;
 import raytracer.Sphere;
 import raytracer.Triangle;
+import uclouvain.ingi2325.math.Matrix4;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
 
@@ -39,6 +41,14 @@ public class SceneBuilder implements ParserHandler {
 	Map<String, List<Geometry>> geometries = new HashMap<String, List<Geometry>>();
 	Map<String, Material> materials = new HashMap<String, Material>();
 	Map<String, Light> lights = new HashMap<String, Light>();
+
+	/** a stack of inverse transformations matrixes,
+	 * so they can directly be applied on ray origin and direction */
+	Stack<Matrix4> transformations = new Stack<Matrix4>();
+
+	public SceneBuilder() {
+		transformations.add(Matrix4.IDENTITY);
+	}
 
 	/**
 	 * Returns the build scene
@@ -574,7 +584,7 @@ public class SceneBuilder implements ParserHandler {
 		Material m = materials.get(materialName);
 		if (geoms != null && m != null) {
 			for (Geometry g : geoms) {
-				scene.objects.add(new Shape(g, m));
+				scene.objects.add(new Shape(g, m, transformations.peek()));
 			}
 		}
 	}
@@ -617,6 +627,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startTranslate(Vector3D vector) throws Exception {
+		transformations.push(Matrix4.translation(vector.opposite()).mul(transformations.peek()));
 	}
 
 	/*
@@ -626,6 +637,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endTranslate() throws Exception {
+		transformations.pop();
 	}
 
 	/*

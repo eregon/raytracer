@@ -1,5 +1,7 @@
 package uclouvain.ingi2325.math;
 
+import uclouvain.ingi2325.utils.Point3D;
+import uclouvain.ingi2325.utils.Vector3D;
 import uclouvain.ingi2325.utils.Vector4;
 
 /**
@@ -9,6 +11,7 @@ import uclouvain.ingi2325.utils.Vector4;
  * @author Julien Dupuis
  */
 public class Matrix4 {
+	public final static Matrix4 IDENTITY = Matrix4.identity();
 
 	/**
 	 * The first element of the first row.
@@ -637,4 +640,40 @@ public class Matrix4 {
 		m32 = 0.0F;
 		m33 = 1.0F;
 	}
+
+	private static Matrix4 identity() {
+		return new Matrix4(
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1);
+	}
+
+	public static Matrix4 translation(Vector3D t) {
+		Matrix4 m = Matrix4.identity();
+		Vector4 v = new Vector4(t, 1);
+		m.setColumn(3, v);
+		return m;
+	}
+
+	public Matrix4 mul(Matrix4 m) {
+		if (m == Matrix4.IDENTITY)
+			return this;
+		return null;
+	}
+
+	public Point3D mul(Point3D p) {
+		return new Point3D(
+				m00 * p.x + m01 * p.y + m02 * p.z + m03,
+				m10 * p.x + m11 * p.y + m12 * p.z + m13,
+				m20 * p.x + m21 * p.y + m22 * p.z + m23);
+	}
+
+	public Vector3D mul(Vector3D v) {
+		return new Vector3D(
+				m00 * v.x + m01 * v.y + m02 * v.z,
+				m10 * v.x + m11 * v.y + m12 * v.z,
+				m20 * v.x + m21 * v.y + m22 * v.z);
+	}
+
 }

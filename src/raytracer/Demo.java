@@ -26,7 +26,7 @@ public class Demo {
 	private RayTracer tracer;
 
 	public Demo() throws FileNotFoundException {
-		Scene scene = new SceneBuilder().loadScene("XML/example.sdl");
+		Scene scene = new SceneBuilder().loadScene("XML/translate.sdl");
 
 		panel = new PixelPanel(512, 512);
 		tracer = new RayTracer(scene, panel.image, new Runnable() {

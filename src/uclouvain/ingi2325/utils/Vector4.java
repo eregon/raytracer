@@ -1,7 +1,7 @@
 package uclouvain.ingi2325.utils;
 
-import uclouvain.ingi2325.exception.*;
-import uclouvain.ingi2325.math.*;
+import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.math.Tuple4;
 
 /**
  * Represents a vector of four float.
@@ -11,6 +11,14 @@ import uclouvain.ingi2325.math.*;
  * @author Sébastien Doeraene <sjrdoeraene@gmail.com>
  */
 public class Vector4 extends Tuple4 {
+
+	public Vector4() {
+		super();
+	}
+
+	public Vector4(Vector3D v, float w) {
+		super(v.x, v.y, v.z, w);
+	}
 
 	/**
 	 * Parse a Vector4 from a string

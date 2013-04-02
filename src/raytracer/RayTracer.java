@@ -77,7 +77,9 @@ public class RayTracer {
 		Shape closest = null;
 		Intersection inter = null;
 		for (Shape shape : scene.objects) {
-			Intersection i = shape.geometry.intersection(ray);
+			Ray r = new Ray(shape.transformation.mul(ray.origin));
+			r.direction = shape.transformation.mul(ray.direction);
+			Intersection i = shape.geometry.intersection(r);
 			if (i != null && i.distance > 0f && i.distance < min_dist) {
 				min_dist = i.distance;
 				inter = i;
