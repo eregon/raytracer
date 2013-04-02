@@ -42,7 +42,7 @@ public class SceneBuilder implements ParserHandler {
 	Map<String, Material> materials = new HashMap<String, Material>();
 	Map<String, Light> lights = new HashMap<String, Light>();
 
-	/** a stack of inverse transformations matrixes,
+	/** a stack of inverse transformations matrices,
 	 * so they can directly be applied on ray origin and direction */
 	Stack<Matrix4> transformations = new Stack<Matrix4>();
 
