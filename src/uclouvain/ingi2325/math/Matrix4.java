@@ -709,15 +709,15 @@ public class Matrix4 {
 				m03, m13, m23, m33);
 	}
 
-	public static Matrix4 translation(Vector3D t) {
+	public static Matrix4 translation(Vector3D translation) {
 		Matrix4 m = Matrix4.identity();
-		m.setColumn(3, new Vector4(t, 1));
+		m.setColumn(3, new Vector4(translation, 1));
 		return m;
 	}
 
-	public static Matrix4 scale(Vector3D s) {
+	public static Matrix4 scale(Vector3D scale) {
 		Matrix4 m = Matrix4.identity();
-		m.setDiagonal(new Vector4(s, 1));
+		m.setDiagonal(new Vector4(scale, 1));
 		return m;
 	}
 
