@@ -14,6 +14,12 @@ public class Sphere implements Geometry {
 	}
 
 	@Override
+	public Box boundingBox() {
+		Vector3D r = new Vector3D(radius, radius, radius);
+		return new Box(center.add(r.opposite()), center.add(r));
+	}
+
+	@Override
 	public Intersection intersection(Ray ray) {
 		Vector3D e_c = ray.origin.sub(center);
 		float A = ray.direction.dotProduct(ray.direction); // d*d, strictly positive
