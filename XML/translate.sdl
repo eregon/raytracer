@@ -21,7 +21,8 @@
        name="triangle1"
       />
       <FileGeometry filename="sphere.obj" name="triSphere" />
-      <Sphere radius="1.5" name="exactSphere"/>
+      <Sphere radius="1.5" name="exactSphere15"/>
+       <Sphere radius="1" name="exactSphere1"/>
    </Geometry>
 
    <Materials>
@@ -33,13 +34,15 @@
    <Scene camera="cam0" lights="light0" background="0.5 0.5 0.5">
       <Shape geometry="triangle1" material="yellow" />
       <Translate vector="0 1.5 0">
-         <Scale scale="1.5 2 1.5">
-            <Shape geometry="triSphere" material="blue" />
-         </Scale>
+         <Rotate axis="1 0 0" angle="90">
+            <Scale scale="1.5 2 1.5">
+               <Shape geometry="exactSphere1" material="blue" />
+            </Scale>
+         </Rotate>
       </Translate>
       <Translate vector="-3 0 0">
          <Translate vector="0 1.5 0">
-            <Shape geometry="exactSphere" material="red" />
+            <Shape geometry="exactSphere15" material="red" />
          </Translate>
       </Translate>
    </Scene>
