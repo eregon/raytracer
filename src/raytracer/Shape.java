@@ -15,4 +15,13 @@ public class Shape {
 		this.transformation = transformation;
 		transformation_t = transformation.transpose();
 	}
+
+	public Intersection intersection(Ray worldRay) {
+		Ray ray = new Ray(transformation.mul(worldRay.origin));
+		ray.direction = transformation.mul(worldRay.direction);
+		Intersection inter = geometry.intersection(ray);
+		if (inter != null)
+			inter.shape = this;
+		return inter;
+	}
 }

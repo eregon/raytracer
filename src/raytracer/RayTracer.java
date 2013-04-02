@@ -72,32 +72,26 @@ public class RayTracer {
 
 	}
 
-	private Pair<Shape, Intersection> findClosestShape(Ray ray) {
+	private Intersection findClosestIntersection(Ray ray) {
 		float min_dist = Float.MAX_VALUE;
-		Shape closest = null;
 		Intersection inter = null;
 		for (Shape shape : scene.objects) {
-			Ray r = new Ray(shape.transformation.mul(ray.origin));
-			r.direction = shape.transformation.mul(ray.direction);
-			Intersection i = shape.geometry.intersection(r);
+			Intersection i = shape.intersection(ray);
 			if (i != null && i.distance > 0f && i.distance < min_dist) {
 				min_dist = i.distance;
 				inter = i;
-				closest = shape;
 			}
 		}
-		return new Pair<Shape, Intersection>(closest, inter);
+		return inter;
 	}
 
 	private void renderPixel(int x, int y, Ray ray) {
-		Pair<Shape, Intersection> pair = findClosestShape(ray);
-		Shape closest = pair.left;
-		Intersection inter = pair.right;
+		Intersection inter = findClosestIntersection(ray);
 		Color color;
 
-		if (closest != null) {
+		if (inter != null) {
 			Point3D hit = inter.point;
-			Vector3D n = closest.transformation_t.mul(inter.normal);
+			Vector3D n = inter.normal();
 			color = Color.BLACK;
 
 			for (Light light : scene.lights) {
@@ -108,7 +102,7 @@ public class RayTracer {
 			}
 
 			// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
-			color = closest.material.color.mul(color).normalize();
+			color = inter.shape.material.color.mul(color).normalize();
 		} else {
 			color = scene.background;
 		}
