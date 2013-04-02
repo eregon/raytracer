@@ -649,13 +649,6 @@ public class Matrix4 {
 				0, 0, 0, 1);
 	}
 
-	public static Matrix4 translation(Vector3D t) {
-		Matrix4 m = Matrix4.identity();
-		Vector4 v = new Vector4(t, 1);
-		m.setColumn(3, v);
-		return m;
-	}
-
 	public Matrix4 mul(Matrix4 m) {
 		if (m == Matrix4.IDENTITY)
 			return this;
@@ -699,6 +692,13 @@ public class Matrix4 {
 				m00 * v.x + m01 * v.y + m02 * v.z,
 				m10 * v.x + m11 * v.y + m12 * v.z,
 				m20 * v.x + m21 * v.y + m22 * v.z);
+	}
+
+	public static Matrix4 translation(Vector3D t) {
+		Matrix4 m = Matrix4.identity();
+		Vector4 v = new Vector4(t, 1);
+		m.setColumn(3, v);
+		return m;
 	}
 
 }
