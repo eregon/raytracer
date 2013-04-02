@@ -1,5 +1,7 @@
 package raytracer;
 
+import java.lang.management.ManagementFactory;
+
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
 import uclouvain.ingi2325.utils.Point3D;
@@ -37,14 +39,18 @@ public class RayTracer {
 
 		final int nThreads = numberOfThreads();
 		Thread[] threads = new Thread[nThreads];
+		final double[] times = new double[nThreads];
+
 		for (int i = 0; i < nThreads; i++) {
+			final int offset = i;
 			final Ray ray = new Ray(scene.camera.position);
 			final Enumerator iter = new RadialEnumerator(
-					new CircleEnumerator(height, width), i, nThreads, height, width);
+					new CircleEnumerator(height, width), offset, nThreads, height, width);
 
 			Runnable task = new Runnable() {
 				@Override
 				public void run() {
+					long t0 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
 					for (int xy : iter) {
 						int x = xy % width, y = xy / width;
 						float a = x + 0.5f - width / 2f;
@@ -52,6 +58,8 @@ public class RayTracer {
 						ray.direction = w.mul(d).opposite().add(u.mul(a)).add(v.mul(b)); // −dW + aU + bV
 						renderPixel(x, y, ray);
 					}
+					long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
+					times[offset] = (t1 - t0) / 1e9;
 				}
 			};
 
@@ -68,7 +76,11 @@ public class RayTracer {
 			e.printStackTrace();
 		}
 		long t1 = System.currentTimeMillis();
-		System.out.println("Rendered in " + String.format("%.3f", (t1 - t0) / 1e3) + "s");
+		System.out.print("Rendered in " + String.format("%.3f", (t1 - t0) / 1e3) + "s real ");
+		double cpuTime = 0;
+		for (double t : times)
+			cpuTime += t;
+		System.out.println(String.format("%.3f", cpuTime) + "s total CPU");
 
 	}
 
