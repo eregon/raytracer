@@ -17,7 +17,7 @@ public class Sphere implements Geometry {
 	public Intersection intersection(Ray ray) {
 		Vector3D e_c = ray.origin.sub(center);
 		float A = ray.direction.dotProduct(ray.direction); // d*d, strictly positive
-		float B = ray.direction.mul(2).dotProduct(e_c); // 2 * d * (e - c)
+		float B = 2 * ray.direction.dotProduct(e_c); // 2 * d * (e - c)
 		float C = e_c.dotProduct(e_c) - radius * radius; // (e - c) * (e - c) - r * r
 
 		float discriminant = B * B - 4 * A * C;
