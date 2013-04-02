@@ -627,7 +627,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startTranslate(Vector3D vector) throws Exception {
-		transformations.push(Matrix4.translation(vector.opposite()).mul(transformations.peek()));
+		pushTransformation(Matrix4.translation(vector.opposite()));
 	}
 
 	/*
@@ -637,7 +637,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endTranslate() throws Exception {
-		transformations.pop();
+		popTransformation();
 	}
 
 	/*
@@ -649,7 +649,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startScale(Vector3D scale) throws Exception {
-		transformations.push(Matrix4.scale(scale.inverse()).mul(transformations.peek()));
+		pushTransformation(Matrix4.scale(scale.inverse()));
 	}
 
 	/*
@@ -659,6 +659,14 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endScale() throws Exception {
+		popTransformation();
+	}
+
+	private void pushTransformation(Matrix4 transformation) {
+		transformations.push(transformation.mul(transformations.peek()));
+	}
+
+	private void popTransformation() {
 		transformations.pop();
 	}
 
