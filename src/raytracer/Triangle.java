@@ -19,17 +19,10 @@ public class Triangle implements Geometry {
 
 	@Override
 	public Box boundingBox() {
-		return new Box(
-				new Point3D(min(_a.x, _b.x, _c.x), min(_a.y, _b.y, _c.y), min(_a.z, _b.z, _c.z)),
-				new Point3D(max(_a.x, _b.x, _c.x), max(_a.y, _b.y, _c.y), max(_a.z, _b.z, _c.z)));
-	}
-
-	private float min(float a, float b, float c) {
-		return Math.min(a, Math.min(b, c));
-	}
-
-	private float max(float a, float b, float c) {
-		return Math.max(a, Math.max(b, c));
+		Box box = new Box(_a);
+		box.update(_b);
+		box.update(_c);
+		return box;
 	}
 
 	@Override
