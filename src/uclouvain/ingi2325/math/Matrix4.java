@@ -701,6 +701,14 @@ public class Matrix4 {
 				m20 * v.x + m21 * v.y + m22 * v.z);
 	}
 
+	public Matrix4 transpose() {
+		return new Matrix4(
+				m00, m10, m20, m30,
+				m01, m11, m21, m31,
+				m02, m12, m22, m32,
+				m03, m13, m23, m33);
+	}
+
 	public static Matrix4 translation(Vector3D t) {
 		Matrix4 m = Matrix4.identity();
 		m.setColumn(3, new Vector4(t, 1));

@@ -97,7 +97,7 @@ public class RayTracer {
 
 		if (closest != null) {
 			Point3D hit = inter.point;
-			Vector3D n = inter.normal;
+			Vector3D n = closest.transformation_t.mul(inter.normal);
 			color = Color.BLACK;
 
 			for (Light light : scene.lights) {

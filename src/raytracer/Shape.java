@@ -7,11 +7,12 @@ public class Shape {
 	public Material material;
 	/** The inverse transformation matrix */
 	public Matrix4 transformation;
+	public Matrix4 transformation_t;
 
 	public Shape(Geometry geometry, Material material, Matrix4 transformation) {
 		this.geometry = geometry;
 		this.material = material;
 		this.transformation = transformation;
-
+		transformation_t = transformation.transpose();
 	}
 }
