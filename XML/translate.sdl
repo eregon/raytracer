@@ -21,8 +21,8 @@
        name="triangle1"
       />
       <FileGeometry filename="sphere.obj" name="triSphere" />
-      <Sphere radius="1.5" name="exactSphere15"/>
-       <Sphere radius="1" name="exactSphere1"/>
+      <Sphere radius="1.5" name="exactSphere15" />
+      <Sphere radius="1" name="exactSphere1" />
    </Geometry>
 
    <Materials>
