@@ -17,6 +17,7 @@ import raytracer.Geometry;
 import raytracer.Light;
 import raytracer.Material;
 import raytracer.PointLight;
+import raytracer.RayTracer;
 import raytracer.Shape;
 import raytracer.Sphere;
 import raytracer.Transformation;
@@ -591,10 +592,12 @@ public class SceneBuilder implements ParserHandler {
 		} else {
 			for (Geometry geometry : geoms) {
 				scene.objects.add(new Shape(geometry, material, transformation));
-				// Bounding box
-				for (Triangle bt : geometry.boundingBox(transformation).toTriangles()) {
-					scene.objects.add(new Shape(bt,
-							new Material(new Color(1, 0, 0)), new Transformation()));
+
+				if (RayTracer.TRACE_BOUNDING_BOXES) {
+					for (Triangle bt : geometry.boundingBox(transformation).toTriangles()) {
+						scene.objects.add(new Shape(bt,
+								new Material(new Color(1, 0, 0)), new Transformation()));
+					}
 				}
 			}
 		}
