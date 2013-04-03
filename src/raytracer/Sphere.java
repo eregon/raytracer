@@ -14,9 +14,10 @@ public class Sphere implements Geometry {
 	}
 
 	@Override
-	public Box boundingBox() {
+	public Box boundingBox(Transformation transformation) {
+		Point3D c = transformation.m.mul(center);
 		Vector3D r = new Vector3D(radius, radius, radius);
-		return new Box(center.add(r.opposite()), center.add(r));
+		return new Box(c.add(r.opposite()), c.add(r));
 	}
 
 	@Override
