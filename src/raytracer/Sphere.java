@@ -1,5 +1,6 @@
 package raytracer;
 
+import uclouvain.ingi2325.math.Matrix4;
 import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;
 
@@ -14,9 +15,28 @@ public class Sphere implements Geometry {
 
 	@Override
 	public Box boundingBox(Transformation transformation) {
-		Vector3D r = new Vector3D(radius, radius, radius);
-		Point3D c = transformation.m.mul(Point3D.ORIGIN);
-		return new Box(c.add(r.opposite()), c.add(r));
+		// See http://stackoverflow.com/questions/4368961/calculating-an-aabb-for-a-transformed-sphere
+		Matrix4 s = new Matrix4(
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, -1);
+
+		if (radius != 1.0f)
+			transformation = transformation.scale(new Vector3D(radius, radius, radius));
+
+		Matrix4 r = transformation.m.mul(s.inverse()).mul(transformation.m.transpose());
+		float r03 = r.m03, r13 = r.m13, r23 = r.m23, r33 = r.m33, r00 = r.m00, r11 = r.m11, r22 = r.m22;
+
+		return new Box(
+				new Point3D(
+						(r03 - (float) Math.sqrt(r03 * r03 - r33 * r00)) / r33,
+						(r13 - (float) Math.sqrt(r13 * r13 - r33 * r11)) / r33,
+						(r23 - (float) Math.sqrt(r23 * r23 - r33 * r22)) / r33),
+				new Point3D(
+						(r03 + (float) Math.sqrt(r03 * r03 - r33 * r00)) / r33,
+						(r13 + (float) Math.sqrt(r13 * r13 - r33 * r11)) / r33,
+						(r23 + (float) Math.sqrt(r23 * r23 - r33 * r22)) / r33));
 	}
 
 	@Override
