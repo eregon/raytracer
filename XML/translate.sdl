@@ -12,7 +12,7 @@
 
    <Geometry>
       <IndexedTriangleSet
-       coordinates="1 2.5 0, 1 3.5 0, -1 3.5 0"
+       coordinates="1 2.5 0, 1 3.5 0, -1 3.5 1"
        normals="0 0 1, 0 0 1, 0 0 1"
        textureCoordinates="0.0 0.0, 1.0 0.0, 0.0 1.0"
        coordinateIndices="0, 1, 2"
@@ -32,15 +32,17 @@
    </Materials>
 
    <Scene camera="cam0" lights="light0" background="0.5 0.5 0.5">
-      <Shape geometry="triangle1" material="yellow" />
-      <Translate vector="0 1.5 0">
-         <Rotate axis="1 0 0" angle="90">
+      <Rotate axis="0 0 1" angle="15">
+         <Shape geometry="triangle1" material="yellow" />
+      </Rotate>
+      <Translate vector="1 0 0">
+         <Rotate axis="0 0 1" angle="30">
             <Scale scale="1.5 2 1.5">
                <Shape geometry="exactSphere1" material="blue" />
             </Scale>
          </Rotate>
       </Translate>
-      <Translate vector="-3 0 0">
+      <Translate vector="-3 -1.5 0">
          <Translate vector="0 1.5 0">
             <Shape geometry="exactSphere15" material="red" />
          </Translate>

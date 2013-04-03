@@ -7,6 +7,13 @@ public class Triangle implements Geometry {
 	Point3D _a, _b, _c;
 	Vector3D na, nb, nc;
 
+	public Triangle(Point3D a, Point3D b, Point3D c, Vector3D normal) {
+		_a = a;
+		_b = b;
+		_c = c;
+		na = nb = nc = normal;
+	}
+
 	public Triangle(Point3D[] vertices, Vector3D[] normals) {
 		super();
 		_a = vertices[0];

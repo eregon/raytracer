@@ -12,6 +12,14 @@ import uclouvain.ingi2325.math.Tuple3;
  */
 public class Vector3D extends Tuple3 {
 
+	public final static Vector3D
+			UP = new Vector3D(0, 0, 1),
+			DOWN = new Vector3D(0, 0, 1),
+			RIGHT = new Vector3D(0, 1, 0),
+			LEFT = new Vector3D(0, -1, 0),
+			NEAR = new Vector3D(1, 0, 0),
+			FAR = new Vector3D(-1, 0, 0);
+
 	public Vector3D() {
 	}
 

@@ -591,6 +591,11 @@ public class SceneBuilder implements ParserHandler {
 		} else {
 			for (Geometry geometry : geoms) {
 				scene.objects.add(new Shape(geometry, material, transformation));
+				// Bounding box
+				for (Triangle bt : geometry.boundingBox(transformation).toTriangles()) {
+					scene.objects.add(new Shape(bt,
+							new Material(new Color(1, 0, 0)), new Transformation()));
+				}
 			}
 		}
 	}
