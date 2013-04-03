@@ -656,6 +656,14 @@ public class Matrix4 {
 				0, 0, 0, 1);
 	}
 
+	public Matrix4 mul(float f) {
+		return new Matrix4(
+				m00 * f, m01 * f, m02 * f, m03 * f,
+				m10 * f, m11 * f, m12 * f, m13 * f,
+				m20 * f, m21 * f, m22 * f, m23 * f,
+				m30 * f, m31 * f, m32 * f, m33 * f);
+	}
+
 	public Matrix4 mul(Matrix4 m) {
 		if (m == Matrix4.IDENTITY)
 			return this;
@@ -699,6 +707,54 @@ public class Matrix4 {
 				m00 * v.x + m01 * v.y + m02 * v.z,
 				m10 * v.x + m11 * v.y + m12 * v.z,
 				m20 * v.x + m21 * v.y + m22 * v.z);
+	}
+
+	public Matrix4 inverse() {
+		// From http://stackoverflow.com/questions/1148309/inverting-a-4x4-matrix
+		Matrix4 inv = new Matrix4();
+
+		inv.m00 = m11 * m22 * m33 - m11 * m23 * m32 - m21 * m12 * m33
+				+ m21 * m13 * m32 + m31 * m12 * m23 - m31 * m13 * m22;
+		inv.m10 = -m10 * m22 * m33 + m10 * m23 * m32 + m20 * m12 * m33
+				- m20 * m13 * m32 - m30 * m12 * m23 + m30 * m13 * m22;
+		inv.m20 = m10 * m21 * m33 - m10 * m23 * m31 - m20 * m11 * m33
+				+ m20 * m13 * m31 + m30 * m11 * m23 - m30 * m13 * m21;
+		inv.m30 = -m10 * m21 * m32 + m10 * m22 * m31 + m20 * m11 * m32
+				- m20 * m12 * m31 - m30 * m11 * m22 + m30 * m12 * m21;
+
+		float det = m00 * inv.m00 + m01 * inv.m10 + m02 * inv.m20 + m03 * inv.m30;
+		if (det == 0f)
+			throw new Error("Non invertible matrix!");
+		det = 1.0f / det;
+
+		inv.m01 = -m01 * m22 * m33 + m01 * m23 * m32 + m21 * m02 * m33
+				- m21 * m03 * m32 - m31 * m02 * m23 + m31 * m03 * m22;
+		inv.m11 = m00 * m22 * m33 - m00 * m23 * m32 - m20 * m02 * m33
+				+ m20 * m03 * m32 + m30 * m02 * m23 - m30 * m03 * m22;
+		inv.m21 = -m00 * m21 * m33 + m00 * m23 * m31 + m20 * m01 * m33
+				- m20 * m03 * m31 - m30 * m01 * m23 + m30 * m03 * m21;
+		inv.m31 = m00 * m21 * m32 - m00 * m22 * m31 - m20 * m01 * m32
+				+ m20 * m02 * m31 + m30 * m01 * m22 - m30 * m02 * m21;
+
+		inv.m02 = m01 * m12 * m33 - m01 * m13 * m32 - m11 * m02 * m33
+				+ m11 * m03 * m32 + m31 * m02 * m13 - m31 * m03 * m12;
+		inv.m12 = -m00 * m12 * m33 + m00 * m13 * m32 + m10 * m02 * m33
+				- m10 * m03 * m32 - m30 * m02 * m13 + m30 * m03 * m12;
+		inv.m22 = m00 * m11 * m33 - m00 * m13 * m31 - m10 * m01 * m33
+				+ m10 * m03 * m31 + m30 * m01 * m13 - m30 * m03 * m11;
+		inv.m32 = -m00 * m11 * m32 + m00 * m12 * m31 + m10 * m01 * m32
+				- m10 * m02 * m31 - m30 * m01 * m12 + m30 * m02 * m11;
+
+		inv.m03 = -m01 * m12 * m23 + m01 * m13 * m22 + m11 * m02 * m23
+				- m11 * m03 * m22 - m21 * m02 * m13 + m21 * m03 * m12;
+		inv.m13 = m00 * m12 * m23 - m00 * m13 * m22 - m10 * m02 * m23
+				+ m10 * m03 * m22 + m20 * m02 * m13 - m20 * m03 * m12;
+		inv.m23 = -m00 * m11 * m23 + m00 * m13 * m21 + m10 * m01 * m23
+				- m10 * m03 * m21 - m20 * m01 * m13 + m20 * m03 * m11;
+		inv.m33 = m00 * m11 * m22 - m00 * m12 * m21 - m10 * m01 * m22
+				+ m10 * m02 * m21 + m20 * m01 * m12 - m20 * m02 * m11;
+
+		return inv.mul(det);
 	}
 
 	public Matrix4 transpose() {
