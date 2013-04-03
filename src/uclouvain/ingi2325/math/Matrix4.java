@@ -708,30 +708,4 @@ public class Matrix4 {
 				m02, m12, m22, m32,
 				m03, m13, m23, m33);
 	}
-
-	public static Matrix4 translation(Vector3D translation) {
-		Matrix4 m = Matrix4.identity();
-		m.setColumn(3, new Vector4(translation, 1));
-		return m;
-	}
-
-	public static Matrix4 scale(Vector3D scale) {
-		Matrix4 m = Matrix4.identity();
-		m.setDiagonal(new Vector4(scale, 1));
-		return m;
-	}
-
-	public static Matrix4 rotate(Vector3D axis, float angle) {
-		// See http://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_and_angle
-		float x = axis.x, y = axis.y, z = axis.z;
-		float s = (float) Math.sin(angle);
-		float c = (float) Math.cos(angle);
-		float d = 1 - c;
-
-		return new Matrix4(
-				c + x * x * d, x * y * d - z * s, x * z * d + y * s, 0,
-				y * x * d + z * s, c + y * y * d, y * z * d - x * s, 0,
-				z * x * d - y * s, z * y * d + x * s, c + z * z * d, 0,
-				0, 0, 0, 1);
-	}
 }

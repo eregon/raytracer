@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import org.xml.sax.InputSource;
 
@@ -20,9 +19,9 @@ import raytracer.Material;
 import raytracer.PointLight;
 import raytracer.Shape;
 import raytracer.Sphere;
+import raytracer.Transformation;
 import raytracer.Triangle;
 import uclouvain.ingi2325.exception.ParseException;
-import uclouvain.ingi2325.math.Matrix4;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
 
@@ -44,13 +43,7 @@ public class SceneBuilder implements ParserHandler {
 	Map<String, Material> materials = new HashMap<String, Material>();
 	Map<String, Light> lights = new HashMap<String, Light>();
 
-	/** a stack of inverse transformations matrices,
-	 * so they can directly be applied on ray origin and direction */
-	Stack<Matrix4> transformations = new Stack<Matrix4>();
-
-	public SceneBuilder() {
-		transformations.add(Matrix4.IDENTITY);
-	}
+	Transformation transformation = new Transformation();
 
 	/**
 	 * Returns the build scene
@@ -597,7 +590,7 @@ public class SceneBuilder implements ParserHandler {
 			System.err.println("Could not find material named " + materialName);
 		} else {
 			for (Geometry geometry : geoms) {
-				scene.objects.add(new Shape(geometry, material, transformations.peek()));
+				scene.objects.add(new Shape(geometry, material, transformation));
 			}
 		}
 	}
@@ -620,7 +613,8 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startRotate(Vector3D axis, float angle) throws Exception {
-		pushTransformation(Matrix4.rotate(axis, (float) (-angle / 180 * Math.PI)));
+		angle = (float) (angle / 180 * Math.PI);
+		transformation = transformation.rotate(axis, angle);
 	}
 
 	/*
@@ -630,7 +624,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endRotate() throws Exception {
-		popTransformation();
+		transformation = transformation.parent;
 	}
 
 	/*
@@ -642,7 +636,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startTranslate(Vector3D vector) throws Exception {
-		pushTransformation(Matrix4.translation(vector.opposite()));
+		transformation = transformation.translate(vector);
 	}
 
 	/*
@@ -652,7 +646,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endTranslate() throws Exception {
-		popTransformation();
+		transformation = transformation.parent;
 	}
 
 	/*
@@ -664,7 +658,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startScale(Vector3D scale) throws Exception {
-		pushTransformation(Matrix4.scale(scale.inverse()));
+		transformation = transformation.scale(scale);
 	}
 
 	/*
@@ -674,15 +668,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endScale() throws Exception {
-		popTransformation();
-	}
-
-	private void pushTransformation(Matrix4 transformation) {
-		transformations.push(transformation.mul(transformations.peek()));
-	}
-
-	private void popTransformation() {
-		transformations.pop();
+		transformation = transformation.parent;
 	}
 
 }
