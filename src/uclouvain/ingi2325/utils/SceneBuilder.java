@@ -607,7 +607,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startRotate(Vector3D axis, float angle) throws Exception {
-		pushTransformation(Matrix4.rotate(axis, (float) (angle / 180 * Math.PI)));
+		pushTransformation(Matrix4.rotate(axis, (float) (-angle / 180 * Math.PI)));
 	}
 
 	/*
