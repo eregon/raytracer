@@ -12,6 +12,8 @@ import uclouvain.ingi2325.math.Tuple3;
  */
 public class Point3D extends Tuple3 {
 
+	public static final Point3D ORIGIN = new Point3D(0, 0, 0);
+
 	public Point3D() {
 		super();
 	}
@@ -34,6 +36,10 @@ public class Point3D extends Tuple3 {
 	 */
 	public static Point3D valueOf(String string) throws ParseException {
 		return valueOf(string, new Point3D());
+	}
+
+	public Vector3D toVector() {
+		return new Vector3D(x, y, z);
 	}
 
 	public Point3D add(Vector3D p) {
