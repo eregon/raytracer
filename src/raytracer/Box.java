@@ -11,8 +11,8 @@ public class Box {
 	}
 
 	public Box(Point3D start) {
-		min = start;
-		max = start;
+		min = start.clone();
+		max = start.clone();
 	}
 
 	public void update(Point3D p) {
