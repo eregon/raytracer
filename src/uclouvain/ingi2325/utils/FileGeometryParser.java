@@ -12,6 +12,7 @@ import java.util.zip.GZIPInputStream;
 
 import raytracer.Geometry;
 import raytracer.Triangle;
+import uclouvain.ingi2325.exception.ParseException;
 
 public class FileGeometryParser {
 	BufferedReader io;
@@ -31,7 +32,7 @@ public class FileGeometryParser {
 		_normals.add(null);
 	}
 
-	public List<Geometry> parse() throws Exception {
+	public List<Geometry> parse() throws IOException, ParseException {
 		List<Geometry> geoms = new ArrayList<Geometry>();
 
 		while ((line = io.readLine()) != null) {

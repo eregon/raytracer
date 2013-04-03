@@ -3,6 +3,7 @@ package uclouvain.ingi2325.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import raytracer.PointLight;
 import raytracer.Shape;
 import raytracer.Sphere;
 import raytracer.Triangle;
+import uclouvain.ingi2325.exception.ParseException;
 import uclouvain.ingi2325.math.Matrix4;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
@@ -411,10 +413,17 @@ public class SceneBuilder implements ParserHandler {
 	 * , java.lang.String)
 	 */
 	@Override
-	public void startFileGeometry(String filename, String name)
-			throws Exception {
+	public void startFileGeometry(String filename, String name) {
 		File file = new File(path, filename);
-		geometries.put(name, new FileGeometryParser(file).parse());
+		try {
+			geometries.put(name, new FileGeometryParser(file).parse());
+		} catch (IOException e) {
+			System.err.println("Could not load " + file);
+			System.err.println("  " + e);
+		} catch (ParseException e) {
+			System.err.println("Could not parse " + file);
+			System.err.println("  " + e);
+		}
 	}
 
 	/*
@@ -581,10 +590,14 @@ public class SceneBuilder implements ParserHandler {
 	public void startShape(String geometryName, String materialName,
 			String textureName) throws Exception {
 		List<Geometry> geoms = geometries.get(geometryName);
-		Material m = materials.get(materialName);
-		if (geoms != null && m != null) {
-			for (Geometry g : geoms) {
-				scene.objects.add(new Shape(g, m, transformations.peek()));
+		Material material = materials.get(materialName);
+		if (geoms == null) {
+			System.err.println("Could not find geometry named " + geometryName);
+		} else if (material == null) {
+			System.err.println("Could not find material named " + materialName);
+		} else {
+			for (Geometry geometry : geoms) {
+				scene.objects.add(new Shape(geometry, material, transformations.peek()));
 			}
 		}
 	}
