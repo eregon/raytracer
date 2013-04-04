@@ -10,9 +10,15 @@ import uclouvain.ingi2325.utils.Vector3D;
 public class Box {
 	public final Point3D min, max;
 
-	public Box(Point3D min, Point3D max) {
-		this.min = min;
-		this.max = max;
+	/** Create a Box from a min and max point, given in any order */
+	public Box(Point3D a, Point3D b) {
+		if (a.x <= b.x) {
+			min = a;
+			max = b;
+		} else {
+			min = b;
+			max = a;
+		}
 	}
 
 	public Box(Point3D start) {
