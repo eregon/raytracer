@@ -54,15 +54,15 @@ public class Sphere implements Geometry {
 				// A > 0, so -B - sqrt(...) is always smaller
 				float sqrt = (float) Math.sqrt(discriminant);
 				// We want t positive, so (- B +- sqrt) positive
-				if (-B >= sqrt) { // -B - sqrt >= 0
+				if (-B > sqrt) { // -B - sqrt > 0
 					t = (-B - sqrt) / (2 * A);
-				} else if (sqrt >= B) { // -B + sqrt >= 0
+				} else if (sqrt > B) { // -B + sqrt > 0
 					t = (-B + sqrt) / (2 * A);
 				} else
 					return null;
 			} else {
 				t = -B / (2 * A);
-				if (t < 0)
+				if (t <= 0)
 					return null;
 			}
 
