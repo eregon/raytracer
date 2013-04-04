@@ -4,11 +4,13 @@ public class Shape {
 	public Geometry geometry;
 	public Material material;
 	public Transformation transformation;
+	public Box boundingBox;
 
 	public Shape(Geometry geometry, Material material, Transformation transformation) {
 		this.geometry = geometry;
 		this.material = material;
 		this.transformation = transformation;
+		boundingBox = geometry.computeBoundingBox(transformation);
 	}
 
 	public Intersection intersection(Ray worldRay) {

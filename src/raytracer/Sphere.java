@@ -14,7 +14,7 @@ public class Sphere implements Geometry {
 	}
 
 	@Override
-	public Box boundingBox(Transformation transformation) {
+	public Box computeBoundingBox(Transformation transformation) {
 		// See http://stackoverflow.com/questions/4368961/calculating-an-aabb-for-a-transformed-sphere
 		Matrix4 s = new Matrix4(
 				1, 0, 0, 0,

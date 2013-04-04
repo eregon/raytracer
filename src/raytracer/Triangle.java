@@ -25,7 +25,7 @@ public class Triangle implements Geometry {
 	}
 
 	@Override
-	public Box boundingBox(Transformation transformation) {
+	public Box computeBoundingBox(Transformation transformation) {
 		Box box = new Box(transformation.m.mul(_a));
 		box.update(transformation.m.mul(_b));
 		box.update(transformation.m.mul(_c));
