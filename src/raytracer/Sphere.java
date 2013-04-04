@@ -49,13 +49,21 @@ public class Sphere implements Geometry {
 		float discriminant = B * B - 4 * A * C;
 
 		if (discriminant >= 0) {
-			Intersection inter = new Intersection();
-
-			if (discriminant > 0)
+			float t;
+			if (discriminant > 0) {
 				// A > 0, so -B - sqrt(...) is always smaller
-				inter.distance = (float) (-B - Math.sqrt(discriminant)) / (2 * A);
-			else
-				inter.distance = -B / (2 * A);
+				float sqrt = (float) Math.sqrt(discriminant);
+				t = (-B - sqrt) / (2 * A);
+				if (t < 0) // try other side, if we are inside the sphere
+					t += sqrt / A; // t = (-B + sqrt) / (2 * A);
+			} else
+				t = -B / (2 * A);
+
+			if (t < 0)
+				return null;
+
+			Intersection inter = new Intersection();
+			inter.distance = t;
 
 			inter.point = ray.origin.add(ray.direction.mul(inter.distance));
 			inter.normal = inter.point.toVector().normalized();

@@ -26,6 +26,7 @@
    </Geometry>
 
    <Materials>
+      <DiffuseMaterial color="1 1 1" name="white" />
       <DiffuseMaterial color="1 0 0" name="red" />
       <DiffuseMaterial color="1 1 0" name="yellow" />
       <DiffuseMaterial color="0 0 0.8" name="blue" />
@@ -47,5 +48,8 @@
             <Shape geometry="exactSphere15" material="red" />
          </Translate>
       </Translate>
+      <Scale scale="12 12 12">
+         <Shape geometry="exactSphere1" material="white" />
+      </Scale>
    </Scene>
 </Sdl>
