@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.xml.sax.InputSource;
 
+import raytracer.Box;
 import raytracer.Camera;
 import raytracer.Geometry;
 import raytracer.Light;
@@ -45,6 +46,7 @@ public class SceneBuilder implements ParserHandler {
 	Map<String, Light> lights = new HashMap<String, Light>();
 
 	Transformation transformation = new Transformation();
+	Box globalBox = new Box();
 
 	/**
 	 * Returns the build scene
@@ -591,10 +593,13 @@ public class SceneBuilder implements ParserHandler {
 			System.err.println("Could not find material named " + materialName);
 		} else {
 			for (Geometry geometry : geoms) {
-				scene.objects.add(new Shape(geometry, material, transformation));
+				Shape shape = new Shape(geometry, material, transformation);
+				scene.objects.add(shape);
+
+				globalBox.include(shape.boundingBox);
 
 				if (RayTracer.TRACE_BOUNDING_BOXES) {
-					for (Triangle bt : geometry.boundingBox(transformation).toTriangles()) {
+					for (Triangle bt : shape.boundingBox.toTriangles()) {
 						scene.objects.add(new Shape(bt,
 								new Material(new Color(1, 0, 0)), new Transformation()));
 					}

@@ -10,6 +10,11 @@ import uclouvain.ingi2325.utils.Vector3D;
 public class Box {
 	public final Point3D min, max;
 
+	public Box() {
+		min = new Point3D(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
+		max = new Point3D(Float.MIN_VALUE, Float.MIN_VALUE, Float.MIN_VALUE);
+	}
+
 	/** Create a Box from a min and max point, given in any order */
 	public Box(Point3D a, Point3D b) {
 		if (a.x <= b.x) {
@@ -41,6 +46,12 @@ public class Box {
 			min.z = p.z;
 		else if (p.z > max.z)
 			max.z = p.z;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + min.x + ", " + max.x + "] X [" + min.y + ", "
+				+ max.y + "] X [" + min.z + ", " + max.z + "]";
 	}
 
 	public List<Triangle> toTriangles() {
@@ -77,5 +88,10 @@ public class Box {
 			Point3D p1, Point3D p2, Point3D p3, Point3D p4) {
 		t.add(new Triangle(p1, p2, p3, normal));
 		t.add(new Triangle(p3, p4, p1, normal));
+	}
+
+	public void include(Box box) {
+		update(box.min);
+		update(box.max);
 	}
 }
