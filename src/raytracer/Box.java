@@ -10,6 +10,7 @@ import uclouvain.ingi2325.utils.Vector3D;
 public class Box {
 	public final Point3D min, max;
 
+	/** Use this constructor with include(Box) to have a box including other boxes */
 	public Box() {
 		min = new Point3D(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
 		max = new Point3D(Float.MIN_VALUE, Float.MIN_VALUE, Float.MIN_VALUE);
@@ -26,6 +27,7 @@ public class Box {
 		}
 	}
 
+	/** Use this with update(Point3D) for incremental construction of the box */
 	public Box(Point3D start) {
 		min = start.clone();
 		max = start.clone();
