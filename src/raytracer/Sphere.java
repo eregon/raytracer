@@ -53,14 +53,18 @@ public class Sphere implements Geometry {
 			if (discriminant > 0) {
 				// A > 0, so -B - sqrt(...) is always smaller
 				float sqrt = (float) Math.sqrt(discriminant);
-				t = (-B - sqrt) / (2 * A);
-				if (t < 0) // try other side, if we are inside the sphere
-					t += sqrt / A; // t = (-B + sqrt) / (2 * A);
-			} else
+				// We want t positive, so (- B +- sqrt) positive
+				if (-B >= sqrt) { // -B - sqrt >= 0
+					t = (-B - sqrt) / (2 * A);
+				} else if (sqrt >= B) { // -B + sqrt >= 0
+					t = (-B + sqrt) / (2 * A);
+				} else
+					return null;
+			} else {
 				t = -B / (2 * A);
-
-			if (t < 0)
-				return null;
+				if (t < 0)
+					return null;
+			}
 
 			Intersection inter = new Intersection();
 			inter.distance = t;
