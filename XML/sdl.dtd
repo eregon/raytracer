@@ -42,7 +42,7 @@
 	name						ID				#REQUIRED
 >
 
-<!ELEMENT Geometry ((Sphere|Cylinder|Cone|Torus|Teapot|IndexedTriangleSet|FileGeometry)+)>
+<!ELEMENT Geometry ((Sphere|Cylinder|Cone|Cube|Torus|Teapot|IndexedTriangleSet|FileGeometry)+)>
 <!ATTLIST Geometry>
 
 <!ELEMENT Sphere EMPTY>
@@ -64,6 +64,12 @@
 	radius						CDATA			#REQUIRED
 	height						CDATA			#REQUIRED
 	capped						CDATA			"true"
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT Cube EMPTY>
+<!ATTLIST Cube
+	size						CDATA			#REQUIRED
 	name						ID				#REQUIRED
 >
 

@@ -27,6 +27,10 @@ public class Vector3D extends Tuple3 {
 		super(x, y, z);
 	}
 
+	public Vector3D(float v) {
+		super(v, v, v);
+	}
+
 	/**
 	 * Parse a Vector3D from a string
 	 * @param string   String representation

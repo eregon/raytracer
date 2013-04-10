@@ -327,6 +327,16 @@ public class SceneBuilder implements ParserHandler {
 	public void endCone() throws Exception {
 	}
 
+	@Override
+	public void startCube(float size, String name) throws Exception {
+		Geometry cube = new Cube(size);
+		geometries.put(name, Arrays.asList(cube));
+	}
+
+	@Override
+	public void endCube() throws Exception {
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

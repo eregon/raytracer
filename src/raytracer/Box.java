@@ -7,8 +7,8 @@ public class Box implements Surface {
 
 	/** Use this constructor with include(Box) to have a box including other boxes */
 	public Box() {
-		min = new Point3D(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
-		max = new Point3D(Float.MIN_VALUE, Float.MIN_VALUE, Float.MIN_VALUE);
+		min = new Point3D(Float.MAX_VALUE);
+		max = new Point3D(Float.MIN_VALUE);
 	}
 
 	/** Create a Box from a min and max point, given in any order */

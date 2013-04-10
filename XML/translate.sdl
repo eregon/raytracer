@@ -23,6 +23,7 @@
       <FileGeometry filename="sphere.obj" name="triSphere" />
       <Sphere radius="1.5" name="exactSphere15" />
       <Sphere radius="1" name="exactSphere1" />
+      <Cube size="2" name="cube" />
    </Geometry>
 
    <Materials>
@@ -51,5 +52,10 @@
       <Scale scale="12 12 12">
          <Shape geometry="exactSphere1" material="white" />
       </Scale>
+      <Rotate axis="1 1 0" angle="35">
+         <Translate vector="-1 -3.5 0">
+            <Shape geometry="cube" material="yellow" />
+         </Translate>
+      </Rotate>
    </Scene>
 </Sdl>

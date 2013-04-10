@@ -22,6 +22,10 @@ public class Point3D extends Tuple3 {
 		super(x, y, z);
 	}
 
+	public Point3D(float v) {
+		super(v, v, v);
+	}
+
 	@Override
 	public Point3D clone() {
 		return new Point3D(x, y, z);

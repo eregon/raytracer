@@ -16,6 +16,10 @@ public class Cube extends Box implements Geometry {
 		}
 	}
 
+	public Cube(float size) {
+		super(new Point3D(-size / 2), new Point3D(size / 2));
+	}
+
 	public Cube(Box box) {
 		super(box.min, box.max);
 	}

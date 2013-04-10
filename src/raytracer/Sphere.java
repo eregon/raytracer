@@ -23,7 +23,7 @@ public class Sphere implements Geometry {
 				0, 0, 0, -1);
 
 		if (radius != 1.0f)
-			transformation = transformation.scale(new Vector3D(radius, radius, radius));
+			transformation = transformation.scale(new Vector3D(radius));
 
 		Matrix4 r = transformation.m.mul(s.inverse()).mul(transformation.m.transpose());
 		float r03 = r.m03, r13 = r.m13, r23 = r.m23, r33 = r.m33, r00 = r.m00, r11 = r.m11, r22 = r.m22;

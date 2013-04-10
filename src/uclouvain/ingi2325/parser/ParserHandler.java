@@ -74,7 +74,7 @@ public interface ParserHandler {
 
 	public void endSpotLight() throws Exception;
 
-	@Contains(value = {"Sphere", "Cylinder", "Cone", "Torus", "Teapot",
+	@Contains(value = {"Sphere", "Cylinder", "Cone", "Cube", "Torus", "Teapot",
 			"IndexedTriangleSet", "FileGeometry"},
 			many = OneToMany)
 	public void startGeometry() throws Exception;
@@ -97,6 +97,11 @@ public interface ParserHandler {
 			@Optional("true") boolean capped, String name) throws Exception;
 
 	public void endCone() throws Exception;
+
+	@Attributes({"size", "name"})
+	public void startCube(float size, String name) throws Exception;
+
+	public void endCube() throws Exception;
 
 	@Attributes({"innerRadius", "outerRadius", "name"})
 	public void startTorus(float innerRadius, float outerRadius, String name)
