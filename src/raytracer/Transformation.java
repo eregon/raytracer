@@ -45,6 +45,7 @@ public class Transformation {
 	}
 
 	public Transformation rotate(Vector3D axis, float angle) {
+		axis.normalized();
 		return transform(rotation(axis, angle), rotation(axis, -angle));
 	}
 
