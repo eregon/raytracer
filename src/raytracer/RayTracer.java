@@ -9,7 +9,7 @@ import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
 
 public class RayTracer {
-	public final static boolean TRACE_BOUNDING_BOXES = false;
+	public final static boolean TRACE_BOUNDING_BOXES = !false;
 
 	Scene scene;
 	Image image;

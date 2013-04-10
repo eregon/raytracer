@@ -6,6 +6,8 @@ import uclouvain.ingi2325.utils.Vector4;
 
 public class Transformation {
 
+	public static final Transformation DEFAULT = new Transformation();
+
 	public Transformation parent;
 
 	/** The transformation matrix */
@@ -15,7 +17,7 @@ public class Transformation {
 	/** The transposed inverse transformation matrix */
 	public Matrix4 m_1t;
 
-	public Transformation() {
+	private Transformation() {
 		parent = null;
 		m = Matrix4.IDENTITY;
 		m_1 = m;

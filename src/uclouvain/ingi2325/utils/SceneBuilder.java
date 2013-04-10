@@ -14,6 +14,7 @@ import org.xml.sax.InputSource;
 
 import raytracer.Box;
 import raytracer.Camera;
+import raytracer.Cube;
 import raytracer.Geometry;
 import raytracer.Light;
 import raytracer.Material;
@@ -45,7 +46,7 @@ public class SceneBuilder implements ParserHandler {
 	Map<String, Material> materials = new HashMap<String, Material>();
 	Map<String, Light> lights = new HashMap<String, Light>();
 
-	Transformation transformation = new Transformation();
+	Transformation transformation = Transformation.DEFAULT;
 	Box globalBox = new Box();
 
 	/**
@@ -599,10 +600,8 @@ public class SceneBuilder implements ParserHandler {
 				globalBox.include(shape.boundingBox);
 
 				if (RayTracer.TRACE_BOUNDING_BOXES) {
-					for (Triangle bt : shape.boundingBox.toTriangles()) {
-						scene.objects.add(new Shape(bt,
-								new Material(new Color(1, 0, 0)), new Transformation()));
-					}
+					scene.objects.add(new Shape(new Cube(shape.boundingBox),
+							new Material(new Color(1, 0, 0)), Transformation.DEFAULT));
 				}
 			}
 		}
