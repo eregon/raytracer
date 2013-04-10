@@ -15,7 +15,7 @@ public class Shape {
 
 	public Intersection intersection(Ray worldRay) {
 		Ray ray = new Ray(transformation.m_1.mul(worldRay.origin));
-		ray.direction = transformation.m_1.mul(worldRay.direction);
+		ray.setDirection(transformation.m_1.mul(worldRay.direction));
 		Intersection inter = geometry.intersection(ray);
 		if (inter != null)
 			inter.shape = this;

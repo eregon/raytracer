@@ -57,7 +57,7 @@ public class RayTracer {
 						int x = xy % width, y = xy / width;
 						float a = x + 0.5f - width / 2f;
 						float b = y + 0.5f - height / 2f;
-						ray.direction = w.mul(d).opposite().add(u.mul(a)).add(v.mul(b)); // −dW + aU + bV
+						ray.setDirection(w.mul(d).opposite().add(u.mul(a)).add(v.mul(b))); // −dW + aU + bV
 						renderPixel(x, y, ray);
 					}
 					long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
