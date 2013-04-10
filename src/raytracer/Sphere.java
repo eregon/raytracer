@@ -68,7 +68,6 @@ public class Sphere implements Geometry {
 
 			Intersection inter = new Intersection();
 			inter.distance = t;
-
 			inter.point = ray.origin.add(ray.direction.mul(inter.distance));
 			inter.normal = inter.point.toVector().normalized();
 			return inter;
