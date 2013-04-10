@@ -1,7 +1,5 @@
 package raytracer;
 
-public interface Geometry {
-	public Intersection intersection(Ray ray);
-
+public interface Geometry extends Surface {
 	public Box computeBoundingBox(Transformation transformation);
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;
 
-public class Box {
+public class Box implements Surface {
 	public final Point3D min, max;
 
 	/** Use this constructor with include(Box) to have a box including other boxes */
@@ -95,5 +95,10 @@ public class Box {
 	public void include(Box box) {
 		update(box.min);
 		update(box.max);
+	}
+
+	@Override
+	public Intersection intersection(Ray ray) {
+		return null; // TODO
 	}
 }
