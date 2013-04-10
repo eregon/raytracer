@@ -135,7 +135,7 @@ public class Box implements Surface {
 		Intersection inter = new Intersection();
 		inter.distance = tmin > 0 ? tmin : tmax;
 		inter.point = ray.origin.add(ray.direction.mul(inter.distance));
-		inter.distance *= ray.direction.norm(); // t was expressed in non-normalized vector
+		inter.distance *= ray.direction_norm; // t was expressed in non-normalized vector
 		return inter;
 	}
 }

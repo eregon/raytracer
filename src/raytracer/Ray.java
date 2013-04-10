@@ -6,6 +6,7 @@ import uclouvain.ingi2325.utils.Vector3D;
 public class Ray {
 	Point3D origin;
 	Vector3D direction;
+	float direction_norm;
 	/** The inverse direction */
 	Vector3D direction_1;
 	boolean signx, signy, signz;
@@ -16,6 +17,7 @@ public class Ray {
 
 	public void setDirection(Vector3D direction) {
 		this.direction = direction;
+		direction_norm = direction.norm();
 		direction_1 = direction.inverse();
 		signx = (direction_1.x < 0);
 		signy = (direction_1.y < 0);
