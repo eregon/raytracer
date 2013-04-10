@@ -13,4 +13,9 @@ public class Intersection {
 	public Vector3D normal() {
 		return shape.transformation.m_1t.mul(normal).normalized();
 	}
+
+	@Override
+	public String toString() {
+		return "Intersection at " + point + " (" + distance + ")";
+	}
 }

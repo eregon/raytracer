@@ -33,6 +33,10 @@ public class Box implements Surface {
 		max = start.clone();
 	}
 
+	public Point3D bound(boolean isMax) {
+		return isMax ? max : min;
+	}
+
 	public void update(Point3D p) {
 		if (p.x < min.x)
 			min.x = p.x;
@@ -99,6 +103,39 @@ public class Box implements Surface {
 
 	@Override
 	public Intersection intersection(Ray ray) {
-		return null; // TODO
+		// From http://www.cs.utah.edu/~awilliam/box/box.pdf
+		float tmin, tmax, tymin, tymax, tzmin, tzmax;
+
+		tmin = (bound(ray.signx).x - ray.origin.x) * ray.direction_1.x;
+		tmax = (bound(!ray.signx).x - ray.origin.x) * ray.direction_1.x;
+
+		tymin = (bound(ray.signy).y - ray.origin.y) * ray.direction_1.y;
+		tymax = (bound(!ray.signy).y - ray.origin.y) * ray.direction_1.y;
+
+		if (tmin > tymax || tymin > tmax)
+			return null;
+		if (tymin > tmin)
+			tmin = tymin;
+		if (tymax < tmax)
+			tmax = tymax;
+
+		tzmin = (bound(ray.signz).z - ray.origin.z) * ray.direction_1.z;
+		tzmax = (bound(!ray.signz).z - ray.origin.z) * ray.direction_1.z;
+
+		if (tmin > tzmax || tzmin > tmax)
+			return null;
+		if (tzmin > tmin)
+			tmin = tzmin;
+		if (tzmax < tmax)
+			tmax = tzmax;
+
+		if (tmax <= 0)
+			return null;
+
+		Intersection inter = new Intersection();
+		inter.distance = tmin > 0 ? tmin : tmax;
+		inter.point = ray.origin.add(ray.direction.mul(inter.distance));
+		inter.distance *= ray.direction.norm(); // t was expressed in non-normalized vector
+		return inter;
 	}
 }
