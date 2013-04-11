@@ -22,9 +22,10 @@ public class KDTree {
 		int median = shapes.size() / 2;
 
 		Axis nextAxis = axis.next();
-		return new KDSplitNode(axis, shapes.get(median),
+		float split = shapes.get(median).boundingBox.center().get(axis);
+		return new KDSplitNode(axis, split,
 				generate(shapes.subList(0, median), nextAxis),
-				generate(shapes.subList(median + 1, shapes.size()), nextAxis));
+				generate(shapes.subList(median, shapes.size()), nextAxis));
 	}
 }
 
@@ -33,13 +34,13 @@ interface KDNode extends Surface {
 };
 
 class KDSplitNode implements KDNode {
-	Axis axis;
-	Shape location;
+	Axis splitAxis;
+	float splitLocation;
 	KDNode left, right;
 
-	public KDSplitNode(Axis axis, Shape location, KDNode left, KDNode right) {
-		this.axis = axis;
-		this.location = location;
+	public KDSplitNode(Axis splitAxis, float splitLocation, KDNode left, KDNode right) {
+		this.splitAxis = splitAxis;
+		this.splitLocation = splitLocation;
 		this.left = left;
 		this.right = right;
 	}
@@ -50,7 +51,7 @@ class KDSplitNode implements KDNode {
 
 	@Override
 	public void print(int depth) {
-		System.out.print("<KDNode loc=" + location.boundingBox.center());
+		System.out.print("<KDNode " + splitAxis + " " + splitLocation);
 		if (left == null && right == null) {
 			System.out.println(">");
 			return;
@@ -97,6 +98,9 @@ class KDLeaf implements KDNode {
 
 	@Override
 	public void print(int depth) {
-		System.out.println("<KDLeaf>");
+		System.out.print("<KDLeaf");
+		for (Shape shape : shapes)
+			System.out.print(" " + shape.geometry);
+		System.out.println(">");
 	}
 }
