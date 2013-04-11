@@ -65,7 +65,6 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	 */
 	@Override
 	public void componentResized(ComponentEvent e) {
-		System.out.println("Resized");
 		// TODO: Should recall RayTracer?
 		// image = new Image(getWidth(), getHeight());
 	}
