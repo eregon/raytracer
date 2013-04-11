@@ -33,7 +33,7 @@ public class RayTracer {
 
 	public void render() {
 		BVH bvh = new BVH(scene.objects);
-		bvh.root.print();
+		// bvh.root.print();
 
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
