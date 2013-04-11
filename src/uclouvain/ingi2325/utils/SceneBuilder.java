@@ -583,6 +583,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endScene() throws Exception {
+		// System.out.println(scene.objects.size() + " shapes to draw");
 	}
 
 	/*
