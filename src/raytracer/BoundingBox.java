@@ -98,7 +98,6 @@ public class BoundingBox implements Surface {
 
 		Intersection inter = new Intersection();
 		inter.distance = tmin > 0 ? tmin : tmax;
-		inter.point = ray.origin.add(ray.direction.mul(inter.distance));
 		return inter;
 	}
 }
