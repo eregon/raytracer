@@ -97,7 +97,16 @@ class BVHLeaf extends BVHNode {
 
 	@Override
 	public Intersection intersection(Ray ray) {
-		return null; // TODO
+		float min_dist = Float.MAX_VALUE;
+		Intersection inter = null;
+		for (Shape shape : shapes) {
+			Intersection i = shape.intersection(ray);
+			if (i != null && i.distance > 0f && i.distance < min_dist) {
+				min_dist = i.distance;
+				inter = i;
+			}
+		}
+		return inter;
 	}
 
 	@Override
