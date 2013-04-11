@@ -28,6 +28,10 @@ public class Transformation {
 		this.parent = parent;
 	}
 
+	public boolean isDefault() {
+		return this == DEFAULT;
+	}
+
 	private Transformation transform(Matrix4 direct, Matrix4 inverse) {
 		Transformation t = new Transformation(this);
 		t.m = m.mul(direct);

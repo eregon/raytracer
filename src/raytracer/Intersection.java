@@ -11,6 +11,8 @@ public class Intersection {
 	public Vector3D normal;
 
 	public Vector3D normal() {
+		if (shape.transformation.isDefault())
+			return normal;
 		return shape.transformation.m_1t.mul(normal).normalized();
 	}
 
