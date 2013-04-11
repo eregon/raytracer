@@ -1,6 +1,7 @@
 package raytracer;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class BVH {
@@ -18,13 +19,21 @@ public class BVH {
 		if (shapes.size() == 1)
 			return new BVHLeaf(shapes.get(0));
 
-		Collections.sort(shapes, Shape.comparatorForAxis(axis));
-		int median = shapes.size() / 2;
+		Comparator<Shape> comparator = Shape.comparatorForAxis(axis);
+		Shape median = new Median<Shape>(shapes, comparator).findMedian();
+
+		int maxLeftSize = (shapes.size() + 1) / 2;
+		List<Shape> left = new ArrayList<Shape>(maxLeftSize);
+		List<Shape> right = new ArrayList<Shape>(shapes.size() - maxLeftSize);
+		for (Shape shape : shapes) {
+			// We need to ensure no less than half go to the right (happens when many are equal)
+			if (comparator.compare(shape, median) <= 0 && left.size() < maxLeftSize)
+				left.add(shape);
+			else
+				right.add(shape);
+		}
 
 		Axis next = axis.next();
-
-		List<Shape> left = shapes.subList(0, median);
-		List<Shape> right = shapes.subList(median, shapes.size());
 
 		return new BVHSplitNode(
 				generate(left, next),
