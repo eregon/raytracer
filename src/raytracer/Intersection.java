@@ -7,7 +7,7 @@ public class Intersection {
 	public Shape shape;
 	public float distance;
 	public Point3D point;
-	/** The normal, in object coordinates */
+	/** The normal, in object coordinates, must be normalized */
 	public Vector3D normal;
 
 	public Vector3D normal() {
