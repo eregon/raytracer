@@ -23,8 +23,6 @@ public class RayTracer {
 		height = image.getHeight();
 		width = image.getWidth();
 		this.onPixelRendered = onPixelRendered;
-
-		bvh = new BVH(scene.objects);
 	}
 
 	private int numberOfThreads() {
@@ -35,6 +33,8 @@ public class RayTracer {
 	}
 
 	public void render() {
+		bvh = new BVH(scene.objects);
+
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
 		final Vector3D u = scene.camera.up.crossProduct(w).normalize();
