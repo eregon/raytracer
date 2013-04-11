@@ -2,17 +2,18 @@ package raytracer;
 
 import uclouvain.ingi2325.utils.Point3D;
 
-public class Box implements Surface {
+/** Axis-Aligned Bounding Box */
+public class BoundingBox implements Surface {
 	public final Point3D min, max;
 
 	/** Use this constructor with include(Box) to have a box including other boxes */
-	public Box() {
+	public BoundingBox() {
 		min = new Point3D(Float.MAX_VALUE);
 		max = new Point3D(Float.MIN_VALUE);
 	}
 
 	/** Create a Box from a min and max point, given in any order */
-	public Box(Point3D a, Point3D b) {
+	public BoundingBox(Point3D a, Point3D b) {
 		if (a.x <= b.x) {
 			min = a;
 			max = b;
@@ -23,7 +24,7 @@ public class Box implements Surface {
 	}
 
 	/** Use this with update(Point3D) for incremental construction of the box */
-	public Box(Point3D start) {
+	public BoundingBox(Point3D start) {
 		min = start.clone();
 		max = start.clone();
 	}
@@ -59,7 +60,7 @@ public class Box implements Surface {
 				+ max.y + "] X [" + min.z + ", " + max.z + "]";
 	}
 
-	public void include(Box box) {
+	public void include(BoundingBox box) {
 		update(box.min);
 		update(box.max);
 	}

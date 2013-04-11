@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.xml.sax.InputSource;
 
-import raytracer.Box;
+import raytracer.BoundingBox;
 import raytracer.Camera;
 import raytracer.Cube;
 import raytracer.Geometry;
@@ -47,7 +47,7 @@ public class SceneBuilder implements ParserHandler {
 	Map<String, Light> lights = new HashMap<String, Light>();
 
 	Transformation transformation = Transformation.DEFAULT;
-	Box globalBox = new Box();
+	BoundingBox globalBox = new BoundingBox();
 
 	/**
 	 * Returns the build scene

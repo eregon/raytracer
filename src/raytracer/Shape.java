@@ -6,7 +6,7 @@ public class Shape {
 	public Geometry geometry;
 	public Material material;
 	public Transformation transformation;
-	public Box boundingBox;
+	public BoundingBox boundingBox;
 
 	public Shape(Geometry geometry, Material material, Transformation transformation) {
 		this.geometry = geometry;

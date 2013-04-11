@@ -3,7 +3,7 @@ package raytracer;
 import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;
 
-public class Cube extends Box implements Geometry {
+public class Cube extends BoundingBox implements Geometry {
 	static enum Face {
 		FRONT(Vector3D.NEAR), BACK(Vector3D.FAR),
 		TOP(Vector3D.UP), BOTTOM(Vector3D.DOWN),
@@ -20,7 +20,7 @@ public class Cube extends Box implements Geometry {
 		super(new Point3D(-size / 2), new Point3D(size / 2));
 	}
 
-	public Cube(Box box) {
+	public Cube(BoundingBox box) {
 		super(box.min, box.max);
 	}
 
@@ -38,8 +38,8 @@ public class Cube extends Box implements Geometry {
 	}
 
 	@Override
-	public Box computeBoundingBox(Transformation transformation) {
-		Box box = new Box(transformation.m.mul(min));
+	public BoundingBox computeBoundingBox(Transformation transformation) {
+		BoundingBox box = new BoundingBox(transformation.m.mul(min));
 		for (Point3D p : vertices())
 			box.update(transformation.m.mul(p));
 		return box;

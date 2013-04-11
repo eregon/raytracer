@@ -14,7 +14,7 @@ public class Sphere implements Geometry {
 	}
 
 	@Override
-	public Box computeBoundingBox(Transformation transformation) {
+	public BoundingBox computeBoundingBox(Transformation transformation) {
 		// See http://stackoverflow.com/questions/4368961/calculating-an-aabb-for-a-transformed-sphere
 		Matrix4 s = new Matrix4(
 				1, 0, 0, 0,
@@ -28,7 +28,7 @@ public class Sphere implements Geometry {
 		Matrix4 r = transformation.m.mul(s.inverse()).mul(transformation.m.transpose());
 		float r03 = r.m03, r13 = r.m13, r23 = r.m23, r33 = r.m33, r00 = r.m00, r11 = r.m11, r22 = r.m22;
 
-		return new Box(
+		return new BoundingBox(
 				new Point3D(
 						(r03 - (float) Math.sqrt(r03 * r03 - r33 * r00)) / r33,
 						(r13 - (float) Math.sqrt(r13 * r13 - r33 * r11)) / r33,

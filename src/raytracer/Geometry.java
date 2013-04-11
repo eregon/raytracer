@@ -5,5 +5,5 @@ public interface Geometry extends Surface {
 	@Override
 	public Intersection intersection(Ray ray);
 
-	public Box computeBoundingBox(Transformation transformation);
+	public BoundingBox computeBoundingBox(Transformation transformation);
 }
