@@ -15,24 +15,30 @@ public class KDTree {
 	}
 
 	public KDNode generate(List<Shape> shapes, Axis axis) {
-		if (shapes.isEmpty())
-			return null;
+		if (shapes.size() <= 2)
+			return new KDLeaf(shapes);
 
 		Collections.sort(shapes, Shape.comparatorForAxis(axis));
 		int median = shapes.size() / 2;
 
 		Axis nextAxis = axis.next();
-		return new KDNode(shapes.get(median),
+		return new KDSplitNode(axis, shapes.get(median),
 				generate(shapes.subList(0, median), nextAxis),
 				generate(shapes.subList(median + 1, shapes.size()), nextAxis));
 	}
 }
 
-class KDNode {
+interface KDNode extends Surface {
+	void print(int i);
+};
+
+class KDSplitNode implements KDNode {
+	Axis axis;
 	Shape location;
 	KDNode left, right;
 
-	public KDNode(Shape location, KDNode left, KDNode right) {
+	public KDSplitNode(Axis axis, Shape location, KDNode left, KDNode right) {
+		this.axis = axis;
 		this.location = location;
 		this.left = left;
 		this.right = right;
@@ -42,7 +48,8 @@ class KDNode {
 		print(0);
 	}
 
-	private void print(int depth) {
+	@Override
+	public void print(int depth) {
 		System.out.print("<KDNode loc=" + location.boundingBox.center());
 		if (left == null && right == null) {
 			System.out.println(">");
@@ -68,5 +75,28 @@ class KDNode {
 	private void indent(int amount) {
 		for (int i = 0; i < amount; i++)
 			System.out.print("  ");
+	}
+
+	@Override
+	public Intersection intersection(Ray ray) {
+		return null; // TODO
+	}
+}
+
+class KDLeaf implements KDNode {
+	List<Shape> shapes;
+
+	public KDLeaf(List<Shape> shapes) {
+		this.shapes = shapes;
+	}
+
+	@Override
+	public Intersection intersection(Ray ray) {
+		return null; // TODO
+	}
+
+	@Override
+	public void print(int depth) {
+		System.out.println("<KDLeaf>");
 	}
 }
