@@ -36,7 +36,7 @@ public class RayTracer {
 		long beforeBVH = System.currentTimeMillis();
 		bvh = new BVH(scene.objects);
 		long afterBVH = System.currentTimeMillis();
-		System.out.println("BVH built in " + String.format("%.3f", (afterBVH - beforeBVH) / 1e3) + "s");
+		System.out.println("BVH built in " + formatTime((afterBVH - beforeBVH) / 1e3));
 
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
@@ -84,11 +84,11 @@ public class RayTracer {
 			e.printStackTrace();
 		}
 		long t1 = System.currentTimeMillis();
-		System.out.print("Rendered in " + String.format("%.3f", (t1 - t0) / 1e3) + "s real ");
+		System.out.print("Rendered in " + formatTime((t1 - t0) / 1e3) + " real ");
 		double cpuTime = 0;
 		for (double t : times)
 			cpuTime += t;
-		System.out.println(String.format("%.3f", cpuTime) + "s total CPU");
+		System.out.println(formatTime(cpuTime) + " total CPU");
 
 	}
 
@@ -117,5 +117,9 @@ public class RayTracer {
 
 		if (onPixelRendered != null)
 			onPixelRendered.run();
+	}
+
+	private String formatTime(double time) {
+		return String.format("%.3fs", time);
 	}
 }
