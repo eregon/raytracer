@@ -32,6 +32,8 @@ public class RayTracer {
 	}
 
 	public void render() {
+		KDTree tree = new KDTree(scene.objects);
+
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
 		final Vector3D u = scene.camera.up.crossProduct(w).normalize();

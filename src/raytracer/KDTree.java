@@ -26,11 +26,6 @@ public class KDTree {
 				generate(shapes.subList(0, median), nextAxis),
 				generate(shapes.subList(median + 1, shapes.size()), nextAxis));
 	}
-
-	@Override
-	public String toString() {
-		return root.toString();
-	}
 }
 
 class KDNode {
@@ -43,9 +38,35 @@ class KDNode {
 		this.right = right;
 	}
 
-	@Override
-	public String toString() {
-		return "<KDNode loc=" + location.boundingBox.center()
-				+ "\n  left=" + left + "\n  right=" + right + ">";
+	public void print() {
+		print(0);
+	}
+
+	private void print(int depth) {
+		System.out.print("<KDNode loc=" + location.boundingBox.center());
+		if (left == null && right == null) {
+			System.out.println(">");
+			return;
+		} else
+			System.out.println();
+
+		indent(depth + 1);
+		System.out.print("left=");
+		if (left == null)
+			System.out.println(left);
+		else
+			left.print(depth + 1);
+
+		indent(depth + 1);
+		System.out.print("right=");
+		if (right == null)
+			System.out.println(right);
+		else
+			right.print(depth + 1);
+	}
+
+	private void indent(int amount) {
+		for (int i = 0; i < amount; i++)
+			System.out.print("  ");
 	}
 }
