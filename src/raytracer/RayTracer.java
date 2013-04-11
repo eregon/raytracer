@@ -15,6 +15,7 @@ public class RayTracer {
 	Image image;
 	int height, width;
 	Runnable onPixelRendered;
+	BVH bvh;
 
 	public RayTracer(Scene scene, Image image, Runnable onPixelRendered) {
 		this.scene = scene;
@@ -22,6 +23,8 @@ public class RayTracer {
 		height = image.getHeight();
 		width = image.getWidth();
 		this.onPixelRendered = onPixelRendered;
+
+		bvh = new BVH(scene.objects);
 	}
 
 	private int numberOfThreads() {
@@ -32,9 +35,6 @@ public class RayTracer {
 	}
 
 	public void render() {
-		BVH bvh = new BVH(scene.objects);
-		// bvh.root.print();
-
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
 		final Vector3D u = scene.camera.up.crossProduct(w).normalize();
@@ -89,21 +89,8 @@ public class RayTracer {
 
 	}
 
-	private Intersection findClosestIntersection(Ray ray) {
-		float min_dist = Float.MAX_VALUE;
-		Intersection inter = null;
-		for (Shape shape : scene.objects) {
-			Intersection i = shape.intersection(ray);
-			if (i != null && i.distance > 0f && i.distance < min_dist) {
-				min_dist = i.distance;
-				inter = i;
-			}
-		}
-		return inter;
-	}
-
 	private void renderPixel(int x, int y, Ray ray) {
-		Intersection inter = findClosestIntersection(ray);
+		Intersection inter = bvh.root.intersection(ray);
 		Color color;
 
 		if (inter != null) {
