@@ -32,6 +32,10 @@ public class Box implements Surface {
 		return isMax ? max : min;
 	}
 
+	public Point3D center() {
+		return min.middle(max);
+	}
+
 	public void update(Point3D p) {
 		if (p.x < min.x)
 			min.x = p.x;

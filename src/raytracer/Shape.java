@@ -1,5 +1,7 @@
 package raytracer;
 
+import java.util.Comparator;
+
 public class Shape {
 	public Geometry geometry;
 	public Material material;
@@ -20,5 +22,16 @@ public class Shape {
 		if (inter != null)
 			inter.shape = this;
 		return inter;
+	}
+
+	public static Comparator<Shape> comparatorForAxis(final Axis axis) {
+		return new Comparator<Shape>() {
+			@Override
+			public int compare(Shape s1, Shape s2) {
+				return Float.compare(
+						s1.boundingBox.center().get(axis),
+						s2.boundingBox.center().get(axis));
+			}
+		};
 	}
 }

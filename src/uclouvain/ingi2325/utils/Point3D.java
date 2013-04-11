@@ -1,5 +1,6 @@
 package uclouvain.ingi2325.utils;
 
+import raytracer.Axis;
 import uclouvain.ingi2325.exception.ParseException;
 import uclouvain.ingi2325.math.Tuple3;
 
@@ -31,6 +32,19 @@ public class Point3D extends Tuple3 {
 		return new Point3D(x, y, z);
 	}
 
+	public float get(Axis axis) {
+		switch (axis) {
+		case X:
+			return x;
+		case Y:
+			return y;
+		case Z:
+			return z;
+		default:
+			return -1f;
+		}
+	}
+
 	/**
 	 * Parse a Point3D from a string
 	 * @param string   String representation
@@ -52,5 +66,9 @@ public class Point3D extends Tuple3 {
 
 	public Vector3D sub(Point3D p) {
 		return new Vector3D(x - p.x, y - p.y, z - p.z);
+	}
+
+	public Point3D middle(Point3D p) {
+		return new Point3D((x + p.x) / 2, (y + p.y) / 2, (z + p.z) / 2);
 	}
 }
