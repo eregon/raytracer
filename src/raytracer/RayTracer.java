@@ -32,8 +32,8 @@ public class RayTracer {
 	}
 
 	public void render() {
-		KDTree tree = new KDTree(scene.objects);
-		tree.root.print(0);
+		BVH bvh = new BVH(scene.objects);
+		bvh.root.print();
 
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
