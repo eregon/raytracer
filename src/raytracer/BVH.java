@@ -72,7 +72,17 @@ class BVHSplitNode extends BVHNode {
 
 	@Override
 	public Intersection intersection(Ray ray) {
-		return null; // TODO
+		Intersection l = null, r = null;
+
+		if (left.box.intersection(ray) != null)
+			l = left.intersection(ray);
+		if (right.box.intersection(ray) != null)
+			r = right.intersection(ray);
+
+		if (l != null && r != null)
+			return l.distance <= r.distance ? l : r;
+		else
+			return l != null ? l : r;
 	}
 }
 
