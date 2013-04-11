@@ -11,7 +11,7 @@
    </Lights>
 
    <Geometry>
-      <FileGeometry filename="treeleaves.obj.gz" name="subject" />
+      <FileGeometry filename="treebranches.obj.gz" name="subject" />
    </Geometry>
 
    <Materials>
