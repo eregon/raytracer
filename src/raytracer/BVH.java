@@ -6,8 +6,8 @@ import java.util.List;
 public class BVH {
 	BVHNode root;
 
-	public BVH(List<Shape> objects) {
-		root = generate(objects);
+	public BVH(List<Shape> shapes) {
+		root = generate(shapes);
 	}
 
 	public BVHNode generate(List<Shape> shapes) {
@@ -21,14 +21,14 @@ public class BVH {
 		Collections.sort(shapes, Shape.comparatorForAxis(axis));
 		int median = shapes.size() / 2;
 
-		Axis nextAxis = axis.next();
+		Axis next = axis.next();
 
 		List<Shape> left = shapes.subList(0, median);
 		List<Shape> right = shapes.subList(median, shapes.size());
 
 		return new BVHSplitNode(
-				generate(left, nextAxis),
-				generate(right, nextAxis));
+				generate(left, next),
+				generate(right, next));
 	}
 }
 
