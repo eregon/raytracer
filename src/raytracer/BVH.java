@@ -15,8 +15,8 @@ public class BVH {
 	}
 
 	public BVHNode generate(List<Shape> shapes, Axis axis) {
-		if (shapes.size() <= 2)
-			return new BVHLeaf(shapes);
+		if (shapes.size() == 1)
+			return new BVHLeaf(shapes.get(0));
 
 		Collections.sort(shapes, Shape.comparatorForAxis(axis));
 		int median = shapes.size() / 2;
@@ -87,33 +87,20 @@ class BVHSplitNode extends BVHNode {
 }
 
 class BVHLeaf extends BVHNode {
-	List<Shape> shapes;
+	Shape shape;
 
-	public BVHLeaf(List<Shape> shapes) {
-		this.shapes = shapes;
-		for (Shape shape : shapes)
-			box.include(shape.boundingBox);
+	public BVHLeaf(Shape shape) {
+		this.shape = shape;
+		box = shape.boundingBox;
 	}
 
 	@Override
 	public Intersection intersection(Ray ray) {
-		float min_dist = Float.MAX_VALUE;
-		Intersection inter = null;
-		for (Shape shape : shapes) {
-			Intersection i = shape.intersection(ray);
-			if (i != null && i.distance > 0f && i.distance < min_dist) {
-				min_dist = i.distance;
-				inter = i;
-			}
-		}
-		return inter;
+		return shape.intersection(ray);
 	}
 
 	@Override
 	public void print(int depth) {
-		System.out.print("<BVHLeaf");
-		for (Shape shape : shapes)
-			System.out.print(" " + shape.geometry);
-		System.out.println(">");
+		System.out.print("<BVHLeaf " + shape + ">");
 	}
 }
