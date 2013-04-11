@@ -49,8 +49,8 @@ public class RayTracer {
 		for (int i = 0; i < nThreads; i++) {
 			final int offset = i;
 			final Ray ray = new Ray(scene.camera.position);
-			final Enumerator iter = new RadialEnumerator(
-					new CircleEnumerator(height, width), offset, nThreads, height, width);
+			final Enumerator iter = new SkippingEnumerator(
+					new CircleEnumerator(height, width), offset, nThreads);
 
 			Runnable task = new Runnable() {
 				@Override
