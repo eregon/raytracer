@@ -33,7 +33,10 @@ public class RayTracer {
 	}
 
 	public void render() {
+		long beforeBVH = System.currentTimeMillis();
 		bvh = new BVH(scene.objects);
+		long afterBVH = System.currentTimeMillis();
+		System.out.println("BVH built in " + String.format("%.3f", (afterBVH - beforeBVH) / 1e3) + "s");
 
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
