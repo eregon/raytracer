@@ -36,7 +36,7 @@ public class FileGeometryParser {
 		List<Geometry> geoms = new ArrayList<Geometry>();
 
 		while ((line = io.readLine()) != null) {
-			String[] parts = line.trim().split(" ", 2);
+			String[] parts = line.split(" ", 2);
 			String type = parts[0].intern();
 			String value = parts[1];
 
