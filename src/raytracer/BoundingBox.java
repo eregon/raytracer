@@ -72,11 +72,6 @@ public class BoundingBox implements Surface {
 				+ max.y + "] X [" + min.z + ", " + max.z + "]";
 	}
 
-	public void include(BoundingBox box) {
-		update(box.min);
-		update(box.max);
-	}
-
 	@Override
 	public Intersection intersection(Ray ray) {
 		// From http://www.cs.utah.edu/~awilliam/box/box.pdf
