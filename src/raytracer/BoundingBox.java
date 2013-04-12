@@ -6,12 +6,6 @@ import uclouvain.ingi2325.utils.Point3D;
 public class BoundingBox implements Surface {
 	public final Point3D min, max;
 
-	/** Use this constructor with include(Box) to have a box including other boxes */
-	public BoundingBox() {
-		min = new Point3D(Float.MAX_VALUE);
-		max = new Point3D(Float.MIN_VALUE);
-	}
-
 	/** Create a Box from a min and max point, given in any order */
 	public BoundingBox(Point3D a, Point3D b) {
 		if (a.x <= b.x) {
