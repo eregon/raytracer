@@ -42,6 +42,7 @@ public class SceneBuilder implements ParserHandler {
 
 	Map<String, Camera> cameras = new HashMap<String, Camera>();
 	Map<String, List<Geometry>> geometries = new HashMap<String, List<Geometry>>();
+	Map<String, Transformation> geometriesTransformations = new HashMap<String, Transformation>();
 	Map<String, Material> materials = new HashMap<String, Material>();
 	Map<String, Light> lights = new HashMap<String, Light>();
 
@@ -296,8 +297,11 @@ public class SceneBuilder implements ParserHandler {
 	 * boolean, java.lang.String)
 	 */
 	@Override
-	public void startCylinder(float radius, float height, boolean capped,
-			String name) throws Exception {
+	public void startCylinder(float radius, float height, boolean capped, String name) throws Exception {
+		geometries.put(name, loadFileGeometry("cylinder.obj"));
+		geometriesTransformations.put(name,
+				Transformation.DEFAULT.scale(new Vector3D(radius, height / 2, radius)));
+		// TODO: capped
 	}
 
 	/*
@@ -316,8 +320,11 @@ public class SceneBuilder implements ParserHandler {
 	 * boolean, java.lang.String)
 	 */
 	@Override
-	public void startCone(float radius, float height, boolean capped,
-			String name) throws Exception {
+	public void startCone(float radius, float height, boolean capped, String name) throws Exception {
+		geometries.put(name, loadFileGeometry("cone.obj"));
+		geometriesTransformations.put(name,
+				Transformation.DEFAULT.scale(new Vector3D(radius, height / 2, radius)));
+		// TODO: capped
 	}
 
 	/*
@@ -346,8 +353,11 @@ public class SceneBuilder implements ParserHandler {
 	 * java.lang.String)
 	 */
 	@Override
-	public void startTorus(float innerRadius, float outerRadius, String name)
-			throws Exception {
+	public void startTorus(float innerRadius, float outerRadius, String name) throws Exception {
+		geometries.put(name, loadFileGeometry("torus.obj"));
+		geometriesTransformations.put(name,
+				Transformation.DEFAULT.scale(new Vector3D(outerRadius / 1.5f)));
+		// TODO: ignoring innerRadius for now
 	}
 
 	/*
@@ -367,6 +377,9 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startTeapot(float size, String name) throws Exception {
+		geometries.put(name, loadFileGeometry("teapot.obj"));
+		geometriesTransformations.put(name,
+				Transformation.DEFAULT.scale(new Vector3D(size)));
 	}
 
 	/*
@@ -610,8 +623,12 @@ public class SceneBuilder implements ParserHandler {
 		} else if (material == null) {
 			System.err.println("Could not find material named " + materialName);
 		} else {
+			Transformation transform = transformation;
+			if (geometriesTransformations.containsKey(geometryName))
+				transform = transform.onTopOf(geometriesTransformations.get(geometryName));
+
 			for (Geometry geometry : geoms) {
-				Shape shape = new Shape(geometry, material, transformation);
+				Shape shape = new Shape(geometry, material, transform);
 				scene.objects.add(shape);
 
 				if (RayTracer.TRACE_BOUNDING_BOXES) {
@@ -698,4 +715,7 @@ public class SceneBuilder implements ParserHandler {
 		transformation = transformation.parent;
 	}
 
+	private List<Geometry> loadFileGeometry(String filename) throws IOException, ParseException {
+		return new FileGeometryParser(new File("XML", filename)).parse();
+	}
 }

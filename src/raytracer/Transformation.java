@@ -40,6 +40,10 @@ public class Transformation {
 		return t;
 	}
 
+	public Transformation onTopOf(Transformation base) {
+		return base.transform(m, m_1);
+	}
+
 	public Transformation translate(Vector3D t) {
 		return transform(translation(t), translation(t.opposite()));
 	}
