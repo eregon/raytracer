@@ -17,7 +17,7 @@ public class BVH {
 
 	public BVHNode generate(List<Shape> shapes, Axis axis) {
 		if (shapes.size() == 1)
-			return new BVHLeaf(shapes.get(0));
+			return shapes.get(0);
 
 		Comparator<Shape> comparator = Shape.comparatorForAxis(axis);
 		Shape median = new Median<Shape>(shapes, comparator).findMedian();
@@ -42,7 +42,7 @@ public class BVH {
 }
 
 abstract class BVHNode implements Surface {
-	BoundingBox box = new BoundingBox();
+	public BoundingBox boundingBox;
 };
 
 class BVHSplitNode extends BVHNode {
@@ -51,36 +51,23 @@ class BVHSplitNode extends BVHNode {
 	public BVHSplitNode(BVHNode left, BVHNode right) {
 		this.left = left;
 		this.right = right;
-		box.include(left.box);
-		box.include(right.box);
+		boundingBox = new BoundingBox();
+		boundingBox.include(left.boundingBox);
+		boundingBox.include(right.boundingBox);
 	}
 
 	@Override
 	public Intersection intersection(Ray ray) {
 		Intersection l = null, r = null;
 
-		if (left.box.intersection(ray) != null)
+		if (left.boundingBox.intersection(ray) != null)
 			l = left.intersection(ray);
-		if (right.box.intersection(ray) != null)
+		if (right.boundingBox.intersection(ray) != null)
 			r = right.intersection(ray);
 
 		if (l != null && r != null)
 			return l.distance <= r.distance ? l : r;
 		else
 			return l != null ? l : r;
-	}
-}
-
-class BVHLeaf extends BVHNode {
-	Shape shape;
-
-	public BVHLeaf(Shape shape) {
-		this.shape = shape;
-		box = shape.boundingBox;
-	}
-
-	@Override
-	public Intersection intersection(Ray ray) {
-		return shape.intersection(ray);
 	}
 }

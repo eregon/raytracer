@@ -2,11 +2,10 @@ package raytracer;
 
 import java.util.Comparator;
 
-public class Shape {
+public class Shape extends BVHNode {
 	public Geometry geometry;
 	public Material material;
 	public Transformation transformation;
-	public BoundingBox boundingBox;
 
 	public Shape(Geometry geometry, Material material, Transformation transformation) {
 		this.geometry = geometry;
@@ -15,6 +14,7 @@ public class Shape {
 		boundingBox = geometry.computeBoundingBox(transformation);
 	}
 
+	@Override
 	public Intersection intersection(Ray worldRay) {
 		Intersection inter;
 
