@@ -280,10 +280,12 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startCylinder(float radius, float height, boolean capped, String name) throws Exception {
-		geometries.put(name, loadFileGeometry("cylinder.obj"));
+		List<Geometry> geoms = loadFileGeometry("cylinder.obj");
+		if (!capped)
+			geoms = rejectHorizontalTriangle(geoms);
+		geometries.put(name, geoms);
 		geometriesTransformations.put(name,
 				Transformation.DEFAULT.scale(new Vector3D(radius, height / 2, radius)));
-		// TODO: capped
 	}
 
 	/*
@@ -303,10 +305,12 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startCone(float radius, float height, boolean capped, String name) throws Exception {
-		geometries.put(name, loadFileGeometry("cone.obj"));
+		List<Geometry> geoms = loadFileGeometry("cone.obj");
+		if (!capped)
+			geoms = rejectHorizontalTriangle(geoms);
+		geometries.put(name, geoms);
 		geometriesTransformations.put(name,
 				Transformation.DEFAULT.scale(new Vector3D(radius, height / 2, radius)));
-		// TODO: capped
 	}
 
 	/*
@@ -699,5 +703,15 @@ public class SceneBuilder implements ParserHandler {
 
 	private List<Geometry> loadFileGeometry(String filename) throws IOException, ParseException {
 		return new FileGeometryParser(new File("XML", filename)).parse();
+	}
+
+	private List<Geometry> rejectHorizontalTriangle(List<Geometry> geoms) {
+		List<Geometry> filtered = new ArrayList<Geometry>();
+		for (Geometry g : geoms) {
+			Triangle t = (Triangle) g;
+			if (t._a.y != t._b.y || t._b.y != t._c.y)
+				filtered.add(g);
+		}
+		return filtered;
 	}
 }
