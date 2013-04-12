@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 
 import raytracer.Geometry;
@@ -36,30 +37,34 @@ public class FileGeometryParser {
 		List<Geometry> geoms = new ArrayList<Geometry>();
 
 		while ((line = io.readLine()) != null) {
-			String[] parts = line.split(" ", 2);
-			String type = parts[0].intern();
-			String value = parts[1];
+			StringTokenizer parts = new StringTokenizer(line, " ");
+			String type = parts.nextToken().intern();
 
 			if (type == "v") { // vertex
-				_vertices.add(Point3D.valueOf(value));
+				_vertices.add(Point3D.valueOf(parts.nextToken("\n")));
 			} else if (type == "vn") {
-				_normals.add(Vector3D.valueOf(value));
+				_normals.add(Vector3D.valueOf(parts.nextToken("\n")));
 			} else if (type == "f") { // surface
-				String[] triplets = value.split(" ");
-				Point3D[] vertices = new Point3D[triplets.length];
-				Vector3D[] normals = new Vector3D[triplets.length];
-				for (int i = 0; i < triplets.length; i++) {
-					String[] indexes = triplets[i].split("/");
-					vertices[i] = _vertices.get(Integer.valueOf(indexes[0]));
-					if (indexes.length >= 3)
-						normals[i] = _normals.get(Integer.valueOf(indexes[2]));
-					else
-						normals[i] = null;
-				}
-				if (vertices.length == 3) {
-					geoms.add(new Triangle(vertices, normals));
+				if (parts.countTokens() != 3) {
+					System.err.println("Unhandled polygon with " + parts.countTokens() + " vertices");
 				} else {
-					System.err.println("Unhandled polygon with " + vertices.length + " vertices");
+					Point3D[] vertices = new Point3D[3];
+					Vector3D[] normals = new Vector3D[3];
+
+					for (int i = 0; i < 3; i++) {
+						StringTokenizer coord = new StringTokenizer(parts.nextToken(), "/");
+						vertices[i] = _vertices.get(Integer.valueOf(coord.nextToken()));
+						if (coord.hasMoreTokens()) {
+							coord.nextToken(); // TODO: texture
+							if (coord.hasMoreTokens())
+								normals[i] = _normals.get(Integer.valueOf(coord.nextToken()));
+							else
+								normals[i] = null;
+						}
+					}
+
+					geoms.add(new Triangle(vertices, normals));
+
 				}
 			}
 		}
