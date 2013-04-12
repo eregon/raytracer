@@ -2,18 +2,16 @@ package uclouvain.ingi2325.parser;
 
 public final class Splitter {
 	final String str;
-	final char[] ary;
 	final int len;
 	int pos;
 
 	public Splitter(String str) {
 		this.str = str;
-		ary = str.toCharArray();
-		len = ary.length;
+		len = str.length();
 	}
 
 	private final boolean negative() {
-		if (ary[pos] == '-') {
+		if (str.charAt(pos) == '-') {
 			pos++;
 			return true;
 		}
@@ -26,8 +24,8 @@ public final class Splitter {
 
 		int before = pos;
 		char c;
-		while (pos < len && (c = ary[pos]) >= '0' && c <= '9') {
-			value = 10 * value + (ary[pos] - '0');
+		while (pos < len && (c = str.charAt(pos)) >= '0' && c <= '9') {
+			value = 10 * value + (str.charAt(pos) - '0');
 			pos++;
 		}
 		if (pos == before)
@@ -43,12 +41,12 @@ public final class Splitter {
 		int divider = 1;
 		boolean afterDot = false;
 		char c;
-		while (pos < len && ((c = ary[pos]) >= '0' && c <= '9')) {
-			value = 10 * value + (ary[pos] - '0');
+		while (pos < len && ((c = str.charAt(pos)) >= '0' && c <= '9')) {
+			value = 10 * value + (str.charAt(pos) - '0');
 			pos++;
 			if (afterDot) {
 				divider *= 10;
-			} else if (pos < len && ary[pos] == '.') {
+			} else if (pos < len && str.charAt(pos) == '.') {
 				afterDot = true;
 				pos++;
 			}
@@ -60,7 +58,7 @@ public final class Splitter {
 	}
 
 	public final boolean have(char c) {
-		if (ary[pos] == c) {
+		if (str.charAt(pos) == c) {
 			pos++;
 			return true;
 		} else
@@ -69,7 +67,7 @@ public final class Splitter {
 
 	public final String getWord() {
 		int start = pos;
-		while (pos < len && ary[pos] != ' ')
+		while (pos < len && str.charAt(pos) != ' ')
 			pos++;
 		return str.substring(start, pos);
 	}
@@ -83,20 +81,20 @@ public final class Splitter {
 	}
 
 	public final char current() {
-		return ary[pos];
+		return str.charAt(pos);
 	}
 
 	public final int count(char c) {
 		int count = 0;
 		for (int i = pos; i < len; i++) {
-			if (ary[i] == c)
+			if (str.charAt(i) == c)
 				count++;
 		}
 		return count;
 	}
 
 	public final void eatSpace() {
-		if (pos < len && ary[pos] == ' ')
+		if (pos < len && str.charAt(pos) == ' ')
 			pos++;
 	}
 }
