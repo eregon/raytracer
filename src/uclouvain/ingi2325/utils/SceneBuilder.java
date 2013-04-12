@@ -96,9 +96,13 @@ public class SceneBuilder implements ParserHandler {
 		Parser parser = new Parser();
 		parser.addHandler(this);
 
+		System.out.print("Parsed in ");
+		long t0 = System.currentTimeMillis();
 		if (!parser.parse(inputSource, /* validate */true, /* echo */false)) {
 			scene = null;
 		}
+		long t1 = System.currentTimeMillis();
+		System.out.println(String.format("%.3fs", (t1 - t0) / 1e3));
 
 		return scene;
 	}
