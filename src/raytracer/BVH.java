@@ -51,9 +51,7 @@ class BVHSplitNode extends BVHNode {
 	public BVHSplitNode(BVHNode left, BVHNode right) {
 		this.left = left;
 		this.right = right;
-		boundingBox = new BoundingBox();
-		boundingBox.include(left.boundingBox);
-		boundingBox.include(right.boundingBox);
+		boundingBox = BoundingBox.including(left.boundingBox, right.boundingBox);
 	}
 
 	@Override

@@ -29,6 +29,18 @@ public class BoundingBox implements Surface {
 		max = start.clone();
 	}
 
+	public static BoundingBox including(BoundingBox a, BoundingBox b) {
+		return new BoundingBox(
+				new Point3D(
+						Math.min(a.min.x, b.min.x),
+						Math.min(a.min.y, b.min.y),
+						Math.min(a.min.z, b.min.z)),
+				new Point3D(
+						Math.max(a.max.x, b.max.x),
+						Math.max(a.max.y, b.max.y),
+						Math.max(a.max.z, b.max.z)));
+	}
+
 	public Point3D bound(boolean isMax) {
 		return isMax ? max : min;
 	}
