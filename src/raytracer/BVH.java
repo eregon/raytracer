@@ -43,12 +43,6 @@ public class BVH {
 
 abstract class BVHNode implements Surface {
 	BoundingBox box = new BoundingBox();
-
-	abstract void print(int i);
-
-	public void print() {
-		print(0);
-	}
 };
 
 class BVHSplitNode extends BVHNode {
@@ -59,24 +53,6 @@ class BVHSplitNode extends BVHNode {
 		this.right = right;
 		box.include(left.box);
 		box.include(right.box);
-	}
-
-	@Override
-	public void print(int depth) {
-		System.out.println("<BVHNode " + box);
-
-		indent(depth + 1);
-		System.out.print("left=");
-		left.print(depth + 1);
-
-		indent(depth + 1);
-		System.out.print("right=");
-		right.print(depth + 1);
-	}
-
-	private void indent(int amount) {
-		for (int i = 0; i < amount; i++)
-			System.out.print("  ");
 	}
 
 	@Override
@@ -106,10 +82,5 @@ class BVHLeaf extends BVHNode {
 	@Override
 	public Intersection intersection(Ray ray) {
 		return shape.intersection(ray);
-	}
-
-	@Override
-	public void print(int depth) {
-		System.out.print("<BVHLeaf " + shape + ">");
 	}
 }
