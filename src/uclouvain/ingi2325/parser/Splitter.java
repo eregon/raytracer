@@ -10,6 +10,47 @@ public final class Splitter {
 		len = str.length();
 	}
 
+	public final boolean more() {
+		return pos < len;
+	}
+
+	public final char current() {
+		return str.charAt(pos);
+	}
+
+	public final String rest() {
+		return str.substring(pos);
+	}
+
+	public final boolean have(char c) {
+		if (str.charAt(pos) == c) {
+			pos++;
+			return true;
+		} else
+			return false;
+	}
+
+	public final int count(char c) {
+		int count = 0;
+		for (int i = pos; i < len; i++) {
+			if (str.charAt(i) == c)
+				count++;
+		}
+		return count;
+	}
+
+	public final void eatSpace() {
+		if (pos < len && str.charAt(pos) == ' ')
+			pos++;
+	}
+
+	public final String getWord() {
+		int start = pos;
+		while (pos < len && str.charAt(pos) != ' ')
+			pos++;
+		return str.substring(start, pos);
+	}
+
 	private final boolean negative() {
 		if (str.charAt(pos) == '-') {
 			pos++;
@@ -33,7 +74,7 @@ public final class Splitter {
 		return neg ? -value : value;
 	}
 
-	public float getFloat() {
+	public final float getFloat() {
 		float value = 0f;
 		boolean neg = negative();
 
@@ -55,46 +96,5 @@ public final class Splitter {
 			throw new NumberFormatException(str.substring(before));
 		value /= divider;
 		return neg ? -value : value;
-	}
-
-	public final boolean have(char c) {
-		if (str.charAt(pos) == c) {
-			pos++;
-			return true;
-		} else
-			return false;
-	}
-
-	public final String getWord() {
-		int start = pos;
-		while (pos < len && str.charAt(pos) != ' ')
-			pos++;
-		return str.substring(start, pos);
-	}
-
-	public final String rest() {
-		return str.substring(pos);
-	}
-
-	public final boolean more() {
-		return pos < len;
-	}
-
-	public final char current() {
-		return str.charAt(pos);
-	}
-
-	public final int count(char c) {
-		int count = 0;
-		for (int i = pos; i < len; i++) {
-			if (str.charAt(i) == c)
-				count++;
-		}
-		return count;
-	}
-
-	public final void eatSpace() {
-		if (pos < len && str.charAt(pos) == ' ')
-			pos++;
 	}
 }
