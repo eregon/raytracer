@@ -20,7 +20,7 @@ public class CLI {
 	}
 
 	public void render() {
-		RayTracer tracer = new RayTracer(scene, image, null);
+		RayTracer tracer = new RayTracer(scene, image);
 		tracer.render();
 		image.saveImage(outputFile);
 	}

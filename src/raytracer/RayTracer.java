@@ -14,15 +14,13 @@ public class RayTracer {
 	Scene scene;
 	Image image;
 	int height, width;
-	Runnable onPixelRendered;
 	BVH bvh;
 
-	public RayTracer(Scene scene, Image image, Runnable onPixelRendered) {
+	public RayTracer(Scene scene, Image image) {
 		this.scene = scene;
 		this.image = image;
 		height = image.getHeight();
 		width = image.getWidth();
-		this.onPixelRendered = onPixelRendered;
 	}
 
 	private int numberOfThreads() {
@@ -114,9 +112,6 @@ public class RayTracer {
 			color = scene.background;
 		}
 		image.drawPixel(x, y, color);
-
-		if (onPixelRendered != null)
-			onPixelRendered.run();
 	}
 
 	private String formatTime(double time) {
