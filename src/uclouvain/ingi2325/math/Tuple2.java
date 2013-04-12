@@ -1,8 +1,7 @@
 package uclouvain.ingi2325.math;
 
-import java.util.*;
-
-import uclouvain.ingi2325.exception.*;
+import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.parser.Splitter;
 
 /**
  * Represents a tuple of two float.
@@ -91,20 +90,14 @@ public abstract class Tuple2 {
 	 * @return The tuple
 	 * @throws ParseException string does not represent a valid Tuple2
 	 */
-	public static <T extends Tuple2> T valueOf(String string,
-			T tuple) throws ParseException {
-		StringTokenizer stringTokenizer = new StringTokenizer(string, " ");
+	public static <T extends Tuple2> T valueOf(String string, T tuple) throws ParseException {
+		Splitter s = new Splitter(string);
 
-		try {
-			tuple.x = Float.parseFloat(stringTokenizer.nextToken());
-			tuple.y = Float.parseFloat(stringTokenizer.nextToken());
-		} catch (NoSuchElementException error) {
-			throwParseException(string, tuple);
-		} catch (NumberFormatException error) {
-			throwParseException(string, tuple);
-		}
+		tuple.x = s.getFloat();
+		s.eatSpace();
+		tuple.y = s.getFloat();
 
-		if (stringTokenizer.hasMoreTokens())
+		if (s.more())
 			throwParseException(string, tuple);
 
 		return tuple;

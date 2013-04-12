@@ -8,12 +8,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 
 import raytracer.Geometry;
 import raytracer.Triangle;
 import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.parser.Splitter;
 
 public class FileGeometryParser {
 	BufferedReader io;
@@ -37,35 +37,36 @@ public class FileGeometryParser {
 		List<Geometry> geoms = new ArrayList<Geometry>();
 
 		while ((line = io.readLine()) != null) {
-			StringTokenizer parts = new StringTokenizer(line, " ");
-			String type = parts.nextToken().intern();
+			Splitter s = new Splitter(line);
+			String type = s.getWord().intern();
+			s.eatSpace();
 
 			if (type == "v") { // vertex
-				_vertices.add(Point3D.valueOf(parts.nextToken("\n")));
+				_vertices.add(Point3D.valueOf(s.rest()));
 			} else if (type == "vn") {
-				_normals.add(Vector3D.valueOf(parts.nextToken("\n")));
+				_normals.add(Vector3D.valueOf(s.rest()));
 			} else if (type == "f") { // surface
-				if (parts.countTokens() != 3) {
-					System.err.println("Unhandled polygon with " + parts.countTokens() + " vertices");
-				} else {
-					Point3D[] vertices = new Point3D[3];
-					Vector3D[] normals = new Vector3D[3];
 
-					for (int i = 0; i < 3; i++) {
-						StringTokenizer coord = new StringTokenizer(parts.nextToken(), "/");
-						vertices[i] = _vertices.get(Integer.valueOf(coord.nextToken()));
-						if (coord.hasMoreTokens()) {
-							coord.nextToken(); // TODO: texture
-							if (coord.hasMoreTokens())
-								normals[i] = _normals.get(Integer.valueOf(coord.nextToken()));
-							else
-								normals[i] = null;
-						}
+				Point3D[] vertices = new Point3D[3];
+				Vector3D[] normals = new Vector3D[3];
+
+				for (int i = 0; i < 3; i++) {
+					vertices[i] = _vertices.get(s.getInt());
+					if (s.have('/')) {
+						s.getInt(); // TODO: texture
+						if (s.have('/'))
+							normals[i] = _normals.get(s.getInt());
+						else
+							normals[i] = null;
 					}
+					s.eatSpace();
+				}
 
+				if (s.more())
+					System.err.println("Unhandled polygon with " + (4 + s.count(' ')) + " vertices");
+				else
 					geoms.add(new Triangle(vertices, normals));
 
-				}
 			}
 		}
 		return geoms;
