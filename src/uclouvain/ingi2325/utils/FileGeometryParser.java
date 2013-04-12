@@ -72,7 +72,8 @@ public class FileGeometryParser {
 
 	private Vector3D getNormal(Splitter s) {
 		if (s.have('/')) {
-			s.getInt(); // TODO: texture
+			if (s.current() != '/')
+				s.getInt(); // TODO: texture
 			if (s.have('/'))
 				return _normals.get(s.getInt());
 		}
