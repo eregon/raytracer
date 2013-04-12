@@ -46,29 +46,36 @@ public class FileGeometryParser {
 			} else if (type == "vn") {
 				_normals.add(Vector3D.valueOf(s.rest()));
 			} else if (type == "f") { // surface
+				Point3D a, b, c;
+				Vector3D na, nb, nc;
 
-				Point3D[] vertices = new Point3D[3];
-				Vector3D[] normals = new Vector3D[3];
+				a = _vertices.get(s.getInt());
+				na = getNormal(s);
+				s.eatSpace();
 
-				for (int i = 0; i < 3; i++) {
-					vertices[i] = _vertices.get(s.getInt());
-					if (s.have('/')) {
-						s.getInt(); // TODO: texture
-						if (s.have('/'))
-							normals[i] = _normals.get(s.getInt());
-						else
-							normals[i] = null;
-					}
-					s.eatSpace();
-				}
+				b = _vertices.get(s.getInt());
+				nb = getNormal(s);
+				s.eatSpace();
+
+				c = _vertices.get(s.getInt());
+				nc = getNormal(s);
 
 				if (s.more())
 					System.err.println("Unhandled polygon with " + (4 + s.count(' ')) + " vertices");
 				else
-					geoms.add(new Triangle(vertices, normals));
+					geoms.add(new Triangle(a, b, c, na, nb, nc));
 
 			}
 		}
 		return geoms;
+	}
+
+	private Vector3D getNormal(Splitter s) {
+		if (s.have('/')) {
+			s.getInt(); // TODO: texture
+			if (s.have('/'))
+				return _normals.get(s.getInt());
+		}
+		return null;
 	}
 }

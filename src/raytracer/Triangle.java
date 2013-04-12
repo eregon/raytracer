@@ -14,14 +14,14 @@ public class Triangle implements Geometry {
 		na = nb = nc = normal;
 	}
 
-	public Triangle(Point3D[] vertices, Vector3D[] normals) {
+	public Triangle(Point3D a, Point3D b, Point3D c, Vector3D na, Vector3D nb, Vector3D nc) {
 		super();
-		_a = vertices[0];
-		_b = vertices[1];
-		_c = vertices[2];
-		na = normals[0];
-		nb = normals[1];
-		nc = normals[2];
+		_a = a;
+		_b = b;
+		_c = c;
+		this.na = na;
+		this.nb = nb;
+		this.nc = nc;
 	}
 
 	@Override
