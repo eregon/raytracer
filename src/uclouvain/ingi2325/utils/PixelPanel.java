@@ -23,7 +23,7 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	/**
 	 * The image displayed in this canvas
 	 */
-	public Image image;
+	public final Image image;
 
 	/**
 	 * Construct a new CgPanel.

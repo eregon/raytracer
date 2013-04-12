@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class BVH {
-	BVHNode root;
+	final BVHNode root;
 
 	public BVH(List<Shape> shapes) {
 		root = generate(shapes);
@@ -42,16 +42,20 @@ public class BVH {
 }
 
 abstract class BVHNode implements Surface {
-	public BoundingBox boundingBox;
+	public final BoundingBox boundingBox;
+
+	public BVHNode(BoundingBox boundingBox) {
+		this.boundingBox = boundingBox;
+	}
 };
 
 class BVHSplitNode extends BVHNode {
 	BVHNode left, right;
 
 	public BVHSplitNode(BVHNode left, BVHNode right) {
+		super(BoundingBox.including(left.boundingBox, right.boundingBox));
 		this.left = left;
 		this.right = right;
-		boundingBox = BoundingBox.including(left.boundingBox, right.boundingBox);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import uclouvain.ingi2325.utils.Vector3D;
 
 public class Sphere implements Geometry {
 	// center is always at (0,0,0)
-	float radius;
+	final float radius;
 
 	public Sphere(float radius) {
 		super();

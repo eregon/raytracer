@@ -18,8 +18,8 @@ public abstract class Enumerator implements Iterator<Integer>, Iterable<Integer>
 }
 
 class LinearEnumerator extends Enumerator {
-	int height, width;
-	int current, next = 0, last;
+	final int height, width, last;
+	int current, next = 0;
 
 	public LinearEnumerator(int height, int width) {
 		this.height = height;
@@ -45,10 +45,10 @@ class LinearEnumerator extends Enumerator {
 
 class SpiralEnumerator extends Enumerator {
 	final int h, w;
-	int mx, my;
+	final int mx, my;
+	final int last;
 	int current;
 	Dir dir = Dir.NORTH;
-	int last;
 
 	public SpiralEnumerator(int height, int width) {
 		h = height;
@@ -84,16 +84,16 @@ class SpiralEnumerator extends Enumerator {
 }
 
 class CircleEnumerator extends Enumerator {
-	int h, w;
-	int mx, my;
+	final int h, w;
+	final int mx, my;
 	final int minx, maxx, miny, maxy;
-	int last;
+	final int last;
 	int x = 0, y = 1;
 	int r = 1;
 	int r_1 = r - 1;
 	Dir dir = Dir.SOUTH;
 	boolean hasNext = true;
-	Queue<Integer> produced = new ArrayDeque<Integer>();
+	final Queue<Integer> produced = new ArrayDeque<Integer>();
 
 	public CircleEnumerator(int height, int width) {
 		h = height;
@@ -198,9 +198,9 @@ class CircleEnumerator extends Enumerator {
 }
 
 class SkippingEnumerator extends Enumerator {
-	Enumerator iter;
-	int offset;
-	int every;
+	final Enumerator iter;
+	final int offset;
+	final int every;
 	boolean hasNext = true;
 	int current, next;
 
@@ -239,14 +239,14 @@ class SkippingEnumerator extends Enumerator {
 }
 
 class RadialEnumerator extends Enumerator {
-	Enumerator iter;
-	int offset;
-	int n;
-	int h, w;
-	int mx, my;
+	final Enumerator iter;
+	final int offset;
+	final int n;
+	final int h, w;
+	final int mx, my;
+	final double a, b;
 	boolean hasNext = true;
 	int current, next;
-	double a, b;
 
 	public RadialEnumerator(Enumerator iter, int offset, int n, int height, int width) {
 		this.iter = iter;

@@ -8,7 +8,7 @@ public class Transformation {
 
 	public static final Transformation DEFAULT = new Transformation();
 
-	public Transformation parent;
+	public final Transformation parent;
 
 	/** The transformation matrix */
 	public Matrix4 m;

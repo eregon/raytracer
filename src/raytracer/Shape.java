@@ -3,15 +3,15 @@ package raytracer;
 import java.util.Comparator;
 
 public class Shape extends BVHNode {
-	public Geometry geometry;
-	public Material material;
-	public Transformation transformation;
+	public final Geometry geometry;
+	public final Material material;
+	public final Transformation transformation;
 
 	public Shape(Geometry geometry, Material material, Transformation transformation) {
+		super(geometry.computeBoundingBox(transformation));
 		this.geometry = geometry;
 		this.material = material;
 		this.transformation = transformation;
-		boundingBox = geometry.computeBoundingBox(transformation);
 	}
 
 	@Override

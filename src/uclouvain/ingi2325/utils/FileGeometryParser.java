@@ -16,11 +16,10 @@ import uclouvain.ingi2325.exception.ParseException;
 import uclouvain.ingi2325.parser.Splitter;
 
 public class FileGeometryParser {
-	BufferedReader io;
-	String line;
+	final BufferedReader io;
 
-	ArrayList<Point3D> _vertices = new ArrayList<Point3D>();
-	ArrayList<Vector3D> _normals = new ArrayList<Vector3D>();
+	final ArrayList<Point3D> _vertices = new ArrayList<Point3D>();
+	final ArrayList<Vector3D> _normals = new ArrayList<Vector3D>();
 
 	public FileGeometryParser(File file) throws IOException {
 		InputStream is = new FileInputStream(file);
@@ -36,6 +35,7 @@ public class FileGeometryParser {
 	public List<Geometry> parse() throws IOException, ParseException {
 		List<Geometry> geoms = new ArrayList<Geometry>();
 
+		String line;
 		while ((line = io.readLine()) != null) {
 			Splitter s = new Splitter(line);
 			String type = s.getWord().intern();

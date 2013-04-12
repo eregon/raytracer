@@ -6,8 +6,8 @@ import java.util.List;
 
 /** Selection algorithm from http://rosettacode.org/wiki/Averages/Median#C */
 public class Median<T> {
-	List<T> list;
-	Comparator<T> comp;
+	final List<T> list;
+	final Comparator<T> comp;
 
 	public Median(List<T> list, Comparator<T> comp) {
 		this.list = list;

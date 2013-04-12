@@ -36,41 +36,23 @@ import uclouvain.ingi2325.parser.ParserHandler;
 public class SceneBuilder implements ParserHandler {
 
 	/**
-	 * The scene being build
-	 */
-	private Scene scene = null;
-
-	Map<String, Camera> cameras = new HashMap<String, Camera>();
-	Map<String, List<Geometry>> geometries = new HashMap<String, List<Geometry>>();
-	Map<String, Transformation> geometriesTransformations = new HashMap<String, Transformation>();
-	Map<String, Material> materials = new HashMap<String, Material>();
-	Map<String, Light> lights = new HashMap<String, Light>();
-
-	Transformation transformation = Transformation.DEFAULT;
-
-	/**
-	 * Returns the build scene
-	 * 
-	 * @return the build scene
-	 */
-	public Scene getScene() {
-		return scene;
-	}
-
-	/**
 	 * The path to the xml directory. This path can be used to locate texture
 	 * files.
 	 */
-	private String path = null;
+	private String path;
 
 	/**
-	 * Returns the path
-	 * 
-	 * @return the path
+	 * The scene being build
 	 */
-	public String getPath() {
-		return path;
-	}
+	private Scene scene;
+
+	final Map<String, Camera> cameras = new HashMap<String, Camera>();
+	final Map<String, List<Geometry>> geometries = new HashMap<String, List<Geometry>>();
+	final Map<String, Transformation> geometriesTransformations = new HashMap<String, Transformation>();
+	final Map<String, Material> materials = new HashMap<String, Material>();
+	final Map<String, Light> lights = new HashMap<String, Light>();
+
+	Transformation transformation = Transformation.DEFAULT;
 
 	/**
 	 * Load a scene.

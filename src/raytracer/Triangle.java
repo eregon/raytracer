@@ -4,8 +4,8 @@ import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;
 
 public class Triangle implements Geometry {
-	Point3D _a, _b, _c;
-	Vector3D na, nb, nc;
+	public final Point3D _a, _b, _c;
+	final Vector3D na, nb, nc;
 
 	public Triangle(Point3D a, Point3D b, Point3D c, Vector3D normal) {
 		_a = a;

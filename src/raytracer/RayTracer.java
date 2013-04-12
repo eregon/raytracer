@@ -11,16 +11,21 @@ import uclouvain.ingi2325.utils.Vector3D;
 public class RayTracer {
 	public final static boolean TRACE_BOUNDING_BOXES = false;
 
-	Scene scene;
-	Image image;
-	int height, width;
-	BVH bvh;
+	final Scene scene;
+	final Image image;
+	final int height, width;
+	final BVH bvh;
 
 	public RayTracer(Scene scene, Image image) {
 		this.scene = scene;
 		this.image = image;
 		height = image.getHeight();
 		width = image.getWidth();
+
+		long beforeBVH = System.currentTimeMillis();
+		bvh = new BVH(scene.objects);
+		long afterBVH = System.currentTimeMillis();
+		System.out.println("BVH built in " + formatTime((afterBVH - beforeBVH) / 1e3));
 	}
 
 	private int numberOfThreads() {
@@ -31,11 +36,6 @@ public class RayTracer {
 	}
 
 	public void render() {
-		long beforeBVH = System.currentTimeMillis();
-		bvh = new BVH(scene.objects);
-		long afterBVH = System.currentTimeMillis();
-		System.out.println("BVH built in " + formatTime((afterBVH - beforeBVH) / 1e3));
-
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
 		final Vector3D u = scene.camera.up.crossProduct(w).normalize();
