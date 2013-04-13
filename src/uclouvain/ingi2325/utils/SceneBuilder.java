@@ -23,7 +23,7 @@ import raytracer.Shape;
 import raytracer.Sphere;
 import raytracer.Transformation;
 import raytracer.Triangle;
-import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.exception.ParseError;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;
 
@@ -81,9 +81,7 @@ public class SceneBuilder implements ParserHandler {
 
 		System.out.print("Parsed in ");
 		long t0 = System.currentTimeMillis();
-		if (!parser.parse(inputSource, /* validate */true, /* echo */false)) {
-			scene = null;
-		}
+		parser.parse(inputSource, /* validate */true, /* echo */false);
 		long t1 = System.currentTimeMillis();
 		System.out.println(String.format("%.3fs", (t1 - t0) / 1e3));
 
@@ -425,29 +423,21 @@ public class SceneBuilder implements ParserHandler {
 	 * , java.lang.String)
 	 */
 	@Override
-	public void startFileGeometry(String filename, String name) {
+	public void startFileGeometry(String filename, String name) throws Exception {
 		File file = new File(path, filename);
 		File bmf = new File(file.getParent(), filename + ".bmf");
-		try {
-			List<Geometry> geoms;
-			if (bmf.exists()) {
-				geoms = new BinaryMeshFile(bmf).load();
-			} else {
-				geoms = new FileGeometryParser(file).parse();
-				if (!bmf.exists() && file.length() > 1024 * 1024) {
-					System.out.println("Creating BMF for " + filename);
-					new BinaryMeshFile(bmf).dump(geoms);
-				}
+		List<Geometry> geoms;
+		if (bmf.exists()) {
+			geoms = new BinaryMeshFile(bmf).load();
+		} else {
+			geoms = new FileGeometryParser(file).parse();
+			if (!bmf.exists() && file.length() > 1024 * 1024) {
+				System.out.println("Creating BMF for " + filename);
+				new BinaryMeshFile(bmf).dump(geoms);
 			}
-
-			geometries.put(name, geoms);
-		} catch (IOException e) {
-			System.err.println("Could not load " + file);
-			System.err.println("  " + e);
-		} catch (ParseException e) {
-			System.err.println("Could not parse " + file);
-			System.err.println("  " + e);
 		}
+
+		geometries.put(name, geoms);
 	}
 
 	/*
@@ -713,7 +703,7 @@ public class SceneBuilder implements ParserHandler {
 		transformation = transformation.parent;
 	}
 
-	private List<Geometry> loadFileGeometry(String filename) throws IOException, ParseException {
+	private List<Geometry> loadFileGeometry(String filename) throws IOException, ParseError {
 		return new FileGeometryParser(new File("XML", filename)).parse();
 	}
 

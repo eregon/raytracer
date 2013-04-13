@@ -1,6 +1,6 @@
 package uclouvain.ingi2325.utils;
 
-import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.exception.ParseError;
 import uclouvain.ingi2325.math.Tuple3;
 
 /**
@@ -88,10 +88,10 @@ public class Color extends Tuple3 {
 	 * Parse a Color from a string
 	 * @param string   String representation
 	 * @return The Color represented by string
-	 * @throws ParseException string is not a valid Color
+	 * @throws ParseError string is not a valid Color
 	 * @see Tuple3#valueOf(String, Tuple3)
 	 */
-	public static Color valueOf(String string) throws ParseException {
+	public static Color valueOf(String string) throws ParseError {
 		return valueOf(string, new Color());
 	}
 

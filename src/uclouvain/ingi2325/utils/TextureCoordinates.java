@@ -16,11 +16,11 @@ public class TextureCoordinates extends Tuple2 {
 	 * Parse a TextureCoordinates from a string
 	 * @param string   String representation
 	 * @return The TextureCoordinates represented by string
-	 * @throws ParseException string is not a valid TextureCoordinates
+	 * @throws ParseError string is not a valid TextureCoordinates
 	 * @see Tuple2#valueOf(String, Tuple2)
 	 */
 	public static TextureCoordinates valueOf(
-			String string) throws ParseException {
+			String string) throws ParseError {
 		return valueOf(string, new TextureCoordinates());
 	}
 }

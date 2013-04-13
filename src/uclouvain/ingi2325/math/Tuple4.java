@@ -1,6 +1,6 @@
 package uclouvain.ingi2325.math;
 
-import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.exception.ParseError;
 import uclouvain.ingi2325.parser.Splitter;
 
 /**
@@ -131,9 +131,9 @@ public abstract class Tuple4 {
 	 * @param string   String representation
 	 * @param tuple    Tuple to be filled
 	 * @return The tuple
-	 * @throws ParseException string does not represent a valid Tuple4
+	 * @throws ParseError string does not represent a valid Tuple4
 	 */
-	public static <T extends Tuple4> T valueOf(String string, T tuple) throws ParseException {
+	public static <T extends Tuple4> T valueOf(String string, T tuple) throws ParseError {
 		Splitter s = new Splitter(string);
 
 		tuple.x = s.getFloat();
@@ -155,11 +155,11 @@ public abstract class Tuple4 {
 	 * <p>This method never returns normally.
 	 * @param string   String that should have been parsed
 	 * @param tuple    Tuple that would have been filled
-	 * @throws ParseException
+	 * @throws ParseError
 	 */
 	private static void throwParseException(String string,
-			Tuple4 tuple) throws ParseException {
-		throw new ParseException(String.format(
+			Tuple4 tuple) throws ParseError {
+		throw new ParseError(String.format(
 				"Cannot convert '%s' into a %s", string,
 				tuple.getClass().getSimpleName()));
 	}

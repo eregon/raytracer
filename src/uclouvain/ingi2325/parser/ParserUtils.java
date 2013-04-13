@@ -3,7 +3,7 @@ package uclouvain.ingi2325.parser;
 import java.lang.reflect.*;
 import java.util.*;
 
-import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.exception.ParseError;
 
 /**
  * Utilities class used to parse Strings, floats, arrays of floats, ...
@@ -34,10 +34,10 @@ public class ParserUtils {
 	 * @param string           String representation
 	 * @param attributeClass   Class of the attribute
 	 * @return The parsed attribute
-	 * @throws ParseException
+	 * @throws ParseError
 	 */
 	static <T> T parseAttribute(String string, Class<T> attributeClass)
-			throws ParseException {
+			throws ParseError {
 		if (attributeClass.isArray())
 			return parseArrayAttribute(string, attributeClass);
 
@@ -57,7 +57,7 @@ public class ParserUtils {
 			return attributeClass.cast(result);
 		} catch (Exception error) {
 			System.err.println(error.getMessage());
-			throw new ParseException(String.format(
+			throw new ParseError(String.format(
 					"Could not parse %s from \"%s\".",
 					attributeClass.getSimpleName(), string));
 		}
@@ -68,10 +68,10 @@ public class ParserUtils {
 	 * @param string           String representation
 	 * @param attributeClass   Class of the array
 	 * @return The array attribute
-	 * @throws ParseException
+	 * @throws ParseError
 	 */
 	private static <T> T parseArrayAttribute(String string,
-			Class<T> attributeClass) throws ParseException {
+			Class<T> attributeClass) throws ParseError {
 		Class<?> componentType = attributeClass.getComponentType();
 
 		StringTokenizer stringTokenizer = new StringTokenizer(string, ",");

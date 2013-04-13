@@ -16,10 +16,10 @@ public class Point2D extends Tuple2 {
 	 * Parse a Point2D from a string
 	 * @param string   String representation
 	 * @return The Point2D represented by string
-	 * @throws ParseException string is not a valid Point2D
+	 * @throws ParseError string is not a valid Point2D
 	 * @see Tuple2#valueOf(String, Tuple2)
 	 */
-	public static Point2D valueOf(String string) throws ParseException {
+	public static Point2D valueOf(String string) throws ParseError {
 		return valueOf(string, new Point2D());
 	}
 }

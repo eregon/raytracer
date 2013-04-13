@@ -1,7 +1,7 @@
 package uclouvain.ingi2325.utils;
 
 import raytracer.Axis;
-import uclouvain.ingi2325.exception.ParseException;
+import uclouvain.ingi2325.exception.ParseError;
 import uclouvain.ingi2325.math.Tuple3;
 
 /**
@@ -49,10 +49,10 @@ public class Point3D extends Tuple3 {
 	 * Parse a Point3D from a string
 	 * @param string   String representation
 	 * @return The Point3D represented by string
-	 * @throws ParseException string is not a valid Point3D
+	 * @throws ParseError string is not a valid Point3D
 	 * @see Tuple3#valueOf(String, Tuple3)
 	 */
-	public static Point3D valueOf(String string) throws ParseException {
+	public static Point3D valueOf(String string) throws ParseError {
 		return valueOf(string, new Point3D());
 	}
 

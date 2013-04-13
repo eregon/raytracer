@@ -1,15 +1,23 @@
 package uclouvain.ingi2325.parser;
 
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
-import uclouvain.ingi2325.exception.*;
+import uclouvain.ingi2325.exception.ParseError;
 
 /**
  * Parser for SDL files
@@ -22,11 +30,11 @@ public final class Parser extends DefaultHandler {
 
 	/** Methods of ParserHandler that start an element */
 	private static final Map<String, Method> startMethods =
-		new HashMap<String, Method>();
+			new HashMap<String, Method>();
 
 	/** Methods of ParserHandler that end an element */
 	private static final Map<String, Method> endMethods =
-		new HashMap<String, Method>();
+			new HashMap<String, Method>();
 
 	/**
 	 * The locator of the document being parsed.
@@ -35,7 +43,7 @@ public final class Parser extends DefaultHandler {
 
 	/** Handlers */
 	private final List<ParserHandler> handlers =
-		new ArrayList<ParserHandler>(2);
+			new ArrayList<ParserHandler>(2);
 
 	static {
 		// Fill startMethods and endMethods
@@ -91,9 +99,8 @@ public final class Parser extends DefaultHandler {
 	 *            True for validating the document on parsing
 	 * @param echo
 	 *            If true, the document is echoed to the standard output
-	 * @return a boolean indicating if the parse was successful.
 	 */
-	public boolean parse(InputSource input, boolean validate, boolean echo) {
+	public void parse(InputSource input, boolean validate, boolean echo) {
 		if (echo)
 			handlers.add(0, EchoParserHandler.makeHandler());
 
@@ -109,19 +116,10 @@ public final class Parser extends DefaultHandler {
 			SAXParser saxParser = factory.newSAXParser();
 			saxParser.parse(input, saxHandler);
 		} catch (SAXParseException e) {
-			// Report the exception (with the line number) and return false
-			System.err.print("ERROR : " + e.getMessage());
-			System.err.println((e.getLineNumber() > 0 ? (" (line "
-					+ e.getLineNumber() + ")") : ""));
-			return false;
+			throw new ParseError("Error during parsing at line " + e.getLineNumber(), e);
 		} catch (Exception e) {
-			// Report the exception and return false
-			System.err.println("ERROR : " + e.getMessage());
-			return false;
+			throw new ParseError(e);
 		}
-
-		// The parsing has succeeded
-		return true;
 	}
 
 	/**
@@ -175,7 +173,7 @@ public final class Parser extends DefaultHandler {
 					parameters[i] = ParserUtils.parseAttribute(value, type);
 				} else if (optional == null) {
 					// Missing non-optional attribute
-					throw new ParseException(String.format(
+					throw new ParseError(String.format(
 							"Element \"%s\" requires attribute \"%s\".",
 							qName, name));
 				} else if (!optional.value().equals(Optional.NULL_STRING)) {
@@ -191,7 +189,6 @@ public final class Parser extends DefaultHandler {
 			invokeHandlerMethod(method, parameters);
 		} catch (Exception exception) {
 			// Catch any exception and turn it into a SAXParseException
-			exception.printStackTrace();
 			throw new SAXParseException(null, locator, exception);
 		}
 	}
@@ -228,15 +225,15 @@ public final class Parser extends DefaultHandler {
 	 * @param name
 	 *            Name in the map
 	 * @return The method
-	 * @throws ParseException
+	 * @throws ParseError
 	 *             The method was not found
 	 */
 	private Method findMethod(Map<String, Method> methods, String name)
-			throws ParseException {
+			throws ParseError {
 		Method method = methods.get(name);
 
 		if (method == null)
-			throw new ParseException(String.format(
+			throw new ParseError(String.format(
 					"Unknown element \"%s\".", name));
 
 		return method;
