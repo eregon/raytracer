@@ -56,7 +56,7 @@ public class Demo {
 					panel.repaint();
 				}
 			}
-		});
+		}, "GUI Updater");
 	}
 
 	public void render() {

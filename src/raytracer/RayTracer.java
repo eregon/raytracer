@@ -72,7 +72,7 @@ public class RayTracer {
 				}
 			};
 
-			threads[i] = new Thread(task);
+			threads[i] = new Thread(task, "Renderer " + (i + 1));
 		}
 
 		long t0 = System.currentTimeMillis();
