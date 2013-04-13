@@ -75,26 +75,38 @@ public final class Splitter {
 	}
 
 	public final float getFloat() {
-		float value = 0f;
+		double value = 0;
 		boolean neg = negative();
 
 		int before = pos;
 		int divider = 1;
+		int exponent = 0;
 		boolean afterDot = false;
 		char c;
 		while (pos < len && ((c = str.charAt(pos)) >= '0' && c <= '9')) {
 			value = 10 * value + (str.charAt(pos) - '0');
 			pos++;
-			if (afterDot) {
+
+			if (afterDot)
 				divider *= 10;
-			} else if (pos < len && str.charAt(pos) == '.') {
-				afterDot = true;
+
+			if (pos == len)
+				break;
+
+			if (str.charAt(pos) == '.') {
 				pos++;
+				afterDot = true;
+			} else if (str.charAt(pos) == 'E') {
+				pos++;
+				exponent = getInt();
+				break;
 			}
 		}
 		if (pos == before)
 			throw new NumberFormatException(str.substring(before));
 		value /= divider;
-		return neg ? -value : value;
+		if (exponent != 0)
+			value *= Math.pow(10, exponent);
+		return (float) (neg ? -value : value);
 	}
 }
