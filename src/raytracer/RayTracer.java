@@ -104,9 +104,9 @@ public class RayTracer {
 
 			for (Light light : scene.lights) {
 				Vector3D l = light.l(hit);
-				// absolute value for two-sided lighting
-				float diffuse = Math.abs(n.dotProduct(l)) * light.intensity;
-				color = color.add(light.color.mul(diffuse));
+				float diffuse = n.dotProduct(l);
+				if (diffuse > 0)
+					color = color.add(light.color.mul(diffuse * light.intensity));
 			}
 
 			// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
