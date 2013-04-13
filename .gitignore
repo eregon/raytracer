@@ -13,6 +13,7 @@
 
 XML/*.obj
 XML/*.obj.gz
+XML/*.bmf
 XML/tmp.sdl
 
 # LaTeX

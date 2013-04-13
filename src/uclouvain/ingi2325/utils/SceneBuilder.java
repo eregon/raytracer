@@ -427,8 +427,20 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startFileGeometry(String filename, String name) {
 		File file = new File(path, filename);
+		File bmf = new File(file.getParent(), filename + ".bmf");
 		try {
-			geometries.put(name, new FileGeometryParser(file).parse());
+			List<Geometry> geoms;
+			if (bmf.exists()) {
+				geoms = new BinaryMeshFile(bmf).load();
+			} else {
+				geoms = new FileGeometryParser(file).parse();
+				if (!bmf.exists() && file.length() > 1024 * 1024) {
+					System.out.println("Creating BMF for " + filename);
+					new BinaryMeshFile(bmf).dump(geoms);
+				}
+			}
+
+			geometries.put(name, geoms);
 		} catch (IOException e) {
 			System.err.println("Could not load " + file);
 			System.err.println("  " + e);
