@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
@@ -25,7 +26,7 @@ public class FileGeometryParser {
 		InputStream is = new FileInputStream(file);
 		if (file.getName().endsWith(".gz"))
 			is = new GZIPInputStream(is);
-		io = new BufferedReader(new InputStreamReader(is));
+		io = new BufferedReader(new InputStreamReader(is, Charset.forName("ASCII")));
 
 		// Indexes start at 1
 		_vertices.add(null);
