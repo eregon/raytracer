@@ -1,6 +1,8 @@
 package uclouvain.ingi2325.parser;
 
 public final class Splitter {
+	private static final int MAX_FLOAT_DECIMAL_DIGITS = 7;
+
 	final String str;
 	final int len;
 	int pos;
@@ -83,8 +85,10 @@ public final class Splitter {
 		int exponent = 0;
 		boolean afterDot = false;
 		char c;
+		int digits = 0;
 		while (pos < len && ((c = str.charAt(pos)) >= '0' && c <= '9')) {
 			value = 10 * value + (str.charAt(pos) - '0');
+			digits++;
 			pos++;
 
 			if (afterDot)
@@ -99,6 +103,12 @@ public final class Splitter {
 			} else if (str.charAt(pos) == 'E') {
 				pos++;
 				exponent = getInt();
+				break;
+			}
+
+			if (digits > MAX_FLOAT_DECIMAL_DIGITS) {
+				while (pos < len && ((c = str.charAt(pos)) >= '0' && c <= '9'))
+					pos++;
 				break;
 			}
 		}
