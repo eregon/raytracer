@@ -1,6 +1,7 @@
 package raytracer;
 
 import java.lang.management.ManagementFactory;
+import java.util.List;
 
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
@@ -22,8 +23,10 @@ public class RayTracer {
 		height = image.getHeight();
 		width = image.getWidth();
 
+		List<Shape> shapes = scene.objects;
+		scene.objects = null; // no more needed, the BVH replaces it
 		long beforeBVH = System.currentTimeMillis();
-		bvh = new BVH(scene.objects);
+		bvh = new BVH(shapes);
 		long afterBVH = System.currentTimeMillis();
 		System.out.println("BVH built in " + formatTime((afterBVH - beforeBVH) / 1e3));
 	}
