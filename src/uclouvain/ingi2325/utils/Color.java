@@ -47,7 +47,7 @@ public class Color extends Tuple3 {
 		super(0, 0, 0);
 	}
 
-	public Color normalize() {
+	public Color validate() {
 		return new Color(clamp(x), clamp(y), clamp(z));
 	}
 

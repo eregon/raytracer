@@ -110,7 +110,7 @@ public class RayTracer {
 			}
 
 			// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
-			color = inter.shape.material.color.mul(color).normalize();
+			color = inter.shape.material.color.mul(color).validate();
 		} else {
 			color = scene.background;
 		}
