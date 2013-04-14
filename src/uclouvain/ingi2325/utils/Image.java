@@ -2,6 +2,7 @@ package uclouvain.ingi2325.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -20,17 +21,15 @@ public class Image extends BufferedImage {
 	 * 
 	 * @param file
 	 *            the filename used to save the file.
-	 * @return true if image was successfully written, false otherwise
 	 */
-	public boolean saveImage(String file) {
+	public void saveImage(String file) {
+		//Graphics2D g2;
+		//g2 = createGraphics();
+		//g2.drawImage(this, null, null);
 		try {
-			//Graphics2D g2;
-			//g2 = createGraphics();
-			//g2.drawImage(this, null, null);
 			ImageIO.write(this, "png", new File(file));
-			return true;
-		} catch (Exception e) {
-			return false;
+		} catch (IOException e) {
+			throw new Error(e);
 		}
 	}
 }
