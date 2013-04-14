@@ -3,8 +3,6 @@ package uclouvain.ingi2325.utils;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 /**
  * Represents a canvas you can draw on.
@@ -16,9 +14,7 @@ import java.awt.event.ComponentListener;
  * @author Antoine Cailliau <antoine.cailliau@uclouvain.be>
  * @author Julien Dupuis
  */
-public class PixelPanel extends Canvas implements ComponentListener {
-
-	private static final long serialVersionUID = 1L;
+public class PixelPanel extends Canvas {
 
 	/**
 	 * The image displayed in this canvas
@@ -32,9 +28,6 @@ public class PixelPanel extends Canvas implements ComponentListener {
 		setSize(new Dimension(width, height));
 		setPreferredSize(new Dimension(width, height));
 		image = new Image(width, height);
-		addComponentListener(this);
-		componentResized(new ComponentEvent(this,
-				ComponentEvent.COMPONENT_RESIZED));
 	}
 
 	/*
@@ -56,49 +49,4 @@ public class PixelPanel extends Canvas implements ComponentListener {
 	public void update(Graphics g) {
 		g.drawImage(image, 0, 0, this);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.ComponentListener#componentResized(java.awt.event.
-	 * ComponentEvent)
-	 */
-	@Override
-	public void componentResized(ComponentEvent e) {
-		// TODO: Should recall RayTracer?
-		// image = new Image(getWidth(), getHeight());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.ComponentListener#componentHidden(java.awt.event.
-	 * ComponentEvent)
-	 */
-	@Override
-	public void componentHidden(ComponentEvent e) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * java.awt.event.ComponentListener#componentMoved(java.awt.event.ComponentEvent
-	 * )
-	 */
-	@Override
-	public void componentMoved(ComponentEvent e) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * java.awt.event.ComponentListener#componentShown(java.awt.event.ComponentEvent
-	 * )
-	 */
-	@Override
-	public void componentShown(ComponentEvent e) {
-	}
-
 }

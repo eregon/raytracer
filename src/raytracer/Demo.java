@@ -36,6 +36,7 @@ public class Demo {
 		tracer = new RayTracer(scene, panel.image);
 
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
