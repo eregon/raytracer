@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="278.0 273.0 -800.0" direction="0.0 0.0 1.0" up="0.0 1.0 0.0" fovy="60" name="cam0" /> 
+   </Cameras>   
+   
+   <Lights>
+      <PointLight position="343 548.8 227" intensity="0.25" color="1 1 1" name="light1" />
+      <PointLight position="343 548.8 332" intensity="0.25" color="1 1 1" name="light2" />
+      <PointLight position="213 548.8 332" intensity="0.25" color="1 1 1" name="light3" />
+      <PointLight position="213 548.8 227" intensity="0.25" color="1 1 1" name="light4" />
+   </Lights>
+   
+   <Geometry>
+      <FileGeometry filename="cornellbox.obj" name="subject" />
+   </Geometry>
+   
+   <Materials>
+      <DiffuseMaterial color="1 1 1" name="white" />
+   </Materials>
+   
+   <Scene camera="cam0" lights="light1, light2, light3, light4" background="0.5 0.5 0.5">
+      <Shape geometry="subject" material="white" />
+   </Scene>
+</Sdl>
