@@ -102,10 +102,17 @@ public class RayTracer {
 
 		Point3D hit = inter.point;
 		Vector3D n = inter.normal();
+		Ray shadowRay = new Ray(hit);
 		Color color = Color.BLACK;
 
 		for (Light light : scene.lights) {
 			Vector3D l = light.l(hit);
+
+			shadowRay.setDirection(l);
+			Intersection i = bvh.root.intersection(shadowRay);
+			if (i != null)
+				return Color.BLACK;
+
 			float diffuse = n.dotProduct(l);
 			if (diffuse > 0)
 				color = color.add(light.color.mul(diffuse * light.intensity));
