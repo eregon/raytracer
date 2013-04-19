@@ -65,7 +65,8 @@ public class RayTracer {
 						float a = x + 0.5f - width / 2f;
 						float b = y + 0.5f - height / 2f;
 						ray.setDirection(w.mul(d).opposite().add(u.mul(a)).add(v.mul(b))); // −dW + aU + bV
-						renderPixel(x, y, ray);
+						Color color = renderPixel(x, y, ray);
+						image.drawPixel(x, y, color);
 					}
 					long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
 					times[offset] = (t1 - t0) / 1e9;
@@ -93,28 +94,25 @@ public class RayTracer {
 
 	}
 
-	private void renderPixel(int x, int y, Ray ray) {
+	private Color renderPixel(int x, int y, Ray ray) {
 		Intersection inter = bvh.root.intersection(ray);
-		Color color;
 
-		if (inter != null) {
-			Point3D hit = inter.point;
-			Vector3D n = inter.normal();
-			color = Color.BLACK;
+		if (inter == null)
+			return scene.background;
 
-			for (Light light : scene.lights) {
-				Vector3D l = light.l(hit);
-				float diffuse = n.dotProduct(l);
-				if (diffuse > 0)
-					color = color.add(light.color.mul(diffuse * light.intensity));
-			}
+		Point3D hit = inter.point;
+		Vector3D n = inter.normal();
+		Color color = Color.BLACK;
 
-			// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
-			color = inter.shape.material.color.mul(color).validate();
-		} else {
-			color = scene.background;
+		for (Light light : scene.lights) {
+			Vector3D l = light.l(hit);
+			float diffuse = n.dotProduct(l);
+			if (diffuse > 0)
+				color = color.add(light.color.mul(diffuse * light.intensity));
 		}
-		image.drawPixel(x, y, color);
+
+		// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
+		return inter.shape.material.color.mul(color).validate();
 	}
 
 	private String formatTime(double time) {
