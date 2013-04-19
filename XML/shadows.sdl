@@ -12,6 +12,7 @@
 
    <Geometry>
       <Sphere radius="1" name="sphere" />
+      <Cube size="1" name="cube" />
       <IndexedTriangleSet name="plane"
        coordinates="-5 0 -5, -5 0 5, 5 0 5, 5 0 -5"
        textureCoordinates="0.0 0.0"
@@ -24,13 +25,21 @@
 
    <Materials>
       <DiffuseMaterial color="1 1 1" name="white" />
+      <DiffuseMaterial color="1 0 0" name="red" />
+      <DiffuseMaterial color="1 1 0" name="yellow" />
       <DiffuseMaterial color="0 0 1" name="blue" />
    </Materials>
 
    <Scene camera="cam0" lights="light1" background="0.1 0.1 0.1">
       <Translate vector="0 -2 0">
-         <Scale scale="1 1 1">
-            <Shape geometry="plane" material="white" />
+         <Shape geometry="plane" material="white" />
+      </Translate>
+      <Translate vector="-2 1 0">
+         <Shape geometry="cube" material="red" />
+      </Translate>
+      <Translate vector="0 3 2">
+         <Scale scale="0.5 0.5 0.5">
+            <Shape geometry="sphere" material="yellow" />
          </Scale>
       </Translate>
       <Translate vector="0 1 0">
