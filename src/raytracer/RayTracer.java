@@ -109,15 +109,13 @@ public class RayTracer {
 
 		for (Light light : scene.lights) {
 			Vector3D l = light.l(hit);
-
-			shadowRay.setDirection(l);
-			Intersection i = bvh.root.intersection(shadowRay, LIGHT_EPSILON, light.distanceTo(hit));
-			if (i != null)
-				return Color.BLACK;
-
 			float diffuse = n.dotProduct(l);
-			if (diffuse > 0)
-				color = color.add(light.color.mul(diffuse * light.intensity));
+			if (diffuse > 0) { // First check if light is not in opposite direction
+				shadowRay.setDirection(l);
+				Intersection i = bvh.root.intersection(shadowRay, LIGHT_EPSILON, light.distanceTo(hit));
+				if (i == null)
+					color = color.add(light.color.mul(diffuse * light.intensity));
+			}
 		}
 
 		// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
