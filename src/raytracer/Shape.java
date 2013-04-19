@@ -29,8 +29,10 @@ public class Shape extends BVHNode {
 			ray.setDirection(transformation.m_1.mul(worldRay.direction));
 			inter = geometry.intersection(ray, t0, t1);
 		}
-		if (inter != null)
+		if (inter != null) {
+			inter.computePoint(worldRay);
 			inter.shape = this;
+		}
 		return inter;
 	}
 
