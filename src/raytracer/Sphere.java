@@ -66,7 +66,7 @@ public class Sphere implements Geometry {
 
 			Intersection inter = new Intersection();
 			inter.distance = t;
-			inter.computePoint(ray);
+			inter.computePoint(ray); // needed for normal, see below
 			inter.normal = inter.point.toVector().normalized();
 			return inter;
 		} else {

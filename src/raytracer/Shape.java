@@ -30,6 +30,7 @@ public class Shape extends BVHNode {
 			inter = geometry.intersection(ray, t0, t1);
 		}
 		if (inter != null) {
+			// Compute intersection point in world coordinates
 			inter.computePoint(worldRay);
 			inter.shape = this;
 		}
