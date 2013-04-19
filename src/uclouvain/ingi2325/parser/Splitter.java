@@ -25,7 +25,7 @@ public final class Splitter {
 	}
 
 	public final boolean have(char c) {
-		if (str.charAt(pos) == c) {
+		if (pos < len && str.charAt(pos) == c) {
 			pos++;
 			return true;
 		} else
