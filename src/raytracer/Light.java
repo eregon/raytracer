@@ -15,4 +15,6 @@ public abstract class Light {
 	}
 
 	public abstract Vector3D l(Point3D hit);
+
+	public abstract float distanceTo(Point3D hit);
 }

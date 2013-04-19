@@ -12,6 +12,8 @@ import uclouvain.ingi2325.utils.Vector3D;
 public class RayTracer {
 	public final static boolean TRACE_BOUNDING_BOXES = false;
 
+	public final static float LIGHT_EPSILON = 0.0001f;
+
 	final Scene scene;
 	final Image image;
 	final int height, width;
@@ -109,7 +111,7 @@ public class RayTracer {
 			Vector3D l = light.l(hit);
 
 			shadowRay.setDirection(l);
-			Intersection i = bvh.root.intersection(shadowRay, 0, Float.POSITIVE_INFINITY);
+			Intersection i = bvh.root.intersection(shadowRay, LIGHT_EPSILON, light.distanceTo(hit));
 			if (i != null)
 				return Color.BLACK;
 

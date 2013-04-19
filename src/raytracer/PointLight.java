@@ -18,4 +18,9 @@ public class PointLight extends Light {
 		return position.sub(hit).normalized();
 	}
 
+	@Override
+	public float distanceTo(Point3D hit) {
+		return position.distanceTo(hit);
+	}
+
 }

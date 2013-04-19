@@ -71,4 +71,9 @@ public class Point3D extends Tuple3 {
 	public Point3D middle(Point3D p) {
 		return new Point3D((x + p.x) / 2, (y + p.y) / 2, (z + p.z) / 2);
 	}
+
+	public float distanceTo(Point3D p) {
+		float dx = x - p.x, dy = y - p.y, dz = z - p.z;
+		return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+	}
 }
