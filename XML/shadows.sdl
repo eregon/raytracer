@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="5 5 5" direction="-0.5 -0.5 -0.5" up="0 1 0" fovy="45" name="cam0" />
+   </Cameras>
+
+   <Lights>
+      <PointLight position="5 5 5" intensity="1" color="1 1 1" name="light0" />
+   </Lights>
+
+   <Geometry>
+      <Sphere radius="1" name="sphere" />
+      <Cube size="1" name="plane" />
+   </Geometry>
+
+   <Materials>
+      <DiffuseMaterial color="1 1 1" name="white" />
+      <DiffuseMaterial color="0 0 1" name="blue" />
+   </Materials>
+
+   <Scene camera="cam0" lights="light0" background="0.1 0.1 0.1">
+      <Translate vector="-2 -2 -2">
+         <Scale scale="10 0.1 10">
+            <Shape geometry="plane" material="white" />
+         </Scale>
+      </Translate>
+      <Shape geometry="sphere" material="blue" />
+   </Scene>
+</Sdl>
