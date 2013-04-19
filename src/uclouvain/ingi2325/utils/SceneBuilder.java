@@ -581,8 +581,12 @@ public class SceneBuilder implements ParserHandler {
 			Color background) throws Exception {
 		scene.camera = cameras.get(cameraName);
 		scene.background = background;
-		for (String lightName : lightNames)
-			scene.lights.add(lights.get(lightName));
+		for (String lightName : lightNames) {
+			Light light = lights.get(lightName);
+			if (light == null)
+				throw new ParseError("Light " + lightName + " not found!");
+			scene.lights.add(light);
+		}
 	}
 
 	/*
