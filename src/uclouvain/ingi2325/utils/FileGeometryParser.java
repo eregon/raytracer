@@ -61,6 +61,9 @@ public class FileGeometryParser {
 				c = _vertices.get(s.getInt());
 				nc = getNormal(s);
 
+				if (na == null || nb == null || nc == null)
+					na = nb = nc = b.sub(a).crossProduct(c.sub(a));
+
 				if (s.more())
 					System.err.println("Unhandled polygon with " + (4 + s.count(' ')) + " vertices");
 				else
