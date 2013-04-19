@@ -7,7 +7,8 @@
    </Cameras>
 
    <Lights>
-      <PointLight position="0 50 20" intensity="1" color="1 1 1" name="light1" />
+      <PointLight position="5 5 4" intensity="0.5" color="1 1 1" name="light0" />
+      <PointLight position="0 50 20" intensity="0.5" color="1 1 1" name="light1" />
    </Lights>
 
    <Geometry>
@@ -30,7 +31,7 @@
       <DiffuseMaterial color="0 0 1" name="blue" />
    </Materials>
 
-   <Scene camera="cam0" lights="light1" background="0.1 0.1 0.1">
+   <Scene camera="cam0" lights="light0, light1" background="0.1 0.1 0.1">
       <Translate vector="0 -2 0">
          <Shape geometry="plane" material="white" />
       </Translate>
