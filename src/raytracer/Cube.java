@@ -46,8 +46,8 @@ public class Cube extends BoundingBox implements Geometry {
 	}
 
 	@Override
-	public Intersection intersection(Ray ray) {
-		Intersection inter = super.intersection(ray);
+	public Intersection intersection(Ray ray, float t0, float t1) {
+		Intersection inter = super.intersection(ray, t0, t1);
 		if (inter != null) {
 			inter.computePoint(ray);
 			Point3D p = inter.point;

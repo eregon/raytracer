@@ -95,7 +95,7 @@ public class RayTracer {
 	}
 
 	private Color renderPixel(int x, int y, Ray ray) {
-		Intersection inter = bvh.root.intersection(ray);
+		Intersection inter = bvh.root.intersection(ray, 0, Float.POSITIVE_INFINITY);
 
 		if (inter == null)
 			return scene.background;
@@ -109,7 +109,7 @@ public class RayTracer {
 			Vector3D l = light.l(hit);
 
 			shadowRay.setDirection(l);
-			Intersection i = bvh.root.intersection(shadowRay);
+			Intersection i = bvh.root.intersection(shadowRay, 0, Float.POSITIVE_INFINITY);
 			if (i != null)
 				return Color.BLACK;
 

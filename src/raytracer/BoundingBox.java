@@ -67,7 +67,7 @@ public class BoundingBox implements Surface {
 	}
 
 	@Override
-	public Intersection intersection(Ray ray) {
+	public Intersection intersection(Ray ray, float t0, float t1) {
 		// From http://www.cs.utah.edu/~awilliam/box/box.pdf
 		float tmin, tmax, tymin, tymax, tzmin, tzmax;
 
@@ -94,11 +94,11 @@ public class BoundingBox implements Surface {
 		if (tzmax < tmax)
 			tmax = tzmax;
 
-		if (tmax <= 0)
+		if (tmax < t0 || tmin > t1)
 			return null;
 
 		Intersection inter = new Intersection();
-		inter.distance = tmin > 0 ? tmin : tmax;
+		inter.distance = tmin > t0 ? tmin : tmax;
 		return inter;
 	}
 }

@@ -19,15 +19,15 @@ public class Shape extends BVHNode {
 	}
 
 	@Override
-	public Intersection intersection(Ray worldRay) {
+	public Intersection intersection(Ray worldRay, float t0, float t1) {
 		Intersection inter;
 
 		if (transformation.isDefault()) {
-			inter = geometry.intersection(worldRay);
+			inter = geometry.intersection(worldRay, t0, t1);
 		} else {
 			Ray ray = new Ray(transformation.m_1.mul(worldRay.origin));
 			ray.setDirection(transformation.m_1.mul(worldRay.direction));
-			inter = geometry.intersection(ray);
+			inter = geometry.intersection(ray, t0, t1);
 		}
 		if (inter != null)
 			inter.shape = this;

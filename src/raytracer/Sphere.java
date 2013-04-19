@@ -40,7 +40,7 @@ public class Sphere implements Geometry {
 	}
 
 	@Override
-	public Intersection intersection(Ray ray) {
+	public Intersection intersection(Ray ray, float t0, float t1) {
 		Vector3D e_c = ray.origin.toVector();
 		float A = ray.direction.dotProduct(ray.direction); // d*d, strictly positive
 		float B = 2 * ray.direction.dotProduct(e_c); // 2 * d * (e - c)
@@ -62,9 +62,10 @@ public class Sphere implements Geometry {
 					return null;
 			} else {
 				t = -B / (2 * A);
-				if (t <= 0)
-					return null;
 			}
+
+			if (t < t0 || t > t1)
+				return null;
 
 			Intersection inter = new Intersection();
 			inter.distance = t;
