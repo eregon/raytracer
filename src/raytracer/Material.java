@@ -37,6 +37,6 @@ public class Material {
 			float s = (float) Math.pow(n.dotProduct(h), shininess); // specular factor
 			color = color.add(specular.mul(s));
 		}
-		return color.mul(light.color.mul(light.intensity));
+		return color.mul(light.computedColor);
 	}
 }
