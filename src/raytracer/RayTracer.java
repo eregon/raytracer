@@ -97,7 +97,7 @@ public class RayTracer {
 	}
 
 	private Color renderPixel(int x, int y, Ray ray) {
-		Intersection inter = bvh.root.intersection(ray, 0, Float.POSITIVE_INFINITY);
+		Intersection inter = bvh.intersection(ray, 0, Float.POSITIVE_INFINITY);
 
 		if (inter == null)
 			return scene.background;
@@ -112,7 +112,7 @@ public class RayTracer {
 			float diffuse = n.dotProduct(l);
 			if (diffuse > 0) { // First check if light is not in opposite direction
 				shadowRay.setDirection(l);
-				Intersection i = bvh.root.intersection(shadowRay, LIGHT_EPSILON, light.distanceTo(hit));
+				Intersection i = bvh.intersection(shadowRay, LIGHT_EPSILON, light.distanceTo(hit));
 				if (i == null)
 					color = color.add(light.color.mul(diffuse * light.intensity));
 			}

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class BVH {
-	final BVHNode root;
+public class BVH implements Surface {
+	private final BVHNode root;
 
 	public BVH(List<Shape> shapes) {
 		root = generate(shapes);
@@ -38,6 +38,11 @@ public class BVH {
 		return new BVHSplitNode(
 				generate(left, next),
 				generate(right, next));
+	}
+
+	@Override
+	public Intersection intersection(Ray ray, float t0, float t1) {
+		return root.intersection(ray, t0, t1);
 	}
 }
 
