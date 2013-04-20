@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="15 15 15" direction="-15 -15 -15" up="0 1 0" fovy="20" name="cam0" />
+   </Cameras>
+
+   <Lights>
+      <PointLight position="10 10 10" intensity="2" color="0.1 0.2 0.9" name="light0" />
+      <PointLight position="-10 -10 10" intensity="1.8" color="1 1 1" name="light1" />
+      <PointLight position="10 -10 10" intensity="2" color="0.9 0.2 0.3" name="light2" />
+      <PointLight position="-10 10 10" intensity="1.8" color="1 1 1" name="light3" />
+   </Lights>
+
+   <Geometry>
+      <Teapot size="1" name="cyl0" />
+   </Geometry>
+
+   <Materials>
+      <DiffuseMaterial color="1 1 0" name="diffuse1" />
+      <PhongMaterial color="1 1 1" shininess="20" name="phong1" />
+      <LinearCombinedMaterial material1="diffuse1" weight1="0.3" material2="phong1" weight2="0.7" name="lc1" />
+   </Materials>
+
+   <Scene camera="cam0" lights="light0,light1,light2,light3" background="0 0 0">
+      <Shape geometry="cyl0" material="lc1" />
+   </Scene>
+</Sdl>

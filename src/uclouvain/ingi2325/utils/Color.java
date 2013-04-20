@@ -14,6 +14,7 @@ public class Color extends Tuple3 {
 
 	public static final Color BLACK = new Color(0, 0, 0);
 	public static final Color WHITE = new Color(1, 1, 1);
+	public static final Color NONE = new Color(0, 0, 0);
 
 	/**
 	 * Constructs and initializes a color from the three given values.

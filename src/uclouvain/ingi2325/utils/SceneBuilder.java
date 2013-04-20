@@ -534,9 +534,8 @@ public class SceneBuilder implements ParserHandler {
 	 * ingi2325.utils.Color, float, java.lang.String)
 	 */
 	@Override
-	public void startPhongMaterial(Color color, float shininess, String name)
-			throws Exception {
-
+	public void startPhongMaterial(Color color, float shininess, String name) throws Exception {
+		materials.put(name, new Material(color, color, shininess));
 	}
 
 	/*
@@ -556,9 +555,9 @@ public class SceneBuilder implements ParserHandler {
 	 * .lang.String, float, java.lang.String, float, java.lang.String)
 	 */
 	@Override
-	public void startLinearCombinedMaterial(String material1Name,
-			float weight1, String material2Name, float weight2, String name)
-			throws Exception {
+	public void startLinearCombinedMaterial(String m1, float weight1, String m2,
+			float weight2, String name) throws Exception {
+		materials.put(name, materials.get(m1).mul(weight1).add(materials.get(m2).mul(weight2)));
 	}
 
 	/*
