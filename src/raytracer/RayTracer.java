@@ -10,7 +10,6 @@ import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
 
 public class RayTracer {
-	public final static boolean SHADOWS = !true;
 	public final static boolean TRACE_BOUNDING_BOXES = false;
 
 	public final static float LIGHT_EPSILON = 0.0001f;
@@ -117,7 +116,7 @@ public class RayTracer {
 			if (d > 0) { // First check if light is not in opposite direction
 				shadowRay.setDirection(l);
 				Intersection i = bvh.intersection(shadowRay, LIGHT_EPSILON, light.distanceTo(hit));
-				if (!SHADOWS || i == null) {
+				if (i == null) {
 					diffuse = diffuse.add(light.color.mul(d * light.intensity));
 					if (material.specular != Color.NONE) {
 						Vector3D v = ray.direction.opposite().normalized();
