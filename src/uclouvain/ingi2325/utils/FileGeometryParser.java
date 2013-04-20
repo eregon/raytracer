@@ -45,7 +45,7 @@ public class FileGeometryParser {
 			if (type == "v") { // vertex
 				_vertices.add(Point3D.valueOf(s.rest()));
 			} else if (type == "vn") {
-				_normals.add(Vector3D.valueOf(s.rest()));
+				_normals.add(Vector3D.valueOf(s.rest()).normalized());
 			} else if (type == "f") { // surface
 				Point3D a, b, c;
 				Vector3D na, nb, nc;

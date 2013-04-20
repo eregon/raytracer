@@ -395,11 +395,11 @@ public class SceneBuilder implements ParserHandler {
 			Vector3D na, nb, nc;
 
 			a = coordinates[coordinateIndices[i]];
-			na = normals[normalIndices[i]];
+			na = normals[normalIndices[i]].normalized();
 			b = coordinates[coordinateIndices[i + 1]];
-			nb = normals[normalIndices[i + 1]];
+			nb = normals[normalIndices[i + 1]].normalized();
 			c = coordinates[coordinateIndices[i + 2]];
-			nc = normals[normalIndices[i + 2]];
+			nc = normals[normalIndices[i + 2]].normalized();
 
 			geoms.add(new Triangle(a, b, c, na, nb, nc));
 		}
