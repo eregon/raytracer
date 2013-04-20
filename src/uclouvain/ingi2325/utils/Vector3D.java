@@ -48,15 +48,20 @@ public class Vector3D extends Tuple3 {
 
 	public Vector3D normalized() {
 		float norm = norm();
-		x /= norm;
-		y /= norm;
-		z /= norm;
+		if (norm != 1) {
+			x /= norm;
+			y /= norm;
+			z /= norm;
+		}
 		return this;
 	}
 
 	public Vector3D normalize() {
 		float norm = norm();
-		return new Vector3D(x / norm, y / norm, z / norm);
+		if (norm == 1)
+			return this;
+		else
+			return new Vector3D(x / norm, y / norm, z / norm);
 	}
 
 	public Vector3D opposite() {
