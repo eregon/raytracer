@@ -102,7 +102,7 @@ public class RayTracer {
 		if (inter == null)
 			return scene.background;
 
-		Point3D hit = inter.point;
+		Point3D hit = inter.point(ray);
 		Vector3D n = inter.normal();
 		Ray shadowRay = new Ray(hit);
 		Color color = Color.BLACK;

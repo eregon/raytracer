@@ -49,8 +49,7 @@ public class Cube extends BoundingBox implements Geometry {
 	public Intersection intersection(Ray ray, float t0, float t1) {
 		Intersection inter = super.intersection(ray, t0, t1);
 		if (inter != null) {
-			inter.computePoint(ray);
-			Point3D p = inter.point;
+			Point3D p = inter.point(ray);
 
 			float d, best = Math.abs(p.x - max.x);
 			Face face = Face.FRONT;
