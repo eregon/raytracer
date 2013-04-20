@@ -5,7 +5,6 @@ import java.util.List;
 
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
-import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.Vector3D;
 
@@ -102,27 +101,7 @@ public class RayTracer {
 		if (inter == null)
 			return scene.background;
 
-		Point3D hit = inter.point(ray);
-		Vector3D n = inter.normal();
-		Vector3D maxLightVector = new Vector3D();
-		Ray shadowRay = new Ray(hit);
-		Material material = inter.shape.material;
-		Color color = Color.BLACK;
-
-		for (Light light : scene.lights) {
-			Vector3D l = light.l(hit);
-			maxLightVector = maxLightVector.add(l.mul(light.intensity));
-			float d = n.dotProduct(l); // diffuse factor
-			if (d > 0) { // First check if light is not in opposite direction
-				shadowRay.setDirection(l);
-				Intersection i = bvh.intersection(shadowRay, LIGHT_EPSILON, light.distanceTo(hit));
-				if (i == null)
-					color = color.add(material.addLight(light, n, l, d, ray));
-			}
-		}
-		float c_l = maxLightVector.norm();
-
-		return color.div(c_l).validate();
+		return inter.shape.material.shading(this, inter, ray);
 	}
 
 	private String formatTime(double time) {

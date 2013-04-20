@@ -1,6 +1,7 @@
 package raytracer;
 
 import uclouvain.ingi2325.utils.Color;
+import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;
 
 public class Material {
@@ -38,5 +39,27 @@ public class Material {
 			color = color.add(specular.mul(s));
 		}
 		return color.mul(light.computedColor);
+	}
+
+	public Color shading(RayTracer tracer, Intersection inter, Ray ray) {
+		Point3D hit = inter.point(ray);
+		Vector3D n = inter.normal();
+		Color color = Color.BLACK;
+
+		Vector3D maxLightVector = new Vector3D();
+		Ray shadowRay = new Ray(hit);
+
+		for (Light light : tracer.scene.lights) {
+			Vector3D l = light.l(hit);
+			maxLightVector = maxLightVector.add(l.mul(light.intensity));
+			float d = n.dotProduct(l); // diffuse factor
+			if (d > 0) { // First check if light is not in opposite direction
+				shadowRay.setDirection(l);
+				Intersection i = tracer.bvh.intersection(shadowRay, RayTracer.LIGHT_EPSILON, light.distanceTo(hit));
+				if (i == null)
+					color = color.add(addLight(light, n, l, d, ray));
+			}
+		}
+		return color.div(maxLightVector.norm()).validate();
 	}
 }
