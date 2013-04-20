@@ -55,7 +55,7 @@ public class Material {
 			float d = n.dotProduct(l); // diffuse factor
 			if (d > 0) { // First check if light is not in opposite direction
 				shadowRay.setDirection(l);
-				Intersection i = tracer.bvh.intersection(shadowRay, RayTracer.LIGHT_EPSILON, light.distanceTo(hit));
+				Intersection i = tracer.shoot(shadowRay, RayTracer.LIGHT_EPSILON, light.distanceTo(hit));
 				if (i == null)
 					color = color.add(addLight(light, n, l, d, ray));
 			}

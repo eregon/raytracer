@@ -96,12 +96,16 @@ public class RayTracer {
 	}
 
 	private Color renderPixel(int x, int y, Ray ray) {
-		Intersection inter = bvh.intersection(ray, 0, Float.POSITIVE_INFINITY);
+		Intersection inter = shoot(ray, 0, Float.POSITIVE_INFINITY);
 
 		if (inter == null)
 			return scene.background;
 
 		return inter.shape.material.shading(this, inter, ray);
+	}
+
+	public Intersection shoot(Ray ray, float t0, float t1) {
+		return bvh.intersection(ray, t0, t1);
 	}
 
 	private String formatTime(double time) {
