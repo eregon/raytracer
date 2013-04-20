@@ -1,6 +1,7 @@
 package raytracer;
 
 import uclouvain.ingi2325.utils.Color;
+import uclouvain.ingi2325.utils.Vector3D;
 
 public class Material {
 	public final Color diffuse;
@@ -26,5 +27,16 @@ public class Material {
 
 	public Material mul(float weight) {
 		return new Material(diffuse.mul(weight), specular.mul(weight), shininess);
+	}
+
+	public Color addLight(Light light, Vector3D n, Vector3D l, float d, Ray ray) {
+		Color color = diffuse.mul(d);
+		if (specular != Color.NONE) {
+			Vector3D v = ray.direction.opposite().normalized();
+			Vector3D h = v.add(l).normalized();
+			float s = (float) Math.pow(n.dotProduct(h), shininess); // specular factor
+			color = color.add(specular.mul(s));
+		}
+		return color.mul(light.color.mul(light.intensity));
 	}
 }
