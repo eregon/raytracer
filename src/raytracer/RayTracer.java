@@ -104,12 +104,14 @@ public class RayTracer {
 
 		Point3D hit = inter.point(ray);
 		Vector3D n = inter.normal();
+		Vector3D maxLightVector = new Vector3D();
 		Ray shadowRay = new Ray(hit);
 		Material material = inter.shape.material;
 		Color diffuse = Color.BLACK, specular = Color.BLACK;
 
 		for (Light light : scene.lights) {
 			Vector3D l = light.l(hit);
+			maxLightVector = maxLightVector.add(l.mul(light.intensity));
 			float d = n.dotProduct(l); // diffuse factor
 			if (d > 0) { // First check if light is not in opposite direction
 				shadowRay.setDirection(l);
@@ -125,13 +127,9 @@ public class RayTracer {
 				}
 			}
 		}
+		float c_l = maxLightVector.norm();
 
-		// TODO: multiply by a constant factor (c_l) to avoid too much white with many lights
-		if (material.specular == Color.NONE) {
-			return material.diffuse.mul(diffuse).validate();
-		} else {
-			return material.diffuse.mul(diffuse).add(material.specular.mul(specular)).div(3).validate(); // TODO
-		}
+		return material.diffuse.mul(diffuse).add(material.specular.mul(specular)).div(c_l).validate();
 	}
 
 	private String formatTime(double time) {
