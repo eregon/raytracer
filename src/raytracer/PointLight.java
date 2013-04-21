@@ -8,7 +8,7 @@ public class PointLight extends Light {
 
 	final Point3D position;
 
-	public PointLight(Color color, Point3D position, float intensity) {
+	public PointLight(Point3D position, Color color, float intensity) {
 		super(color, intensity);
 		this.position = position;
 	}

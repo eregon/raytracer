@@ -177,7 +177,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startDirectionalLight(Vector3D direction, float intensity,
 			Color color, String name) throws Exception {
-		lights.put(name, new DirectionalLight(color, intensity, direction));
+		lights.put(name, new DirectionalLight(direction, color, intensity));
 	}
 
 	/*
@@ -199,7 +199,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startPointLight(Point3D position, float intensity, Color color,
 			String name) throws Exception {
-		lights.put(name, new PointLight(color, position, intensity));
+		lights.put(name, new PointLight(position, color, intensity));
 	}
 
 	/*
