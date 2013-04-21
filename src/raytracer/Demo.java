@@ -30,9 +30,9 @@ public class Demo {
 	private volatile boolean done = false;
 
 	public Demo() throws FileNotFoundException {
-		Scene scene = new SceneBuilder().loadScene("XML/teapotPhong.sdl");
+		Scene scene = new SceneBuilder().loadScene("XML/shadows.sdl");
 
-		panel = new PixelPanel(512, 512);
+		panel = new PixelPanel(1024, 742);
 		tracer = new RayTracer(scene, panel.image);
 
 		frame = new JFrame();
