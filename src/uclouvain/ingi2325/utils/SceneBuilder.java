@@ -14,6 +14,7 @@ import org.xml.sax.InputSource;
 
 import raytracer.Camera;
 import raytracer.Cube;
+import raytracer.DirectionalLight;
 import raytracer.Geometry;
 import raytracer.Light;
 import raytracer.Material;
@@ -176,6 +177,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startDirectionalLight(Vector3D direction, float intensity,
 			Color color, String name) throws Exception {
+		lights.put(name, new DirectionalLight(color, intensity, direction));
 	}
 
 	/*
