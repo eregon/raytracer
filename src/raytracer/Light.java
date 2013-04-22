@@ -12,9 +12,9 @@ public abstract class Light {
 	final Color computedColor;
 
 	public Light(Color color, float intensity) {
-		this.color = color;
+		this.color = color.validate();
 		this.intensity = intensity;
-		computedColor = color.mul(intensity);
+		computedColor = this.color.mul(intensity);
 	}
 
 	public abstract Vector3D l(Point3D hit);
