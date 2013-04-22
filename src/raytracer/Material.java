@@ -46,12 +46,10 @@ public class Material {
 		Vector3D n = inter.normal();
 		Color color = Color.BLACK;
 
-		Vector3D maxLightVector = new Vector3D();
 		Ray shadowRay = new Ray(hit);
 
 		for (Light light : tracer.scene.lights) {
 			Vector3D l = light.l(hit);
-			maxLightVector = maxLightVector.add(l.mul(light.intensity));
 			float d = n.dotProduct(l); // diffuse factor
 			if (d > 0) { // First check if light is not in opposite direction
 				shadowRay.setDirection(l);
@@ -60,6 +58,6 @@ public class Material {
 					color = color.add(addLight(light, n, l, d, ray));
 			}
 		}
-		return color.div(maxLightVector.norm()).validate();
+		return color.div(tracer.lightDivider).validate();
 	}
 }

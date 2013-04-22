@@ -17,12 +17,14 @@ public class RayTracer {
 	final Image image;
 	final int height, width;
 	final BVH bvh;
+	final float lightDivider;
 
 	public RayTracer(Scene scene, Image image) {
 		this.scene = scene;
 		this.image = image;
 		height = image.getHeight();
 		width = image.getWidth();
+		lightDivider = scene.lights.size();
 
 		List<Shape> shapes = scene.objects;
 		scene.objects = null; // no more needed, the BVH replaces it
