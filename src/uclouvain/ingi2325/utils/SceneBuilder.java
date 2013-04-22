@@ -137,7 +137,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startCamera(Point3D position, Vector3D direction, Vector3D up,
 			float fovy, String name) throws Exception {
-		fovy = (float) (fovy / 180 * Math.PI);
+		fovy = deg2rad(fovy);
 		cameras.put(name, new Camera(position, direction, up, fovy));
 	}
 
@@ -225,7 +225,7 @@ public class SceneBuilder implements ParserHandler {
 	public void startSpotLight(Point3D position, Vector3D direction,
 			float angle, float intensity, Color color, String name)
 			throws Exception {
-		angle = (float) (angle / 180 * Math.PI);
+		angle = deg2rad(angle);
 		lights.put(name, new SpotLight(position, direction, angle, color, intensity));
 	}
 
@@ -654,7 +654,7 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void startRotate(Vector3D axis, float angle) throws Exception {
-		angle = (float) (angle / 180 * Math.PI);
+		angle = deg2rad(angle);
 		transformation = transformation.rotate(axis, angle);
 	}
 
@@ -710,6 +710,10 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void endScale() throws Exception {
 		transformation = transformation.parent;
+	}
+
+	private float deg2rad(float angle) {
+		return (float) (angle / 180 * Math.PI);
 	}
 
 	private List<Geometry> loadFileGeometry(String filename) throws IOException, ParseError {
