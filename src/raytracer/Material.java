@@ -38,7 +38,7 @@ public class Material {
 			float s = (float) Math.pow(n.dotProduct(h), shininess); // specular factor
 			color = color.add(specular.mul(s));
 		}
-		return color.mul(light.computedColor);
+		return color.mul(light.computedColor(l));
 	}
 
 	public Color shading(RayTracer tracer, Intersection inter, Ray ray) {
@@ -50,6 +50,8 @@ public class Material {
 
 		for (Light light : tracer.scene.lights) {
 			Vector3D l = light.l(hit);
+			if (l == null)
+				continue;
 			float d = n.dotProduct(l); // diffuse factor
 			if (d > 0) { // First check if light is not in opposite direction
 				shadowRay.setDirection(l);

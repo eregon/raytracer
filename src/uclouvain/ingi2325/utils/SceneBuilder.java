@@ -22,6 +22,7 @@ import raytracer.PointLight;
 import raytracer.RayTracer;
 import raytracer.Shape;
 import raytracer.Sphere;
+import raytracer.SpotLight;
 import raytracer.Transformation;
 import raytracer.Triangle;
 import uclouvain.ingi2325.exception.ParseError;
@@ -223,6 +224,8 @@ public class SceneBuilder implements ParserHandler {
 	public void startSpotLight(Point3D position, Vector3D direction,
 			float angle, float intensity, Color color, String name)
 			throws Exception {
+		angle = (float) (angle / 180 * Math.PI);
+		lights.put(name, new SpotLight(position, direction, angle, color, intensity));
 	}
 
 	/*
