@@ -137,6 +137,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startCamera(Point3D position, Vector3D direction, Vector3D up,
 			float fovy, String name) throws Exception {
+		fovy = (float) (fovy / 180 * Math.PI);
 		cameras.put(name, new Camera(position, direction, up, fovy));
 	}
 

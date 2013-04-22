@@ -47,7 +47,7 @@ public class RayTracer {
 		final Vector3D u = scene.camera.up.crossProduct(w).normalize();
 		final Vector3D v = u.crossProduct(w);
 		// projection distance
-		final float d = (float) (width / 2 / Math.tan(Math.PI / 180 * scene.camera.fovy / 2));
+		final float d = (float) (width / 2 / Math.tan(scene.camera.fovy / 2));
 
 		final int nThreads = numberOfThreads();
 		Thread[] threads = new Thread[nThreads];
