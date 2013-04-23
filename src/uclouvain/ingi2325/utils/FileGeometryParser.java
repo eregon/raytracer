@@ -38,7 +38,7 @@ public class FileGeometryParser {
 
 		String line;
 		while ((line = io.readLine()) != null) {
-			Splitter s = new Splitter(line);
+			Splitter s = new Splitter(line.trim());
 			String type = s.getWord().intern();
 			s.eatSpace();
 
