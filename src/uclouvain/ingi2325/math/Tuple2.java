@@ -93,8 +93,9 @@ public abstract class Tuple2 {
 	public static <T extends Tuple2> T valueOf(String string, T tuple) throws ParseError {
 		Splitter s = new Splitter(string);
 
+		s.eatSpaces();
 		tuple.x = s.getFloat();
-		s.eatSpace();
+		s.eatSpaces();
 		tuple.y = s.getFloat();
 
 		if (s.more())

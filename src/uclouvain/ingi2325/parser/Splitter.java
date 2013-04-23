@@ -46,6 +46,11 @@ public final class Splitter {
 			pos++;
 	}
 
+	public final void eatSpaces() {
+		while (pos < len && str.charAt(pos) == ' ')
+			pos++;
+	}
+
 	public final String getWord() {
 		int start = pos;
 		while (pos < len && str.charAt(pos) != ' ')

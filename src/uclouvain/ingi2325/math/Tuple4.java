@@ -136,12 +136,13 @@ public abstract class Tuple4 {
 	public static <T extends Tuple4> T valueOf(String string, T tuple) throws ParseError {
 		Splitter s = new Splitter(string);
 
+		s.eatSpaces();
 		tuple.x = s.getFloat();
-		s.eatSpace();
+		s.eatSpaces();
 		tuple.y = s.getFloat();
-		s.eatSpace();
+		s.eatSpaces();
 		tuple.z = s.getFloat();
-		s.eatSpace();
+		s.eatSpaces();
 		tuple.w = s.getFloat();
 
 		if (s.more())
