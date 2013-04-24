@@ -1,7 +1,13 @@
 package raytracer;
 
 import java.lang.management.ManagementFactory;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
@@ -43,52 +49,33 @@ public class RayTracer {
 	}
 
 	public void render() {
-		final int nThreads = numberOfThreads();
-		Thread[] threads = new Thread[nThreads];
-		final double[] times = new double[nThreads];
+		final int n = numberOfThreads();
+		ExecutorService pool = Executors.newFixedThreadPool(n);
+		List<Renderer> renderers = new ArrayList<Renderer>(n);
 
-		for (int i = 0; i < nThreads; i++) {
-			final int offset = i;
-			final Ray ray = new Ray(scene.camera.position);
+		for (int i = 0; i < n; i++) {
 			final Enumerator iter = new SkippingEnumerator(
-					new CircleEnumerator(height, width), offset, nThreads);
-
-			Runnable task = new Runnable() {
-				@Override
-				public void run() {
-					long t0 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
-					for (int xy : iter) {
-						int x = xy % width, y = xy / width;
-						float a = x + 0.5f - width / 2f;
-						float b = y + 0.5f - height / 2f;
-						ray.setDirection(scene.camera.toScreen(a, b));
-						Color color = renderPixel(x, y, ray);
-						// y min at top, opposite of v
-						image.drawPixel(x, (height - 1 - y), color);
-					}
-					long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
-					times[offset] = (t1 - t0) / 1e9;
-				}
-			};
-
-			threads[i] = new Thread(task, "Renderer " + (i + 1));
+					new CircleEnumerator(height, width), i, n);
+			renderers.add(new Renderer(iter));
 		}
 
+		double cpuTime = 0;
 		long t0 = System.currentTimeMillis();
-		for (Thread thread : threads)
-			thread.start();
 		try {
-			for (Thread thread : threads)
-				thread.join();
+			for (Future<Double> future : pool.invokeAll(renderers)) {
+				try {
+					cpuTime += future.get();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		long t1 = System.currentTimeMillis();
-		System.out.print("Rendered in " + formatTime((t1 - t0) / 1e3) + " real ");
-		double cpuTime = 0;
-		for (double t : times)
-			cpuTime += t;
-		System.out.println(formatTime(cpuTime) + " total CPU");
+		pool.shutdown();
+		System.out.print("Rendered in " + formatTime((t1 - t0) / 1e3)
+				+ " real " + formatTime(cpuTime) + " total CPU");
 
 	}
 
@@ -107,5 +94,30 @@ public class RayTracer {
 
 	private String formatTime(double time) {
 		return String.format("%.3fs", time);
+	}
+
+	class Renderer implements Callable<Double> {
+		final Enumerator iter;
+
+		public Renderer(Enumerator iter) {
+			this.iter = iter;
+		}
+
+		@Override
+		public Double call() {
+			long t0 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
+			Ray ray = new Ray(scene.camera.position);
+			for (int xy : iter) {
+				int x = xy % width, y = xy / width;
+				float a = x + 0.5f - width / 2f;
+				float b = y + 0.5f - height / 2f;
+				ray.setDirection(scene.camera.toScreen(a, b));
+				Color color = renderPixel(x, y, ray);
+				// y min at top, opposite of v
+				image.drawPixel(x, (height - 1 - y), color);
+			}
+			long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
+			return (t1 - t0) / 1e9;
+		}
 	}
 }
