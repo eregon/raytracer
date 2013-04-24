@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <!--<Camera position="-11.931 17.259 -3.137" direction="-11.931 17.259 -3.137" up="0 0 1" fovy="45" name="cam0" />-->
+      <!--<Camera position="70 -60 50" direction="-7 6 -5" up="0 0 1" fovy="45" name="cam0" />-->
+      <!--<Camera position="4 11 16" direction="-4 -11 -16" up="0 0 -1" fovy="60" name="cam0" />-->
+      <Camera position="4 9 16" direction="-4 -9 -16" up="0 1 0" fovy="60" name="cam0" />
+   </Cameras>
+
+   <Lights>
+      <!--Light Blue-->
+      <PointLight position="-6 5 -6" intensity="1.25" color="0.733 0.836 1" name="sky0.0" />
+      <PointLight position=" 6 5 -6" intensity="1.25" color="0.733 0.836 1" name="sky0.1" />
+      <PointLight position="-6 5  6" intensity="1.25" color="0.733 0.836 1" name="sky0.2" />
+      <PointLight position=" 6 5  6" intensity="1.25" color="0.733 0.836 1" name="sky0.3" />
+      <PointLight position=" 8 5  0" intensity="1.25" color="0.733 0.836 1" name="sky0.4" />
+      <PointLight position=" 0 5  8" intensity="1.25" color="0.733 0.836 1" name="sky0.5" />
+      <PointLight position=" 0 5 -8" intensity="1.25" color="0.733 0.836 1" name="sky0.6" />
+      <PointLight position="-8 5  0" intensity="1.25" color="0.733 0.836 1" name="sky0.7" />
+      <!--Blue-->
+      <PointLight position="-5 7 -5" intensity="1.25" color="0.368 0.553 1" name="sky1.0" />
+      <PointLight position=" 5 7 -5" intensity="1.25" color="0.368 0.553 1" name="sky1.1" />
+      <PointLight position="-5 7  5" intensity="1.25" color="0.368 0.553 1" name="sky1.2" />
+      <PointLight position=" 5 7  5" intensity="1.25" color="0.368 0.553 1" name="sky1.3" />
+      <PointLight position=" 6 7  0" intensity="1.25" color="0.368 0.553 1" name="sky1.4" />
+      <PointLight position=" 0 7  6" intensity="1.25" color="0.368 0.553 1" name="sky1.5" />
+      <PointLight position=" 0 7 -6" intensity="1.25" color="0.368 0.553 1" name="sky1.6" />
+      <PointLight position="-6 7  0" intensity="1.25" color="0.368 0.553 1" name="sky1.7" />
+      <!--Dark Blue-->
+      <PointLight position="-3 8 -3" intensity="1.25" color="0.103 0.372 1" name="sky2.0" />
+      <PointLight position=" 3 8 -3" intensity="1.25" color="0.103 0.372 1" name="sky2.1" />
+      <PointLight position="-3 8  3" intensity="1.25" color="0.103 0.372 1" name="sky2.2" />
+      <PointLight position=" 3 8  3" intensity="1.25" color="0.103 0.372 1" name="sky2.3" />
+      <PointLight position=" 4 8  0" intensity="1.25" color="0.103 0.372 1" name="sky2.4" />
+      <PointLight position=" 0 8  4" intensity="1.25" color="0.103 0.372 1" name="sky2.5" />
+      <PointLight position=" 0 8 -4" intensity="1.25" color="0.103 0.372 1" name="sky2.6" />
+      <PointLight position="-4 8  0" intensity="1.25" color="0.103 0.372 1" name="sky2.7" />
+      <!--Sun-->
+      <DirectionalLight direction="-11.084 17.79 -3.137" intensity="20" color="1 0.954 0.6" name="sun" />
+   </Lights>
+
+   <Geometry>
+      <FileGeometry filename="house.obj" name="house" />
+   </Geometry>
+
+   <Materials>
+      <DiffuseMaterial color="1 0 0" name="red"   />
+      <DiffuseMaterial color="0 1 0" name="green" />
+      <DiffuseMaterial color="0 0 1" name="blue"  />
+      <DiffuseMaterial color="1 1 0" name="yellow" />
+      <DiffuseMaterial color="1 1 1" name="white" />
+      <DiffuseMaterial color="0 0 0" name="black" />
+   </Materials>
+
+   <Scene camera="cam0"
+       lights="sun, sky0.0, sky0.1, sky0.2, sky0.3, sky0.4, sky0.5, sky0.6, sky0.7, sky1.0, sky1.1, sky1.2, sky1.3, sky1.4, sky1.5, sky1.6, sky1.7, sky2.0, sky2.1, sky2.2, sky2.3, sky2.4, sky2.5, sky2.6, sky2.7"
+       background="0.5 0.5 1.0">
+      <Shape geometry="house" material="white"/>
+   </Scene>
+</Sdl>
+
+
