@@ -62,4 +62,19 @@ public class Material {
 		}
 		return color.div(tracer.lightDivider).validate();
 	}
+
+	public Color shadingDoubleSidedNoShadows(RayTracer tracer, Intersection inter, Ray ray) {
+		Point3D hit = inter.point(ray);
+		Vector3D n = inter.normal();
+		Color color = Color.BLACK;
+
+		for (Light light : tracer.scene.lights) {
+			Vector3D l = light.l(hit);
+			if (l == null)
+				continue;
+			float d = Math.abs(n.dotProduct(l)); // diffuse factor
+			color = color.add(addLight(light, n, l, d, ray));
+		}
+		return color.div(tracer.lightDivider).validate();
+	}
 }

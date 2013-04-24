@@ -105,7 +105,7 @@ public class RayTracer {
 		if (inter == null)
 			return scene.background;
 
-		return inter.shape.material.shading(this, inter, ray);
+		return inter.shape.material.shadingDoubleSidedNoShadows(this, inter, ray);
 	}
 
 	public Intersection shoot(Ray ray, float t0, float t1) {
