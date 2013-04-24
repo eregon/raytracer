@@ -6,7 +6,6 @@ import java.util.List;
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
 import uclouvain.ingi2325.utils.Scene;
-import uclouvain.ingi2325.utils.Vector3D;
 
 public class RayTracer {
 	public final static boolean TRACE_BOUNDING_BOXES = false;
@@ -42,13 +41,7 @@ public class RayTracer {
 	}
 
 	public void render() {
-		// Camera coordinate system induced from direction and up
-		final Vector3D w = scene.camera.direction.opposite();
-		final Vector3D u = scene.camera.direction.crossProduct(scene.camera.up).normalize();
-		final Vector3D v = w.crossProduct(u);
-		// projection distance
-		final float d = (float) (width / 2 / Math.tan(scene.camera.fovy / 2));
-		final Vector3D toPlan = scene.camera.direction.mul(d);
+		scene.camera.focus(width);
 
 		final int nThreads = numberOfThreads();
 		Thread[] threads = new Thread[nThreads];
@@ -68,7 +61,7 @@ public class RayTracer {
 						int x = xy % width, y = xy / width;
 						float a = x + 0.5f - width / 2f;
 						float b = y + 0.5f - height / 2f;
-						ray.setDirection(toPlan.add(u.mul(a)).add(v.mul(b)).normalized()); // −dW + aU + bV
+						ray.setDirection(scene.camera.toScreen(a, b));
 						Color color = renderPixel(x, y, ray);
 						// y min at top, opposite of v
 						image.drawPixel(x, (height - 1 - y), color);
