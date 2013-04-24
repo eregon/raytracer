@@ -48,6 +48,7 @@ public class RayTracer {
 		final Vector3D v = w.crossProduct(u);
 		// projection distance
 		final float d = (float) (width / 2 / Math.tan(scene.camera.fovy / 2));
+		final Vector3D toPlan = scene.camera.direction.mul(d);
 
 		final int nThreads = numberOfThreads();
 		Thread[] threads = new Thread[nThreads];
@@ -67,7 +68,7 @@ public class RayTracer {
 						int x = xy % width, y = xy / width;
 						float a = x + 0.5f - width / 2f;
 						float b = y + 0.5f - height / 2f;
-						ray.setDirection(w.mul(d).opposite().add(u.mul(a)).add(v.mul(b))); // −dW + aU + bV
+						ray.setDirection(toPlan.add(u.mul(a)).add(v.mul(b))); // −dW + aU + bV
 						Color color = renderPixel(x, y, ray);
 						// y min at top, opposite of v
 						image.drawPixel(x, (height - 1 - y), color);
