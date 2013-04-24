@@ -1,6 +1,7 @@
 package raytracer;
 
 import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -97,6 +98,7 @@ public class RayTracer {
 	}
 
 	class Renderer implements Callable<Double> {
+		final ThreadMXBean bean = ManagementFactory.getThreadMXBean();
 		final Enumerator iter;
 
 		public Renderer(Enumerator iter) {
@@ -105,7 +107,7 @@ public class RayTracer {
 
 		@Override
 		public Double call() {
-			long t0 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
+			long t0 = bean.getCurrentThreadCpuTime();
 			Ray ray = new Ray(scene.camera.position);
 			for (int xy : iter) {
 				int x = xy % width, y = xy / width;
@@ -116,7 +118,7 @@ public class RayTracer {
 				// y min at top, opposite of v
 				image.drawPixel(x, (height - 1 - y), color);
 			}
-			long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
+			long t1 = bean.getCurrentThreadCpuTime();
 			return (t1 - t0) / 1e9;
 		}
 	}
