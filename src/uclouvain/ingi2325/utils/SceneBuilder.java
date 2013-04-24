@@ -433,6 +433,8 @@ public class SceneBuilder implements ParserHandler {
 		File file = new File(path, filename);
 		File bmf = new File(file.getParent(), filename + ".bmf");
 		List<Geometry> geoms;
+		if (bmf.exists() && file.lastModified() > bmf.lastModified())
+			bmf.delete(); // Remove outdated file
 		if (bmf.exists()) {
 			geoms = new BinaryMeshFile(bmf).load();
 		} else {
