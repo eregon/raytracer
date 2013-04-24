@@ -65,7 +65,7 @@ public class FileGeometryParser {
 					na = nb = nc = b.sub(a).crossProduct(c.sub(a));
 
 				if (s.more())
-					System.err.println("Unhandled polygon with " + (4 + s.count(' ')) + " vertices");
+					throw new ParseError("Unhandled polygon with more than 3 vertices: " + line);
 				else
 					geoms.add(new Triangle(a, b, c, na, nb, nc));
 
