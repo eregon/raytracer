@@ -25,6 +25,8 @@ public class RayTracer {
 		width = image.getWidth();
 		lightDivider = scene.lights.size();
 
+		scene.camera.focus(width);
+
 		List<Shape> shapes = scene.objects;
 		scene.objects = null; // no more needed, the BVH replaces it
 		long beforeBVH = System.currentTimeMillis();
@@ -41,8 +43,6 @@ public class RayTracer {
 	}
 
 	public void render() {
-		scene.camera.focus(width);
-
 		final int nThreads = numberOfThreads();
 		Thread[] threads = new Thread[nThreads];
 		final double[] times = new double[nThreads];
