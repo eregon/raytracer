@@ -44,8 +44,8 @@ public class RayTracer {
 	public void render() {
 		// Camera coordinate system induced from direction and up
 		final Vector3D w = scene.camera.direction.opposite();
-		final Vector3D u = scene.camera.up.crossProduct(w).normalize();
-		final Vector3D v = u.crossProduct(w);
+		final Vector3D u = scene.camera.direction.crossProduct(scene.camera.up).normalize();
+		final Vector3D v = w.crossProduct(u);
 		// projection distance
 		final float d = (float) (width / 2 / Math.tan(scene.camera.fovy / 2));
 
@@ -69,7 +69,8 @@ public class RayTracer {
 						float b = y + 0.5f - height / 2f;
 						ray.setDirection(w.mul(d).opposite().add(u.mul(a)).add(v.mul(b))); // −dW + aU + bV
 						Color color = renderPixel(x, y, ray);
-						image.drawPixel(x, y, color);
+						// y min at top, opposite of v
+						image.drawPixel(x, (height - 1 - y), color);
 					}
 					long t1 = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
 					times[offset] = (t1 - t0) / 1e9;
