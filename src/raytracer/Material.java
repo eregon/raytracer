@@ -10,11 +10,11 @@ public class Material {
 	final float shininess;
 
 	public Material(Color diffuse, Color specular, float shininess) {
-		this.diffuse = diffuse;
 		if (specular.equals(Color.NONE))
-			this.specular = Color.NONE;
-		else
-			this.specular = specular;
+			specular = Color.NONE; // For identity test
+
+		this.diffuse = diffuse;
+		this.specular = specular;
 		this.shininess = shininess;
 	}
 

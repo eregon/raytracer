@@ -23,7 +23,7 @@ public class Camera {
 
 		// Camera coordinate system induced from direction and up
 		w = direction.opposite();
-		u = direction.crossProduct(this.up).normalize();
+		u = direction.crossProduct(up).normalize();
 		v = w.crossProduct(u);
 	}
 

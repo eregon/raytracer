@@ -15,11 +15,14 @@ public class SpotLight extends Light {
 
 	public SpotLight(Point3D position, Vector3D direction, float angle, Color color, float intensity) {
 		super(color, intensity);
+		direction = direction.normalize();
+		angle = Math.abs(angle) / 2;
+
 		this.position = position;
-		this.direction = direction.normalize();
-		oppositeDirection = this.direction.opposite();
-		this.angle = Math.abs(angle) / 2;
-		cos = (float) Math.cos(this.angle);
+		this.direction = direction;
+		oppositeDirection = direction.opposite();
+		this.angle = angle;
+		cos = (float) Math.cos(angle);
 	}
 
 	@Override
