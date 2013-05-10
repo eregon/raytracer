@@ -16,6 +16,7 @@ import uclouvain.ingi2325.utils.Scene;
 
 public class RayTracer {
 	public final static boolean TRACE_BOUNDING_BOXES = false;
+	public final static int SUPER_SAMPLING = 2;
 
 	public final static float LIGHT_EPSILON = 0.0001f;
 
@@ -109,12 +110,28 @@ public class RayTracer {
 		public Double call() {
 			long t0 = bean.getCurrentThreadCpuTime();
 			Ray ray = new Ray(scene.camera.position);
+			float super_sampling = SUPER_SAMPLING;
 			for (int xy : iter) {
 				int x = xy % width, y = xy / width;
-				float a = x + 0.5f - width / 2f;
-				float b = y + 0.5f - height / 2f;
-				ray.setDirection(scene.camera.toScreen(a, b));
-				Color color = renderPixel(x, y, ray);
+				// pixel goes from [a,b] to [a+1,b+1]
+				float a = x - width / 2f;
+				float b = y - height / 2f;
+
+				// start at first bottom left pixel center
+				a += 1f / (2 * super_sampling);
+				b += 1f / (2 * super_sampling);
+
+				Color color = Color.NONE;
+				for (int i = 0; i < SUPER_SAMPLING; i++) {
+					for (int j = 0; j < SUPER_SAMPLING; j++) {
+						ray.setDirection(scene.camera.toScreen(
+								a + i / super_sampling, b + j / super_sampling));
+						Color c = renderPixel(x, y, ray);
+						color = color.add(c);
+					}
+				}
+				color = color.div(super_sampling * super_sampling);
+
 				// y min at top, opposite of v
 				image.drawPixel(x, (height - 1 - y), color);
 			}
