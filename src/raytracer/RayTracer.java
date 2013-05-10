@@ -81,7 +81,7 @@ public class RayTracer {
 
 	}
 
-	private Color renderPixel(int x, int y, Ray ray) {
+	private Color shading(Ray ray) {
 		Intersection inter = shoot(ray, 0, Float.POSITIVE_INFINITY);
 
 		if (inter == null)
@@ -99,6 +99,7 @@ public class RayTracer {
 	}
 
 	class Renderer implements Callable<Double> {
+		final static float super_sampling = SUPER_SAMPLING;
 		final ThreadMXBean bean = ManagementFactory.getThreadMXBean();
 		final Enumerator iter;
 
@@ -110,33 +111,36 @@ public class RayTracer {
 		public Double call() {
 			long t0 = bean.getCurrentThreadCpuTime();
 			Ray ray = new Ray(scene.camera.position);
-			float super_sampling = SUPER_SAMPLING;
 			for (int xy : iter) {
 				int x = xy % width, y = xy / width;
-				// pixel goes from [a,b] to [a+1,b+1]
-				float a = x - width / 2f;
-				float b = y - height / 2f;
-
-				// start at first bottom left pixel center
-				a += 1f / (2 * super_sampling);
-				b += 1f / (2 * super_sampling);
-
-				Color color = Color.NONE;
-				for (int i = 0; i < SUPER_SAMPLING; i++) {
-					for (int j = 0; j < SUPER_SAMPLING; j++) {
-						ray.setDirection(scene.camera.toScreen(
-								a + i / super_sampling, b + j / super_sampling));
-						Color c = renderPixel(x, y, ray);
-						color = color.add(c);
-					}
-				}
-				color = color.div(super_sampling * super_sampling);
-
+				Color color = render(ray, x, y);
 				// y min at top, opposite of v
 				image.drawPixel(x, (height - 1 - y), color);
 			}
 			long t1 = bean.getCurrentThreadCpuTime();
 			return (t1 - t0) / 1e9;
+		}
+
+		Color render(Ray ray, int x, int y) {
+			// pixel goes from [a,b] to [a+1,b+1]
+			float a = x - width / 2f;
+			float b = y - height / 2f;
+
+			// start at first bottom left pixel center
+			a += 1f / (2 * super_sampling);
+			b += 1f / (2 * super_sampling);
+
+			Color color = Color.NONE;
+			for (int i = 0; i < SUPER_SAMPLING; i++) {
+				for (int j = 0; j < SUPER_SAMPLING; j++) {
+					ray.setDirection(scene.camera.toScreen(
+							a + i / super_sampling,
+							b + j / super_sampling));
+					color = color.add(shading(ray));
+				}
+			}
+			color = color.div(super_sampling * super_sampling);
+			return color;
 		}
 	}
 }
