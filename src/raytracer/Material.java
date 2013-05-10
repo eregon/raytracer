@@ -28,7 +28,7 @@ public class Material {
 	}
 
 	public Material mul(float weight) {
-		return new Material(diffuse.mul(weight), specular.mul(weight), shininess);
+		return new Material(diffuse.mul(weight), specular.mul(weight), shininess * weight);
 	}
 
 	public Color addLight(Light light, Vector3D n, Vector3D l, float d, Ray ray) {
