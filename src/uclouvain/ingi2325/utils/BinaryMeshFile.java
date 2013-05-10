@@ -12,8 +12,8 @@ import java.nio.channels.FileChannel.MapMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import raytracer.Geometry;
-import raytracer.Triangle;
+import raytracer.geometry.Geometry;
+import raytracer.geometry.Triangle;
 
 public class BinaryMeshFile {
 	static final int floatsByTriangle = 2 * 3 * 3;

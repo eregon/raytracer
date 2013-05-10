@@ -1,5 +1,9 @@
-package raytracer;
+package raytracer.geometry;
 
+import raytracer.BoundingBox;
+import raytracer.Intersection;
+import raytracer.Ray;
+import raytracer.Transformation;
 import uclouvain.ingi2325.math.Matrix4;
 import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;

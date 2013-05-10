@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import raytracer.Geometry;
-import raytracer.Triangle;
+import raytracer.geometry.Geometry;
+import raytracer.geometry.Triangle;
 import uclouvain.ingi2325.exception.ParseError;
 import uclouvain.ingi2325.parser.Splitter;
 

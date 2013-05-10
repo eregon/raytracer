@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import junit.framework.TestCase;
-import raytracer.Median;
+import raytracer.util.Median;
 
 public class MedianTest extends TestCase {
 	Comparator<Integer> ci = new Comparator<Integer>() {

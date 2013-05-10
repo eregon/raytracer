@@ -3,9 +3,10 @@ package uclouvain.ingi2325.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import raytracer.Camera;
-import raytracer.Light;
 import raytracer.Shape;
+import raytracer.light.Light;
 
 /**
  * Represents a scene

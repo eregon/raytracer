@@ -10,6 +10,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import raytracer.enumerator.CircleEnumerator;
+import raytracer.enumerator.Enumerator;
+import raytracer.enumerator.SkippingEnumerator;
+
+
+
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
 import uclouvain.ingi2325.utils.Scene;

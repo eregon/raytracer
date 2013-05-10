@@ -1,4 +1,4 @@
-package raytracer;
+package raytracer.util;
 
 public enum Axis {
 	X, Y, Z;

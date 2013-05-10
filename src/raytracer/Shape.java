@@ -4,6 +4,9 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.Map;
 
+import raytracer.geometry.Geometry;
+import raytracer.util.Axis;
+
 public class Shape extends BVHNode {
 	private static final Map<Axis, Comparator<Shape>> COMPARATORS = comparators();
 

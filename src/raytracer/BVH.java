@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import raytracer.util.Axis;
+import raytracer.util.Median;
+
 public class BVH implements Surface {
 	private final BVHNode root;
 

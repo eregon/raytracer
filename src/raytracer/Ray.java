@@ -4,8 +4,8 @@ import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;
 
 public class Ray {
-	final Point3D origin;
-	Vector3D direction;
+	public final Point3D origin;
+	public Vector3D direction;
 	float direction_norm;
 	/** The inverse direction */
 	Vector3D direction_1;

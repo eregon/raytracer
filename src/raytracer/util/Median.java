@@ -1,4 +1,4 @@
-package raytracer;
+package raytracer.util;
 
 import java.util.Collections;
 import java.util.Comparator;

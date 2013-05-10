@@ -1,4 +1,4 @@
-package raytracer;
+package raytracer.light;
 
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Point3D;

@@ -1,6 +1,6 @@
 package uclouvain.ingi2325.utils;
 
-import raytracer.Axis;
+import raytracer.util.Axis;
 import uclouvain.ingi2325.exception.ParseError;
 import uclouvain.ingi2325.math.Tuple3;
 

@@ -10,21 +10,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.xml.sax.InputSource;
 
 import raytracer.Camera;
-import raytracer.Cube;
-import raytracer.DirectionalLight;
-import raytracer.Geometry;
-import raytracer.Light;
 import raytracer.Material;
-import raytracer.PointLight;
 import raytracer.RayTracer;
 import raytracer.Shape;
-import raytracer.Sphere;
-import raytracer.SpotLight;
 import raytracer.Transformation;
-import raytracer.Triangle;
+import raytracer.geometry.Cube;
+import raytracer.geometry.Geometry;
+import raytracer.geometry.Sphere;
+import raytracer.geometry.Triangle;
+import raytracer.light.DirectionalLight;
+import raytracer.light.Light;
+import raytracer.light.PointLight;
+import raytracer.light.SpotLight;
 import uclouvain.ingi2325.exception.ParseError;
 import uclouvain.ingi2325.parser.Parser;
 import uclouvain.ingi2325.parser.ParserHandler;

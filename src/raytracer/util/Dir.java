@@ -1,10 +1,10 @@
-package raytracer;
+package raytracer.util;
 
 public enum Dir {
 	NORTH(0, -1), EAST(1, 0), SOUTH(0, 1), WEST(-1, 0);
 
-	final int dx;
-	final int dy;
+	public final int dx;
+	public final int dy;
 
 	private Dir(int dx, int dy) {
 		this.dx = dx;
