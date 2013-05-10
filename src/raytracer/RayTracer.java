@@ -99,7 +99,6 @@ public class RayTracer {
 	}
 
 	class Renderer implements Callable<Double> {
-		final static float super_sampling = SUPER_SAMPLING;
 		final ThreadMXBean bean = ManagementFactory.getThreadMXBean();
 		final Enumerator iter;
 
@@ -127,19 +126,19 @@ public class RayTracer {
 			float b = y - height / 2f;
 
 			// start at first bottom left pixel center
-			a += 1f / (2 * super_sampling);
-			b += 1f / (2 * super_sampling);
+			a += 1f / (2 * SUPER_SAMPLING);
+			b += 1f / (2 * SUPER_SAMPLING);
 
 			Color color = Color.NONE;
 			for (int i = 0; i < SUPER_SAMPLING; i++) {
 				for (int j = 0; j < SUPER_SAMPLING; j++) {
 					ray.setDirection(scene.camera.toScreen(
-							a + i / super_sampling,
-							b + j / super_sampling));
+							a + i / (float) SUPER_SAMPLING,
+							b + j / (float) SUPER_SAMPLING));
 					color = color.add(shading(ray));
 				}
 			}
-			color = color.div(super_sampling * super_sampling);
+			color = color.div(SUPER_SAMPLING * SUPER_SAMPLING);
 			return color;
 		}
 	}
