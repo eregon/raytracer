@@ -123,6 +123,11 @@ public class CLI {
 				options.super_sampling = Integer.parseInt(arg.substring("-ss=".length()));
 
 			else {
+				if (arg.startsWith("-")) {
+					System.err.println("Unrecognized option: " + arg);
+					usage();
+				}
+
 				if (sceneFile == null)
 					sceneFile = arg;
 				else if (outputFile == null)
