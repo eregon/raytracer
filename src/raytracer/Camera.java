@@ -49,6 +49,10 @@ public class Camera {
 		return transform(Transformation.DEFAULT.scale(new Vector3D(zoom)));
 	}
 
+	public Camera translate(float du, float dv) {
+		return transform(Transformation.DEFAULT.translate(u.mul(du).add(v.mul(dv))));
+	}
+
 	private Camera transform(Transformation t) {
 		return new Camera(t.m.mul(position), t.m.mul(direction), up, fovy);
 	}

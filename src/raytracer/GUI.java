@@ -17,6 +17,7 @@ public class GUI extends JFrame implements KeyListener {
 	final PixelPanel panel;
 	final RayTracer tracer;
 	final Scene scene;
+	final float move_units;
 
 	private volatile boolean drawing = false;
 
@@ -25,6 +26,7 @@ public class GUI extends JFrame implements KeyListener {
 		this.panel = panel;
 		this.tracer = tracer;
 		this.scene = scene;
+		move_units = options.width / 1000f;
 		setResizable(false);
 		getContentPane().add(panel);
 		pack();
@@ -87,6 +89,18 @@ public class GUI extends JFrame implements KeyListener {
 			break;
 		case KeyEvent.VK_M:
 			newCamera = scene.camera.zoom(ZOOM);
+			break;
+		case KeyEvent.VK_Q:
+			newCamera = scene.camera.translate(-move_units, 0);
+			break;
+		case KeyEvent.VK_D:
+			newCamera = scene.camera.translate(move_units, 0);
+			break;
+		case KeyEvent.VK_Z:
+			newCamera = scene.camera.translate(0, -move_units);
+			break;
+		case KeyEvent.VK_S:
+			newCamera = scene.camera.translate(0, move_units);
 			break;
 		default:
 			return;
