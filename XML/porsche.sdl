@@ -8,18 +8,23 @@
 
    <Lights>
       <PointLight position="3 5 5" intensity="1" color="1 1 1" name="light0" />
-			<!-- <SpotLight position="0 -10 1" direction="0 10 -1" angle="15" intensity="1" color="1 1 1" name="light1" /> -->
+      <!-- <SpotLight position="0 -10 1" direction="0 10 -1" angle="15" intensity="1" color="1 1 1" name="light1" /> -->
    </Lights>
 
    <Geometry>
       <FileGeometry filename="California/california.obj" name="subject" />
+      <Circle radius="3" name="floor" />
    </Geometry>
 
    <Materials>
       <DiffuseMaterial color="1 1 1" name="base" />
+      <DiffuseMaterial color="0.5 0.5 0.5" name="floorMaterial" />
    </Materials>
 
    <Scene camera="cam0" lights="light0" background="0 0 0">
       <Shape geometry="subject" material="base" />
+      <Translate vector="0 0.39 -0.75724">
+         <Shape geometry="floor" material="floorMaterial" />
+      </Translate>
    </Scene>
 </Sdl>
