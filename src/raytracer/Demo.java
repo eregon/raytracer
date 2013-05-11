@@ -8,7 +8,7 @@ package raytracer;
  */
 public class Demo {
 	public static void main(String[] args) throws Exception {
-		String sceneFile = "XML/shadows.sdl";
+		String sceneFile = "XML/testDoF.sdl";
 		String outputFile = "image.png";
 
 		Options options = new Options();

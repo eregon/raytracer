@@ -10,11 +10,17 @@ import uclouvain.ingi2325.utils.Scene;
 
 public class GUI extends JFrame implements KeyListener {
 
+	protected static final long UPDATE_EVERY = 30; // ms
+
+	final PixelPanel panel;
 	final RayTracer tracer;
 	final Scene scene;
 
+	private volatile boolean drawing = false;
+
 	public GUI(PixelPanel panel, RayTracer tracer, Scene scene, Options options) {
 		super();
+		this.panel = panel;
 		this.tracer = tracer;
 		this.scene = scene;
 		setResizable(false);
@@ -22,10 +28,35 @@ public class GUI extends JFrame implements KeyListener {
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addKeyListener(this);
+		super.setVisible(true);
+		createUpdater();
 	}
 
 	public void start() {
-		super.setVisible(true);
+		drawing = true;
+	}
+
+	public void done() {
+		panel.paint(panel.getGraphics());
+		drawing = false;
+	}
+
+	void createUpdater() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(UPDATE_EVERY);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+						return;
+					}
+					if (drawing)
+						panel.paint(panel.getGraphics());
+				}
+			}
+		}, "GUI Updater").start();
 	}
 
 	@Override
@@ -54,7 +85,9 @@ public class GUI extends JFrame implements KeyListener {
 		}
 
 		scene.camera = newCamera;
+		start();
 		tracer.render();
+		done();
 	}
 
 	@Override

@@ -9,15 +9,11 @@ import uclouvain.ingi2325.utils.SceneBuilder;
 
 public class CLI {
 
-	protected static final long UPDATE_EVERY = 30; // ms
-
 	String outputFile;
 	Options options;
 	Scene scene;
 	Image image;
 	RayTracer tracer;
-
-	private volatile boolean done = false;
 
 	public CLI(String sceneFile, String outputFile, Options options) throws FileNotFoundException {
 		this.options = options;
@@ -33,7 +29,6 @@ public class CLI {
 
 	public void trace() {
 		tracer.render();
-		//done = true;
 		saveImage();
 	}
 
@@ -45,27 +40,9 @@ public class CLI {
 		PixelPanel panel = new PixelPanel(image, options);
 
 		GUI gui = new GUI(panel, tracer, scene, options);
-		createUpdater(panel);
 		gui.start();
 		trace();
-		panel.repaint();
-	}
-
-	void createUpdater(final PixelPanel panel) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (!done) {
-					try {
-						Thread.sleep(UPDATE_EVERY);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-						return;
-					}
-					panel.paint(panel.getGraphics());
-				}
-			}
-		}, "GUI Updater").start();
+		gui.done();
 	}
 
 	public static void usage() {
