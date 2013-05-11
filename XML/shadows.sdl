@@ -7,9 +7,9 @@
    </Cameras>
 
    <Lights>
-      <PointLight position="5 5 4" intensity="1.5" color="1 1 1" name="light0" />
-      <PointLight position="0 50 20" intensity="1.5" color="1 1 1" name="light1" />
-      <SpotLight position="10 20 -10" direction="-1 -2 1" angle="14" intensity="1.5" color="1 1 0" name="light2" />
+      <PointLight position="5 5 4" intensity="0.5" color="1 1 1" name="light0" />
+      <PointLight position="0 50 20" intensity="0.5" color="1 1 1" name="light1" />
+      <SpotLight position="10 20 -10" direction="-1 -2 1" angle="14" intensity="0.5" color="1 1 0" name="light2" />
    </Lights>
 
    <Geometry>
