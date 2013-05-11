@@ -12,6 +12,7 @@ public class GUI extends JFrame implements KeyListener {
 
 	static final long UPDATE_EVERY = 30; // ms
 	static final float MOVE_ANGLE = (float) (Math.PI / 12);
+	static final float ZOOM = 1.1f;
 
 	final PixelPanel panel;
 	final RayTracer tracer;
@@ -80,6 +81,12 @@ public class GUI extends JFrame implements KeyListener {
 			break;
 		case KeyEvent.VK_DOWN:
 			newCamera = scene.camera.rotateUpDown(MOVE_ANGLE);
+			break;
+		case KeyEvent.VK_P:
+			newCamera = scene.camera.zoom(1 / ZOOM);
+			break;
+		case KeyEvent.VK_M:
+			newCamera = scene.camera.zoom(ZOOM);
 			break;
 		default:
 			return;

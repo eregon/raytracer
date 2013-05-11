@@ -45,6 +45,10 @@ public class Camera {
 		return transform(Transformation.DEFAULT.rotate(u, angle));
 	}
 
+	public Camera zoom(float zoom) {
+		return transform(Transformation.DEFAULT.scale(new Vector3D(zoom)));
+	}
+
 	private Camera transform(Transformation t) {
 		return new Camera(t.m.mul(position), t.m.mul(direction), up, fovy);
 	}
