@@ -13,7 +13,7 @@
 
    <Geometry>
       <FileGeometry filename="California/california.obj" name="subject" />
-      <Circle radius="3" name="floor" />
+      <Sphere radius="30" name="floor" />
    </Geometry>
 
    <Materials>
@@ -23,7 +23,7 @@
 
    <Scene camera="cam0" lights="light0" background="0 0 0">
       <Shape geometry="subject" material="base" />
-      <Translate vector="0 0.39 -0.75724">
+      <Translate vector="0 0.2 -30.723">
          <Shape geometry="floor" material="floorMaterial" />
       </Translate>
    </Scene>
