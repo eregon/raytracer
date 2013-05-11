@@ -26,7 +26,7 @@ public class GUI extends JFrame implements KeyListener {
 		this.panel = panel;
 		this.tracer = tracer;
 		this.scene = scene;
-		move_units = options.width / 1000f;
+		move_units = options.width / 3f;
 		setResizable(false);
 		getContentPane().add(panel);
 		pack();

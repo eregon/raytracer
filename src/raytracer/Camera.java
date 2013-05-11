@@ -10,6 +10,7 @@ public class Camera {
 	final float fovy;
 
 	final Vector3D u, v, w;
+	float d;
 	Vector3D toPlan;
 
 	public Camera(Point3D position, Vector3D direction, Vector3D up, float fovy) {
@@ -29,7 +30,7 @@ public class Camera {
 
 	public void focus(int width) {
 		// projection distance
-		float d = (float) (width / 2 / Math.tan(fovy / 2));
+		d = (float) (width / 2 / Math.tan(fovy / 2));
 		toPlan = direction.mul(d);
 	}
 
@@ -50,7 +51,7 @@ public class Camera {
 	}
 
 	public Camera translate(float du, float dv) {
-		return transform(Transformation.DEFAULT.translate(u.mul(du).add(v.mul(dv))));
+		return transform(Transformation.DEFAULT.translate(u.mul(du / d).add(v.mul(dv / d))));
 	}
 
 	private Camera transform(Transformation t) {
