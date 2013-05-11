@@ -33,7 +33,7 @@ public class CLI {
 
 	public void trace() {
 		tracer.render();
-		done = true;
+		//done = true;
 		saveImage();
 	}
 
@@ -44,7 +44,7 @@ public class CLI {
 	public void renderGUI() {
 		PixelPanel panel = new PixelPanel(image, options);
 
-		GUI gui = new GUI(panel);
+		GUI gui = new GUI(panel, tracer, scene, options);
 		createUpdater(panel);
 		gui.start();
 		trace();
@@ -62,7 +62,7 @@ public class CLI {
 						e.printStackTrace();
 						return;
 					}
-					panel.repaint();
+					panel.paint(panel.getGraphics());
 				}
 			}
 		}, "GUI Updater").start();

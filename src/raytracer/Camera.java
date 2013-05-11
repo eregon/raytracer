@@ -36,4 +36,14 @@ public class Camera {
 	public Vector3D toScreen(float x, float y) {
 		return toPlan.add(u.mul(x)).add(v.mul(y)).normalized(); // −dW + aU + bV
 	}
+
+	public Camera rotate(double angle, boolean up_down) {
+		Transformation t;
+		if (up_down)
+			t = Transformation.DEFAULT.rotate(u, (float) angle); // up-down
+		else
+			t = Transformation.DEFAULT.rotate(up, (float) angle); // left-right
+
+		return new Camera(t.m.mul(position), t.m.mul(direction), up, fovy);
+	}
 }

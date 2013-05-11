@@ -6,10 +6,17 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 import uclouvain.ingi2325.utils.PixelPanel;
+import uclouvain.ingi2325.utils.Scene;
 
 public class GUI extends JFrame implements KeyListener {
-	public GUI(PixelPanel panel) {
+
+	final RayTracer tracer;
+	final Scene scene;
+
+	public GUI(PixelPanel panel, RayTracer tracer, Scene scene, Options options) {
 		super();
+		this.tracer = tracer;
+		this.scene = scene;
 		setResizable(false);
 		getContentPane().add(panel);
 		pack();
@@ -27,22 +34,27 @@ public class GUI extends JFrame implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		Camera newCamera = null;
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			System.out.println("left");
+			newCamera = scene.camera.rotate(-Math.PI / 12, false);
 			break;
 		case KeyEvent.VK_RIGHT:
-			System.out.println("right");
+			newCamera = scene.camera.rotate(Math.PI / 12, false);
 			break;
 		case KeyEvent.VK_UP:
-			System.out.println("up");
+			newCamera = scene.camera.rotate(-Math.PI / 12, true);
 			break;
 		case KeyEvent.VK_DOWN:
-			System.out.println("down");
+			newCamera = scene.camera.rotate(Math.PI / 12, true);
 			break;
 		default:
-			break;
+			return;
 		}
+
+		scene.camera = newCamera;
+		tracer.render();
 	}
 
 	@Override

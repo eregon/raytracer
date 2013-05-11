@@ -33,23 +33,8 @@ public class PixelPanel extends Canvas {
 		this.image = image;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.Canvas#paint(java.awt.Graphics)
-	 */
 	@Override
 	public void paint(Graphics g) {
-		update(g);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.Canvas#update(java.awt.Graphics)
-	 */
-	@Override
-	public void update(Graphics g) {
 		g.drawImage(image, 0, 0, this);
 	}
 }
