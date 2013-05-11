@@ -80,6 +80,12 @@ public class CLI {
 
 	public static void usage() {
 		System.out.println("java raytracer.CLI [OPTIONS] SCENE.sdl OUTPUT.png");
+		System.out.println("  -gui          Render in a window");
+		System.out.println("  -width=N");
+		System.out.println("  -height=N");
+		System.out.println("  -noShadows");
+		System.out.println("  -ss=N         Supersampling (N*N samples per pixel)");
+		System.out.println("  -bb           Show bounding boxes");
 		System.exit(1);
 	}
 
