@@ -97,10 +97,10 @@ public class GUI extends JFrame implements KeyListener {
 			newCamera = scene.camera.translate(move_units, 0);
 			break;
 		case KeyEvent.VK_Z:
-			newCamera = scene.camera.translate(0, -move_units);
+			newCamera = scene.camera.translate(0, move_units);
 			break;
 		case KeyEvent.VK_S:
-			newCamera = scene.camera.translate(0, move_units);
+			newCamera = scene.camera.translate(0, -move_units);
 			break;
 		default:
 			return;
