@@ -1,8 +1,11 @@
 package uclouvain.ingi2325.parser;
 
-import uclouvain.ingi2325.utils.*;
-
-import static uclouvain.ingi2325.parser.Contains.ManySpec.*;
+import static uclouvain.ingi2325.parser.Contains.ManySpec.OneToMany;
+import static uclouvain.ingi2325.parser.Contains.ManySpec.ZeroToMany;
+import uclouvain.ingi2325.utils.Color;
+import uclouvain.ingi2325.utils.Point3D;
+import uclouvain.ingi2325.utils.TextureCoordinates;
+import uclouvain.ingi2325.utils.Vector3D;
 
 /**
  * Handler of the parser
@@ -29,8 +32,8 @@ import static uclouvain.ingi2325.parser.Contains.ManySpec.*;
  * @author Sébastien Doeraene <sjrdoeraene@gmail.com>
  */
 public interface ParserHandler {
-	@Contains({"Cameras", "Lights", "Geometry", "Textures?", "Materials?",
-		"Scene"})
+	@Contains({ "Cameras", "Lights", "Geometry", "Textures?", "Materials?",
+			"Scene" })
 	public void startSdl() throws Exception;
 
 	public void endSdl() throws Exception;
@@ -40,88 +43,95 @@ public interface ParserHandler {
 
 	public void endCameras() throws Exception;
 
-	@Attributes({"position", "direction", "up", "fovy", "name"})
+	@Attributes({ "position", "direction", "up", "fovy", "name" })
 	public void startCamera(Point3D position, Vector3D direction, Vector3D up,
 			float fovy, String name) throws Exception;
 
 	public void endCamera() throws Exception;
 
-	@Contains(value = {"DirectionalLight", "PointLight", "SpotLight"},
+	@Contains(value = { "DirectionalLight", "PointLight", "SpotLight" },
 			many = OneToMany)
 	public void startLights() throws Exception;
 
 	public void endLights() throws Exception;
 
-	@Attributes({"direction", "intensity", "color", "name"})
+	@Attributes({ "direction", "intensity", "color", "name" })
 	public void startDirectionalLight(Vector3D direction,
 			@Optional("1") float intensity, @Optional("1 1 1") Color color,
 			String name) throws Exception;
 
 	public void endDirectionalLight() throws Exception;
 
-	@Attributes({"position", "intensity", "color", "name"})
+	@Attributes({ "position", "intensity", "color", "name" })
 	public void startPointLight(Point3D position,
 			@Optional("1") float intensity, @Optional("1 1 1") Color color,
 			String name) throws Exception;
 
 	public void endPointLight() throws Exception;
 
-	@Attributes({"position", "direction", "angle", "intensity", "color",
-		"name"})
+	@Attributes({ "position", "direction", "angle", "intensity", "color",
+			"name" })
 	public void startSpotLight(Point3D position, Vector3D direction,
 			float angle, @Optional("1") float intensity,
 			@Optional("1 1 1") Color color, String name) throws Exception;
 
 	public void endSpotLight() throws Exception;
 
-	@Contains(value = {"Sphere", "Cylinder", "Cone", "Cube", "Torus", "Teapot",
-			"IndexedTriangleSet", "FileGeometry"},
+	@Attributes({ "position", "a", "b", "intensity", "color", "name" })
+	public void startAreaLight(Point3D position, Vector3D a,
+			Vector3D b, @Optional("1") float intensity,
+			@Optional("1 1 1") Color color, String name) throws Exception;
+
+	public void endAreaLight() throws Exception;
+
+	@Contains(value = { "Sphere", "Cylinder", "Cone", "Cube", "Torus", "Teapot",
+			"IndexedTriangleSet", "FileGeometry" },
 			many = OneToMany)
 	public void startGeometry() throws Exception;
 
 	public void endGeometry() throws Exception;
 
-	@Attributes({"radius", "name"})
+	@Attributes({ "radius", "name" })
 	public void startCircle(float size, String name) throws Exception;
 
 	public void endCircle() throws Exception;
 
-	@Attributes({"radius", "name"})
+	@Attributes({ "radius", "name" })
 	public void startSphere(float radius, String name) throws Exception;
 
 	public void endSphere() throws Exception;
 
-	@Attributes({"radius", "height", "capped", "name"})
+	@Attributes({ "radius", "height", "capped", "name" })
 	public void startCylinder(float radius, float height,
 			@Optional("true") boolean capped, String name) throws Exception;
 
 	public void endCylinder() throws Exception;
 
-	@Attributes({"radius", "height", "capped", "name"})
+	@Attributes({ "radius", "height", "capped", "name" })
 	public void startCone(float radius, float height,
 			@Optional("true") boolean capped, String name) throws Exception;
 
 	public void endCone() throws Exception;
 
-	@Attributes({"size", "name"})
+	@Attributes({ "size", "name" })
 	public void startCube(float size, String name) throws Exception;
 
 	public void endCube() throws Exception;
 
-	@Attributes({"innerRadius", "outerRadius", "name"})
+	@Attributes({ "innerRadius", "outerRadius", "name" })
 	public void startTorus(float innerRadius, float outerRadius, String name)
 			throws Exception;
 
 	public void endTorus() throws Exception;
 
-	@Attributes({"size", "name"})
+	@Attributes({ "size", "name" })
 	public void startTeapot(float size, String name) throws Exception;
 
 	public void endTeapot() throws Exception;
 
-	@Attributes({"coordinates", "normals", "textureCoordinates",
-		"coordinateIndices", "normalIndices", "textureCoordinateIndices",
-		"name"})
+	@Attributes({ "coordinates", "normals", "textureCoordinates",
+			"coordinateIndices", "normalIndices", "textureCoordinateIndices",
+			"name" })
 	public void startIndexedTriangleSet(Point3D[] coordinates,
 			@Optional Vector3D[] normals,
 			@Optional TextureCoordinates[] textureCoordinates,
@@ -131,7 +141,7 @@ public interface ParserHandler {
 
 	public void endIndexedTriangleSet() throws Exception;
 
-	@Attributes({"filename", "name"})
+	@Attributes({ "filename", "name" })
 	public void startFileGeometry(String filename, String name)
 			throws Exception;
 
@@ -142,67 +152,67 @@ public interface ParserHandler {
 
 	public void endTextures() throws Exception;
 
-	@Attributes({"src", "name"})
+	@Attributes({ "src", "name" })
 	public void startTexture(String src, String name) throws Exception;
 
 	public void endTexture() throws Exception;
 
-	@Contains(value = {"DiffuseMaterial", "PhongMaterial",
-			"LinearCombinedMaterial"},
+	@Contains(value = { "DiffuseMaterial", "PhongMaterial",
+			"LinearCombinedMaterial" },
 			many = ZeroToMany)
 	public void startMaterials() throws Exception;
 
 	public void endMaterials() throws Exception;
 
-	@Attributes({"color", "name"})
+	@Attributes({ "color", "name" })
 	public void startDiffuseMaterial(Color color, String name) throws Exception;
 
 	public void endDiffuseMaterial() throws Exception;
 
-	@Attributes({"color", "shininess", "name"})
+	@Attributes({ "color", "shininess", "name" })
 	public void startPhongMaterial(Color color, float shininess, String name)
 			throws Exception;
 
 	public void endPhongMaterial() throws Exception;
 
-	@Attributes({"material1", "weight1", "material2", "weight2", "name"})
+	@Attributes({ "material1", "weight1", "material2", "weight2", "name" })
 	public void startLinearCombinedMaterial(@IDRef String material1Name,
 			@Optional("0.5") float weight1, @IDRef String material2Name,
 			@Optional("0.5") float weight2, String name) throws Exception;
 
 	public void endLinearCombinedMaterial() throws Exception;
 
-	@Attributes({"camera", "lights", "background"})
-	@Contains(value = {"Shape", "Rotate", "Translate", "Scale"},
-        many = OneToMany)
+	@Attributes({ "camera", "lights", "background" })
+	@Contains(value = { "Shape", "Rotate", "Translate", "Scale" },
+			many = OneToMany)
 	public void startScene(@IDRef String cameraName, String[] lightNames,
 			@Optional("0 0 0") Color background) throws Exception;
 
 	public void endScene() throws Exception;
 
-	@Attributes({"geometry", "material", "texture"})
+	@Attributes({ "geometry", "material", "texture" })
 	public void startShape(@IDRef String geometryName,
 			@Optional @IDRef String materialName,
 			@Optional @IDRef String textureName) throws Exception;
 
 	public void endShape() throws Exception;
 
-	@Attributes({"axis", "angle"})
-	@Contains(value = {"Shape", "Rotate", "Translate", "Scale"},
+	@Attributes({ "axis", "angle" })
+	@Contains(value = { "Shape", "Rotate", "Translate", "Scale" },
 			many = OneToMany)
 	public void startRotate(Vector3D axis, float angle) throws Exception;
 
 	public void endRotate() throws Exception;
 
-	@Attributes({"vector"})
-	@Contains(value = {"Shape", "Rotate", "Translate", "Scale"},
+	@Attributes({ "vector" })
+	@Contains(value = { "Shape", "Rotate", "Translate", "Scale" },
 			many = OneToMany)
 	public void startTranslate(Vector3D vector) throws Exception;
 
 	public void endTranslate() throws Exception;
 
-	@Attributes({"scale"})
-	@Contains(value = {"Shape", "Rotate", "Translate", "Scale"},
+	@Attributes({ "scale" })
+	@Contains(value = { "Shape", "Rotate", "Translate", "Scale" },
 			many = OneToMany)
 	public void startScale(Vector3D scale) throws Exception;
 

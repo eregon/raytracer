@@ -22,6 +22,7 @@ import raytracer.geometry.Cube;
 import raytracer.geometry.Geometry;
 import raytracer.geometry.Sphere;
 import raytracer.geometry.Triangle;
+import raytracer.light.AreaLight;
 import raytracer.light.DirectionalLight;
 import raytracer.light.Light;
 import raytracer.light.PointLight;
@@ -230,6 +231,15 @@ public class SceneBuilder implements ParserHandler {
 			throws Exception {
 		angle = deg2rad(angle);
 		lights.put(name, new SpotLight(position, direction, angle, color, intensity));
+	}
+
+	@Override
+	public void startAreaLight(Point3D position, Vector3D a, Vector3D b, float intensity, Color color, String name) throws Exception {
+		lights.put(name, new AreaLight(position, a, b, intensity, color));
+	}
+
+	@Override
+	public void endAreaLight() throws Exception {
 	}
 
 	/*

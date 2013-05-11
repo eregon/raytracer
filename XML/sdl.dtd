@@ -13,7 +13,7 @@
 	name						ID				#REQUIRED
 >
 
-<!ELEMENT Lights ((DirectionalLight|PointLight|SpotLight)+)>
+<!ELEMENT Lights ((DirectionalLight|PointLight|SpotLight|AreaLight)+)>
 <!ATTLIST Lights>
 
 <!ELEMENT DirectionalLight EMPTY>
@@ -37,6 +37,16 @@
 	position					CDATA			#REQUIRED
 	direction					CDATA			#REQUIRED
 	angle						CDATA			#REQUIRED
+	intensity					CDATA			"1"
+	color						CDATA			"1 1 1"
+	name						ID				#REQUIRED
+>
+
+<!ELEMENT AreaLight EMPTY>
+<!ATTLIST AreaLight
+	position					CDATA			#REQUIRED
+	a							CDATA			#REQUIRED
+	b							CDATA			#REQUIRED
 	intensity					CDATA			"1"
 	color						CDATA			"1 1 1"
 	name						ID				#REQUIRED
