@@ -40,7 +40,7 @@ public class FileGeometryParser {
 		while ((line = io.readLine()) != null) {
 			Splitter s = new Splitter(line.trim());
 			String type = s.getWord().intern();
-			s.eatSpace();
+			s.eatSpaces();
 
 			if (type == "v") { // vertex
 				_vertices.add(Point3D.valueOf(s.rest()));
@@ -52,11 +52,11 @@ public class FileGeometryParser {
 
 				a = _vertices.get(s.getInt());
 				na = getNormal(s);
-				s.eatSpace();
+				s.eatSpaces();
 
 				b = _vertices.get(s.getInt());
 				nb = getNormal(s);
-				s.eatSpace();
+				s.eatSpaces();
 
 				c = _vertices.get(s.getInt());
 				nc = getNormal(s);

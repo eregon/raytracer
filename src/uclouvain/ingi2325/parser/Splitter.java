@@ -41,11 +41,6 @@ public final class Splitter {
 		return count;
 	}
 
-	public final void eatSpace() {
-		if (pos < len && str.charAt(pos) == ' ')
-			pos++;
-	}
-
 	public final void eatSpaces() {
 		while (pos < len && str.charAt(pos) == ' ')
 			pos++;
