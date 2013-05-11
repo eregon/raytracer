@@ -8,7 +8,8 @@
 
    <Lights>
       <PointLight position="3 5 5" intensity="1" color="1 1 1" name="light0" />
-      <!-- <SpotLight position="0 -10 1" direction="0 10 -1" angle="15" intensity="1" color="1 1 1" name="light1" /> -->
+      <SpotLight position="0 -10 1" direction="0 10 -1" angle="15" intensity="1" color="1 0 0" name="light1" />
+      <SpotLight position="3 5 5" direction="-3 -5 -5" angle="15" intensity="1" color="0 0 1" name="light2" />
    </Lights>
 
    <Geometry>
@@ -21,7 +22,7 @@
       <DiffuseMaterial color="0.5 0.5 0.5" name="floorMaterial" />
    </Materials>
 
-   <Scene camera="cam0" lights="light0" background="0 0 0">
+   <Scene camera="cam0" lights="light0, light1, light2" background="0 0 0">
       <Shape geometry="subject" material="base" />
       <Translate vector="0 0.2 -30.723">
          <Shape geometry="floor" material="floorMaterial" />
