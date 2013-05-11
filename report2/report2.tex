@@ -1,0 +1,46 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{alltt}
+
+\usepackage[top=30mm, bottom=30mm, left=25mm, right=25mm]{geometry}
+\setlength\parindent{0pt}
+\setlength{\parskip}{0.7em}
+
+%\usepackage{graphicx}
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+%\graphicspath{{./images/}}
+
+\title{INGI2325 Computer Graphics \\
+  Project -- Last Report}
+\author{Benoit Daloze}
+
+\begin{document}
+\maketitle
+
+\section{How to run and compile your project}
+
+\begin{itemize}
+  \item To compile, just run \texttt{\$ ant compile} in the top-level directory.
+  \item To run the demo, type \texttt{\$ ant} in the top-level directory.
+  \item To remove compiled files, run \texttt{\$ ant clean}.
+\end{itemize}
+
+Of course, the project can be imported in Eclipse and ran from there.
+
+It also has a command-line interface:
+\begin{verbatim}
+$ java -cp bin raytracer.CLI [OPTIONS] <SCENE>.sdl <OUTPUT>.png
+  -gui          Render in a window
+  -width=N
+  -height=N
+  -noShadows
+  -ss=N         Supersampling (N*N samples per pixel)
+  -bb           Draw bounding boxes
+\end{verbatim}
+
+\end{document}
