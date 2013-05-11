@@ -78,7 +78,7 @@ public class RayTracer {
 		}
 		long t1 = System.currentTimeMillis();
 		pool.shutdown();
-		System.out.print("Rendered in " + formatTime((t1 - t0) / 1e3)
+		System.out.println("Rendered in " + formatTime((t1 - t0) / 1e3)
 				+ " real " + formatTime(cpuTime) + " total CPU");
 
 	}
