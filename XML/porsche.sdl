@@ -17,7 +17,7 @@
    </Geometry>
 
    <Materials>
-      <DiffuseMaterial color="1 1 1" name="base" />
+      <PhongMaterial shininess="60" color="1 1 1" name="base" />
       <DiffuseMaterial color="0.5 0.5 0.5" name="floorMaterial" />
    </Materials>
 

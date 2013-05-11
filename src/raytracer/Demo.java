@@ -15,7 +15,7 @@ public class Demo {
 		options.width = 1024;
 		options.height = 742;
 		options.shadows = true;
-		options.super_sampling = 1;
+		options.super_sampling = 2;
 		options.trace_bounding_boxes = false;
 
 		CLI cli = new CLI(sceneFile, outputFile, options);
