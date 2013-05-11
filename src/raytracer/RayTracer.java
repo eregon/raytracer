@@ -26,6 +26,8 @@ public class RayTracer {
 	final boolean shadows;
 	final int super_sampling;
 	final BVH bvh;
+	final int nThreads;
+	final ExecutorService pool;
 
 	public RayTracer(Scene scene, Image image, Options options) {
 		this.scene = scene;
@@ -41,6 +43,9 @@ public class RayTracer {
 		bvh = new BVH(shapes);
 		long afterBVH = System.currentTimeMillis();
 		System.out.println("BVH built in " + formatTime((afterBVH - beforeBVH) / 1e3));
+
+		nThreads = numberOfThreads();
+		pool = Executors.newFixedThreadPool(nThreads);
 	}
 
 	private int numberOfThreads() {
@@ -53,13 +58,11 @@ public class RayTracer {
 	public void render() {
 		scene.camera.focus(width);
 
-		final int n = numberOfThreads();
-		ExecutorService pool = Executors.newFixedThreadPool(n);
-		List<Renderer> renderers = new ArrayList<Renderer>(n);
+		List<Renderer> renderers = new ArrayList<Renderer>(nThreads);
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < nThreads; i++) {
 			final Enumerator iter = new SkippingEnumerator(
-					new CircleEnumerator(height, width), i, n);
+					new CircleEnumerator(height, width), i, nThreads);
 			renderers.add(new Renderer(iter));
 		}
 
@@ -77,7 +80,6 @@ public class RayTracer {
 			e.printStackTrace();
 		}
 		long t1 = System.currentTimeMillis();
-		pool.shutdown();
 		System.out.println("Rendered in " + formatTime((t1 - t0) / 1e3)
 				+ " real " + formatTime(cpuTime) + " total CPU");
 
