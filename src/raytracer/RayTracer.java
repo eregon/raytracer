@@ -13,30 +13,26 @@ import java.util.concurrent.Future;
 import raytracer.enumerator.CircleEnumerator;
 import raytracer.enumerator.Enumerator;
 import raytracer.enumerator.SkippingEnumerator;
-
-
-
 import uclouvain.ingi2325.utils.Color;
 import uclouvain.ingi2325.utils.Image;
 import uclouvain.ingi2325.utils.Scene;
 
 public class RayTracer {
-	public final static boolean TRACE_BOUNDING_BOXES = false;
-	public final static int SUPER_SAMPLING = 2;
-
 	public final static float LIGHT_EPSILON = 0.0001f;
 
 	final Scene scene;
 	final Image image;
 	final int height, width;
+	final int super_sampling;
 	final BVH bvh;
 	final float lightDivider;
 
-	public RayTracer(Scene scene, Image image) {
+	public RayTracer(Scene scene, Image image, Options options) {
 		this.scene = scene;
 		this.image = image;
 		height = image.getHeight();
 		width = image.getWidth();
+		super_sampling = options.super_sampling;
 		lightDivider = scene.lights.size();
 
 		scene.camera.focus(width);
@@ -132,19 +128,19 @@ public class RayTracer {
 			float b = y - height / 2f;
 
 			// start at first bottom left pixel center
-			a += 1f / (2 * SUPER_SAMPLING);
-			b += 1f / (2 * SUPER_SAMPLING);
+			a += 1f / (2 * super_sampling);
+			b += 1f / (2 * super_sampling);
 
 			Color color = Color.NONE;
-			for (int i = 0; i < SUPER_SAMPLING; i++) {
-				for (int j = 0; j < SUPER_SAMPLING; j++) {
+			for (int i = 0; i < super_sampling; i++) {
+				for (int j = 0; j < super_sampling; j++) {
 					ray.setDirection(scene.camera.toScreen(
-							a + i / (float) SUPER_SAMPLING,
-							b + j / (float) SUPER_SAMPLING));
+							a + i / (float) super_sampling,
+							b + j / (float) super_sampling));
 					color = color.add(shading(ray));
 				}
 			}
-			color = color.div(SUPER_SAMPLING * SUPER_SAMPLING);
+			color = color.div(super_sampling * super_sampling);
 			return color;
 		}
 	}

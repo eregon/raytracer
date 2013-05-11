@@ -10,12 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.xml.sax.InputSource;
 
 import raytracer.Camera;
 import raytracer.Material;
-import raytracer.RayTracer;
+import raytracer.Options;
 import raytracer.Shape;
 import raytracer.Transformation;
 import raytracer.geometry.Cube;
@@ -48,6 +47,7 @@ public class SceneBuilder implements ParserHandler {
 	 * The scene being build
 	 */
 	private Scene scene;
+	private boolean trace_bounding_boxes;
 
 	final Map<String, Camera> cameras = new HashMap<String, Camera>();
 	final Map<String, List<Geometry>> geometries = new HashMap<String, List<Geometry>>();
@@ -67,7 +67,7 @@ public class SceneBuilder implements ParserHandler {
 	 *             The file corresponding to the given filename could not be
 	 *             found.
 	 */
-	public Scene loadScene(String filename) throws FileNotFoundException {
+	public Scene loadScene(String filename, Options options) throws FileNotFoundException {
 
 		File file = new File(filename);
 		FileInputStream fileInputStream = new FileInputStream(file);
@@ -78,6 +78,7 @@ public class SceneBuilder implements ParserHandler {
 				+ file.getParentFile().getAbsolutePath() + "/");
 
 		scene = new Scene();
+		trace_bounding_boxes = options.trace_bounding_boxes;
 
 		Parser parser = new Parser();
 		parser.addHandler(this);
@@ -631,7 +632,7 @@ public class SceneBuilder implements ParserHandler {
 				Shape shape = new Shape(geometry, material, transform);
 				scene.objects.add(shape);
 
-				if (RayTracer.TRACE_BOUNDING_BOXES) {
+				if (trace_bounding_boxes) {
 					scene.objects.add(new Shape(new Cube(shape.boundingBox),
 							new Material(new Color(1, 0, 0)), Transformation.DEFAULT));
 				}

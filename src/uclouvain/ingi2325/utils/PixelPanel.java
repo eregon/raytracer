@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import raytracer.Options;
+
 /**
  * Represents a canvas you can draw on.
  * 
@@ -24,10 +26,11 @@ public class PixelPanel extends Canvas {
 	/**
 	 * Construct a new CgPanel.
 	 */
-	public PixelPanel(int width, int height) {
-		setSize(new Dimension(width, height));
-		setPreferredSize(new Dimension(width, height));
-		image = new Image(width, height);
+	public PixelPanel(Options options) {
+		Dimension size = new Dimension(options.width, options.height);
+		setSize(size);
+		setPreferredSize(size);
+		image = new Image(options);
 	}
 
 	/*

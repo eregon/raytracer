@@ -30,10 +30,15 @@ public class Demo {
 	private volatile boolean done = false;
 
 	public Demo() throws FileNotFoundException {
-		Scene scene = new SceneBuilder().loadScene("XML/shadows.sdl");
+		Options options = new Options();
+		options.width = 1024;
+		options.height = 742;
+		options.super_sampling = 1;
 
-		panel = new PixelPanel(1024, 742);
-		tracer = new RayTracer(scene, panel.image);
+		Scene scene = new SceneBuilder().loadScene("XML/shadows.sdl", options);
+
+		panel = new PixelPanel(options);
+		tracer = new RayTracer(scene, panel.image, options);
 
 		frame = new JFrame();
 		frame.setResizable(false);

@@ -6,9 +6,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import raytracer.Options;
+
 public class Image extends BufferedImage {
-	public Image(int width, int height) {
-		super(width, height, BufferedImage.TYPE_INT_RGB);
+	public Image(Options options) {
+		super(options.width, options.height, BufferedImage.TYPE_INT_RGB);
 	}
 
 	public void drawPixel(int x, int y, Color color) {

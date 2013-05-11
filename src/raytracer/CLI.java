@@ -9,18 +9,19 @@ import uclouvain.ingi2325.utils.SceneBuilder;
 public class CLI {
 
 	String outputFile;
-	int width = 512, height = 512;
+	Options options;
 	Image image;
 	Scene scene;
 
-	public CLI(String sceneFile, String outputFile) throws FileNotFoundException {
-		scene = new SceneBuilder().loadScene(sceneFile);
-		image = new Image(width, height);
+	public CLI(String sceneFile, String outputFile, Options options) throws FileNotFoundException {
+		this.options = options;
 		this.outputFile = outputFile;
+		scene = new SceneBuilder().loadScene(sceneFile, options);
+		image = new Image(options);
 	}
 
 	public void render() {
-		RayTracer tracer = new RayTracer(scene, image);
+		RayTracer tracer = new RayTracer(scene, image, options);
 		tracer.render();
 		image.saveImage(outputFile);
 	}
@@ -31,10 +32,15 @@ public class CLI {
 			return;
 		}
 
+		Options options = new Options();
+		options.width = 640;
+		options.height = 480;
+		options.super_sampling = 1;
+
 		String sceneFile = args[0];
 		String outputFile = args[1];
 
-		new CLI(sceneFile, outputFile).render();
+		new CLI(sceneFile, outputFile, options).render();
 	}
 
 }
