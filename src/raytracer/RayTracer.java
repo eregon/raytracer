@@ -30,8 +30,8 @@ public class RayTracer {
 	public RayTracer(Scene scene, Image image, Options options) {
 		this.scene = scene;
 		this.image = image;
-		height = image.getHeight();
-		width = image.getWidth();
+		height = options.height;
+		width = options.width;
 		super_sampling = options.super_sampling;
 		lightDivider = scene.lights.size();
 
