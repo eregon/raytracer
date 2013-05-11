@@ -35,8 +35,6 @@ public class RayTracer {
 		shadows = options.shadows;
 		super_sampling = options.super_sampling;
 
-		scene.camera.focus(width);
-
 		List<Shape> shapes = scene.objects;
 		scene.objects = null; // no more needed, the BVH replaces it
 		long beforeBVH = System.currentTimeMillis();
@@ -53,6 +51,8 @@ public class RayTracer {
 	}
 
 	public void render() {
+		scene.camera.focus(width);
+
 		final int n = numberOfThreads();
 		ExecutorService pool = Executors.newFixedThreadPool(n);
 		List<Renderer> renderers = new ArrayList<Renderer>(n);
