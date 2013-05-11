@@ -31,10 +31,9 @@ public class Material {
 		return new Material(diffuse.mul(weight), specular.mul(weight), shininess * weight);
 	}
 
-	public Color addLight(Light light, Vector3D n, Vector3D l, float d, Ray ray) {
+	public Color colorUnderLight(Light light, Vector3D n, Vector3D l, Vector3D v, float d) {
 		Color color = diffuse.mul(d);
 		if (specular != Color.NONE) {
-			Vector3D v = ray.direction.opposite().normalized();
 			Vector3D h = v.add(l).normalized();
 			float s = (float) Math.pow(n.dotProduct(h), shininess); // specular factor
 			color = color.add(specular.mul(s));
@@ -45,28 +44,20 @@ public class Material {
 	public Color shading(RayTracer tracer, Intersection inter, Ray ray) {
 		Point3D hit = inter.point(ray);
 		Vector3D n = inter.normal();
+		Vector3D v = ray.direction.opposite().normalized();
+		Ray shadowRay = new Ray(hit);
 		Color color = Color.BLACK;
 
-		Ray shadowRay = new Ray(hit);
+		for (Light light : tracer.scene.lights)
+			color = light.shading(color, tracer, this, shadowRay, n, v);
 
-		for (Light light : tracer.scene.lights) {
-			Vector3D l = light.l(hit);
-			if (l == null)
-				continue;
-			float d = n.dotProduct(l); // diffuse factor
-			if (d > 0) { // First check if light is not in opposite direction
-				shadowRay.setDirection(l);
-				Intersection i = tracer.shoot(shadowRay, RayTracer.LIGHT_EPSILON, light.distanceTo(hit));
-				if (i == null)
-					color = color.add(addLight(light, n, l, d, ray));
-			}
-		}
 		return color.div(tracer.lightDivider).validate();
 	}
 
 	public Color shadingDoubleSidedNoShadows(RayTracer tracer, Intersection inter, Ray ray) {
 		Point3D hit = inter.point(ray);
 		Vector3D n = inter.normal();
+		Vector3D v = ray.direction.opposite().normalized();
 		Color color = Color.BLACK;
 
 		for (Light light : tracer.scene.lights) {
@@ -74,7 +65,7 @@ public class Material {
 			if (l == null)
 				continue;
 			float d = Math.abs(n.dotProduct(l)); // diffuse factor
-			color = color.add(addLight(light, n, l, d, ray));
+			color = color.add(colorUnderLight(light, n, l, v, d));
 		}
 		return color.div(tracer.lightDivider).validate();
 	}
