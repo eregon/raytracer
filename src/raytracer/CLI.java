@@ -15,8 +15,9 @@ public class CLI {
 
 	String outputFile;
 	Options options;
-	Image image;
 	Scene scene;
+	Image image;
+	RayTracer tracer;
 
 	private volatile boolean done = false;
 
@@ -24,6 +25,8 @@ public class CLI {
 		this.options = options;
 		this.outputFile = outputFile;
 		scene = new SceneBuilder().loadScene(sceneFile, options);
+		image = new Image(options);
+		tracer = new RayTracer(scene, image, options);
 	}
 
 	public void saveImage() {
@@ -31,20 +34,17 @@ public class CLI {
 	}
 
 	public void trace() {
-		RayTracer tracer = new RayTracer(scene, image, options);
 		tracer.render();
 		done = true;
 		saveImage();
 	}
 
 	public void renderCLI() {
-		image = new Image(options);
 		trace();
 	}
 
 	public void renderGUI() {
-		PixelPanel panel = new PixelPanel(options);
-		image = panel.image;
+		PixelPanel panel = new PixelPanel(image, options);
 
 		createWindow(panel);
 		createUpdater(panel);

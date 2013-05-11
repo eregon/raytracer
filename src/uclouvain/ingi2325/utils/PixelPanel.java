@@ -26,11 +26,11 @@ public class PixelPanel extends Canvas {
 	/**
 	 * Construct a new CgPanel.
 	 */
-	public PixelPanel(Options options) {
+	public PixelPanel(Image image, Options options) {
 		Dimension size = new Dimension(options.width, options.height);
 		setSize(size);
 		setPreferredSize(size);
-		image = new Image(options);
+		this.image = image;
 	}
 
 	/*
