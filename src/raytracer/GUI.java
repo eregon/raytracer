@@ -12,7 +12,7 @@ public class GUI extends JFrame implements KeyListener {
 
 	static final long UPDATE_EVERY = 30; // ms
 	static final float MOVE_ANGLE = (float) (Math.PI / 12);
-	static final float ZOOM = 1.1f;
+	static final float ZOOM = 1.2f;
 
 	final PixelPanel panel;
 	final RayTracer tracer;
