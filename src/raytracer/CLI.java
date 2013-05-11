@@ -2,8 +2,6 @@ package raytracer;
 
 import java.io.FileNotFoundException;
 
-import javax.swing.JFrame;
-
 import uclouvain.ingi2325.utils.Image;
 import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
@@ -46,19 +44,11 @@ public class CLI {
 	public void renderGUI() {
 		PixelPanel panel = new PixelPanel(image, options);
 
-		createWindow(panel);
+		GUI gui = new GUI(panel);
 		createUpdater(panel);
+		gui.start();
 		trace();
 		panel.repaint();
-	}
-
-	void createWindow(PixelPanel panel) {
-		JFrame frame = new JFrame();
-		frame.setResizable(false);
-		frame.getContentPane().add(panel);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
 	}
 
 	void createUpdater(final PixelPanel panel) {
