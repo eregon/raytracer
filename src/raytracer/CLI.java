@@ -17,10 +17,10 @@ public class CLI {
 		this.options = options;
 		this.outputFile = outputFile;
 		scene = new SceneBuilder().loadScene(sceneFile, options);
-		image = new Image(options);
 	}
 
 	public void render() {
+		image = new Image(options);
 		RayTracer tracer = new RayTracer(scene, image, options);
 		tracer.render();
 		image.saveImage(outputFile);
