@@ -17,6 +17,7 @@ import raytracer.Material;
 import raytracer.Options;
 import raytracer.Shape;
 import raytracer.Transformation;
+import raytracer.geometry.Circle;
 import raytracer.geometry.Cube;
 import raytracer.geometry.Geometry;
 import raytracer.geometry.Sphere;
@@ -256,6 +257,15 @@ public class SceneBuilder implements ParserHandler {
 	 */
 	@Override
 	public void endGeometry() throws Exception {
+	}
+
+	@Override
+	public void startCircle(float radius, String name) throws Exception {
+		geometries.put(name, Arrays.asList((Geometry) new Circle(radius)));
+	}
+
+	@Override
+	public void endCircle() throws Exception {
 	}
 
 	/*

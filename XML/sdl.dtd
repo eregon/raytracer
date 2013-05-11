@@ -42,8 +42,14 @@
 	name						ID				#REQUIRED
 >
 
-<!ELEMENT Geometry ((Sphere|Cylinder|Cone|Cube|Torus|Teapot|IndexedTriangleSet|FileGeometry)+)>
+<!ELEMENT Geometry ((Circle|Sphere|Cylinder|Cone|Cube|Torus|Teapot|IndexedTriangleSet|FileGeometry)+)>
 <!ATTLIST Geometry>
+
+<!ELEMENT Circle EMPTY>
+<!ATTLIST Circle
+	radius						CDATA			#REQUIRED
+	name						ID				#REQUIRED
+>
 
 <!ELEMENT Sphere EMPTY>
 <!ATTLIST Sphere

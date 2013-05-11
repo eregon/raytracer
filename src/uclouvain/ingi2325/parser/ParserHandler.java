@@ -82,6 +82,11 @@ public interface ParserHandler {
 	public void endGeometry() throws Exception;
 
 	@Attributes({"radius", "name"})
+	public void startCircle(float size, String name) throws Exception;
+
+	public void endCircle() throws Exception;
+
+	@Attributes({"radius", "name"})
 	public void startSphere(float radius, String name) throws Exception;
 
 	public void endSphere() throws Exception;
