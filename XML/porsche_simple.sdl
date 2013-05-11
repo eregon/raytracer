@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="4 -4 3.5" direction="-0.5 0.5 -0.5" up="0 0 1" fovy="45" name="cam0" />
+   </Cameras>
+
+   <Lights>
+      <PointLight position="3 5 5" intensity="1" color="1 1 1" name="light0" />
+   </Lights>
+
+   <Geometry>
+      <FileGeometry filename="California/california.obj" name="subject" />
+   </Geometry>
+
+   <Materials>
+      <DiffuseMaterial color="1 1 1" name="base" />
+   </Materials>
+
+   <Scene camera="cam0" lights="light0" background="0 0 0">
+      <Shape geometry="subject" material="base" />
+   </Scene>
+</Sdl>
