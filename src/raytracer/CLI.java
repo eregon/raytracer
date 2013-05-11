@@ -26,21 +26,52 @@ public class CLI {
 		image.saveImage(outputFile);
 	}
 
+	public static void usage() {
+		System.out.println("java raytracer.CLI [OPTIONS] SCENE.sdl OUTPUT.png");
+		System.exit(1);
+	}
+
 	public static void main(String[] args) throws FileNotFoundException {
-		if (args.length != 2) {
-			System.out.println("java raytracer.CLI SCENE.sdl OUTPUT.png");
-			return;
-		}
+		String sceneFile = null;
+		String outputFile = null;
 
 		Options options = new Options();
 		options.width = 640;
 		options.height = 480;
+		options.shadows = true;
 		options.super_sampling = 1;
+		options.trace_bounding_boxes = false;
 
-		String sceneFile = args[0];
-		String outputFile = args[1];
+		for (String arg : args) {
+			arg = arg.intern();
+
+			if (arg == "-noShadows")
+				options.shadows = false;
+
+			else if (arg == "-bb")
+				options.trace_bounding_boxes = true;
+
+			else if (arg.startsWith("-width="))
+				options.width = Integer.parseInt(arg.substring("-width=".length()));
+
+			else if (arg.startsWith("-height="))
+				options.height = Integer.parseInt(arg.substring("-height=".length()));
+
+			else if (arg.startsWith("-ss="))
+				options.super_sampling = Integer.parseInt(arg.substring("-ss=".length()));
+
+			else {
+				if (sceneFile == null)
+					sceneFile = arg;
+				else if (outputFile == null)
+					outputFile = arg;
+				else
+					usage();
+			}
+		}
+		if (sceneFile == null || outputFile == null)
+			usage();
 
 		new CLI(sceneFile, outputFile, options).render();
 	}
-
 }

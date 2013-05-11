@@ -23,6 +23,7 @@ public class RayTracer {
 	final Scene scene;
 	final Image image;
 	final int height, width;
+	final boolean shadows;
 	final int super_sampling;
 	final BVH bvh;
 	final float lightDivider;
@@ -32,6 +33,7 @@ public class RayTracer {
 		this.image = image;
 		height = options.height;
 		width = options.width;
+		shadows = options.shadows;
 		super_sampling = options.super_sampling;
 		lightDivider = scene.lights.size();
 
@@ -89,7 +91,10 @@ public class RayTracer {
 		if (inter == null)
 			return scene.background;
 
-		return inter.shape.material.shading(this, inter, ray);
+		if (shadows)
+			return inter.shape.material.shading(this, inter, ray);
+		else
+			return inter.shape.material.shadingDoubleSidedNoShadows(this, inter, ray);
 	}
 
 	public Intersection shoot(Ray ray, float t0, float t1) {

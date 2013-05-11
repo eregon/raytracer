@@ -33,7 +33,9 @@ public class Demo {
 		Options options = new Options();
 		options.width = 1024;
 		options.height = 742;
+		options.shadows = true;
 		options.super_sampling = 1;
+		options.trace_bounding_boxes = false;
 
 		Scene scene = new SceneBuilder().loadScene("XML/shadows.sdl", options);
 
