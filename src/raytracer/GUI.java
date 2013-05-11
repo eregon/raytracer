@@ -10,7 +10,8 @@ import uclouvain.ingi2325.utils.Scene;
 
 public class GUI extends JFrame implements KeyListener {
 
-	protected static final long UPDATE_EVERY = 30; // ms
+	static final long UPDATE_EVERY = 30; // ms
+	static final float MOVE_ANGLE = (float) (Math.PI / 12);
 
 	final PixelPanel panel;
 	final RayTracer tracer;
@@ -69,16 +70,16 @@ public class GUI extends JFrame implements KeyListener {
 
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			newCamera = scene.camera.rotate(-Math.PI / 12, false);
+			newCamera = scene.camera.rotate(-MOVE_ANGLE, false);
 			break;
 		case KeyEvent.VK_RIGHT:
-			newCamera = scene.camera.rotate(Math.PI / 12, false);
+			newCamera = scene.camera.rotate(MOVE_ANGLE, false);
 			break;
 		case KeyEvent.VK_UP:
-			newCamera = scene.camera.rotate(-Math.PI / 12, true);
+			newCamera = scene.camera.rotate(-MOVE_ANGLE, true);
 			break;
 		case KeyEvent.VK_DOWN:
-			newCamera = scene.camera.rotate(Math.PI / 12, true);
+			newCamera = scene.camera.rotate(MOVE_ANGLE, true);
 			break;
 		default:
 			return;

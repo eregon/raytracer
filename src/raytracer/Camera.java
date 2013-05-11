@@ -37,12 +37,12 @@ public class Camera {
 		return toPlan.add(u.mul(x)).add(v.mul(y)).normalized(); // −dW + aU + bV
 	}
 
-	public Camera rotate(double angle, boolean up_down) {
+	public Camera rotate(float angle, boolean up_down) {
 		Transformation t;
 		if (up_down)
-			t = Transformation.DEFAULT.rotate(u, (float) angle); // up-down
+			t = Transformation.DEFAULT.rotate(u, angle); // up-down
 		else
-			t = Transformation.DEFAULT.rotate(up, (float) angle); // left-right
+			t = Transformation.DEFAULT.rotate(up, angle); // left-right
 
 		return new Camera(t.m.mul(position), t.m.mul(direction), up, fovy);
 	}
