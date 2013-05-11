@@ -85,7 +85,7 @@ public class CLI {
 		System.out.println("  -height=N");
 		System.out.println("  -noShadows");
 		System.out.println("  -ss=N         Supersampling (N*N samples per pixel)");
-		System.out.println("  -bb           Show bounding boxes");
+		System.out.println("  -bb           Draw bounding boxes");
 		System.exit(1);
 	}
 
