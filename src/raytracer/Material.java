@@ -51,7 +51,7 @@ public class Material {
 		for (Light light : tracer.scene.lights)
 			color = light.shading(color, tracer, this, shadowRay, n, v);
 
-		return color.div(tracer.lightDivider).validate();
+		return color.validate();
 	}
 
 	public Color shadingDoubleSidedNoShadows(RayTracer tracer, Intersection inter, Ray ray) {
@@ -67,6 +67,6 @@ public class Material {
 			float d = Math.abs(n.dotProduct(l)); // diffuse factor
 			color = color.add(colorUnderLight(light, n, l, v, d));
 		}
-		return color.div(tracer.lightDivider).validate();
+		return color.validate();
 	}
 }

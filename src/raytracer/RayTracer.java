@@ -26,7 +26,6 @@ public class RayTracer {
 	final boolean shadows;
 	final int super_sampling;
 	final BVH bvh;
-	final float lightDivider;
 
 	public RayTracer(Scene scene, Image image, Options options) {
 		this.scene = scene;
@@ -35,7 +34,6 @@ public class RayTracer {
 		width = options.width;
 		shadows = options.shadows;
 		super_sampling = options.super_sampling;
-		lightDivider = scene.lights.size();
 
 		scene.camera.focus(width);
 
