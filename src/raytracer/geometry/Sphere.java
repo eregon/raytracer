@@ -13,7 +13,6 @@ public class Sphere implements Geometry {
 	final float radius;
 
 	public Sphere(float radius) {
-		super();
 		this.radius = radius;
 	}
 

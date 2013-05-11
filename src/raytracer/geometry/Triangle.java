@@ -19,7 +19,6 @@ public class Triangle implements Geometry {
 	}
 
 	public Triangle(Point3D a, Point3D b, Point3D c, Vector3D na, Vector3D nb, Vector3D nc) {
-		super();
 		_a = a;
 		_b = b;
 		_c = c;
