@@ -2,16 +2,23 @@ package raytracer;
 
 import java.io.FileNotFoundException;
 
+import javax.swing.JFrame;
+
 import uclouvain.ingi2325.utils.Image;
+import uclouvain.ingi2325.utils.PixelPanel;
 import uclouvain.ingi2325.utils.Scene;
 import uclouvain.ingi2325.utils.SceneBuilder;
 
 public class CLI {
 
+	protected static final long UPDATE_EVERY = 30; // ms
+
 	String outputFile;
 	Options options;
 	Image image;
 	Scene scene;
+
+	private volatile boolean done = false;
 
 	public CLI(String sceneFile, String outputFile, Options options) throws FileNotFoundException {
 		this.options = options;
@@ -19,11 +26,56 @@ public class CLI {
 		scene = new SceneBuilder().loadScene(sceneFile, options);
 	}
 
-	public void render() {
-		image = new Image(options);
+	public void saveImage() {
+		image.saveImage(outputFile);
+	}
+
+	public void trace() {
 		RayTracer tracer = new RayTracer(scene, image, options);
 		tracer.render();
-		image.saveImage(outputFile);
+		done = true;
+		saveImage();
+	}
+
+	public void renderCLI() {
+		image = new Image(options);
+		trace();
+	}
+
+	public void renderGUI() {
+		PixelPanel panel = new PixelPanel(options);
+		image = panel.image;
+
+		createWindow(panel);
+		createUpdater(panel);
+		trace();
+		panel.repaint();
+	}
+
+	void createWindow(PixelPanel panel) {
+		JFrame frame = new JFrame();
+		frame.setResizable(false);
+		frame.getContentPane().add(panel);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
+	void createUpdater(final PixelPanel panel) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (!done) {
+					try {
+						Thread.sleep(UPDATE_EVERY);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+						return;
+					}
+					panel.repaint();
+				}
+			}
+		}, "GUI Updater").start();
 	}
 
 	public static void usage() {
@@ -34,6 +86,7 @@ public class CLI {
 	public static void main(String[] args) throws FileNotFoundException {
 		String sceneFile = null;
 		String outputFile = null;
+		boolean gui = false;
 
 		Options options = new Options();
 		options.width = 640;
@@ -45,7 +98,10 @@ public class CLI {
 		for (String arg : args) {
 			arg = arg.intern();
 
-			if (arg == "-noShadows")
+			if (arg == "-gui")
+				gui = true;
+
+			else if (arg == "-noShadows")
 				options.shadows = false;
 
 			else if (arg == "-bb")
@@ -72,6 +128,10 @@ public class CLI {
 		if (sceneFile == null || outputFile == null)
 			usage();
 
-		new CLI(sceneFile, outputFile, options).render();
+		CLI cli = new CLI(sceneFile, outputFile, options);
+		if (gui)
+			cli.renderGUI();
+		else
+			cli.renderCLI();
 	}
 }
