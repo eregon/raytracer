@@ -70,16 +70,16 @@ public class GUI extends JFrame implements KeyListener {
 
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			newCamera = scene.camera.rotate(-MOVE_ANGLE, false);
+			newCamera = scene.camera.rotateLeftRight(-MOVE_ANGLE);
 			break;
 		case KeyEvent.VK_RIGHT:
-			newCamera = scene.camera.rotate(MOVE_ANGLE, false);
+			newCamera = scene.camera.rotateLeftRight(MOVE_ANGLE);
 			break;
 		case KeyEvent.VK_UP:
-			newCamera = scene.camera.rotate(-MOVE_ANGLE, true);
+			newCamera = scene.camera.rotateUpDown(-MOVE_ANGLE);
 			break;
 		case KeyEvent.VK_DOWN:
-			newCamera = scene.camera.rotate(MOVE_ANGLE, true);
+			newCamera = scene.camera.rotateUpDown(MOVE_ANGLE);
 			break;
 		default:
 			return;
