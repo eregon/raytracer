@@ -433,7 +433,7 @@ public class SceneBuilder implements ParserHandler {
 	@Override
 	public void startFileGeometry(String filename, String name) throws Exception {
 		File file = new File(path, filename);
-		File bmf = new File(file.getParent(), filename + ".bmf");
+		File bmf = new File(path, filename + ".bmf");
 		List<Geometry> geoms;
 		if (bmf.exists() && file.lastModified() > bmf.lastModified())
 			bmf.delete(); // Remove outdated file
