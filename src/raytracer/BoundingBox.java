@@ -60,6 +60,26 @@ public class BoundingBox implements Surface {
 			max.z = p.z;
 	}
 
+	public Point3D[] vertices() {
+		return new Point3D[] {
+				min,
+				new Point3D(min.x, min.y, max.z),
+				new Point3D(min.x, max.y, min.z),
+				new Point3D(min.x, max.y, max.z),
+				new Point3D(max.x, min.y, min.z),
+				new Point3D(max.x, min.y, max.z),
+				new Point3D(max.x, max.y, min.z),
+				max
+		};
+	}
+
+	public BoundingBox transform(Transformation transformation) {
+		BoundingBox box = new BoundingBox(transformation.m.mul(min));
+		for (Point3D p : vertices())
+			box.update(transformation.m.mul(p));
+		return box;
+	}
+
 	@Override
 	public String toString() {
 		return "[" + min.x + ", " + max.x + "] X [" + min.y + ", "

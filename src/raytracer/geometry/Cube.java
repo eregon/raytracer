@@ -28,25 +28,9 @@ public class Cube extends BoundingBox implements Geometry {
 		super(box.min, box.max);
 	}
 
-	public Point3D[] vertices() {
-		return new Point3D[] {
-				min,
-				new Point3D(min.x, min.y, max.z),
-				new Point3D(min.x, max.y, min.z),
-				new Point3D(min.x, max.y, max.z),
-				new Point3D(max.x, min.y, min.z),
-				new Point3D(max.x, min.y, max.z),
-				new Point3D(max.x, max.y, min.z),
-				max
-		};
-	}
-
 	@Override
 	public BoundingBox computeBoundingBox(Transformation transformation) {
-		BoundingBox box = new BoundingBox(transformation.m.mul(min));
-		for (Point3D p : vertices())
-			box.update(transformation.m.mul(p));
-		return box;
+		return transform(transformation);
 	}
 
 	@Override
