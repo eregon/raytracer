@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="4 -4 3.5" direction="-0.5 0.5 -0.5" up="0 0 1" fovy="45" name="cam0" />
+   </Cameras>
+
+   <Lights>
+      <AreaLight position="3 5 5" a="0 5 0" b="5 0 0" intensity="1" color="1 1 1" name="light0" />
+      <SpotLight position="0 -10 1" direction="0 10 -1" angle="15" intensity="1" color="1 0 0" name="light1" />
+      <SpotLight position="3 5 5" direction="-3 -5 -5" angle="15" intensity="1" color="0 0 1" name="light2" />
+   </Lights>
+
+   <Geometry>
+      <FileGeometry filename="California/california.obj" name="subject" />
+      <Sphere radius="30" name="floor" />
+   </Geometry>
+
+   <Materials>
+      <PhongMaterial shininess="60" color="1 1 1" name="base" />
+      <DiffuseMaterial color="0.5 0.5 0.5" name="floorMaterial" />
+   </Materials>
+
+   <Scene camera="cam0" lights="light0, light1, light2" background="0 0 0">
+      <Shape geometry="subject" material="base" />
+      <Translate vector="0 0.2 -30.723">
+         <Shape geometry="floor" material="floorMaterial" />
+      </Translate>
+   </Scene>
+</Sdl>
