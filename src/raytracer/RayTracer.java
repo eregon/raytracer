@@ -50,6 +50,10 @@ public class RayTracer {
 		pool = Executors.newFixedThreadPool(nThreads);
 	}
 
+	public void shutdown() {
+		pool.shutdown();
+	}
+
 	private int numberOfThreads() {
 		if (System.getenv("THREADS") != null)
 			return Math.max(1, Integer.parseInt(System.getenv("THREADS")));

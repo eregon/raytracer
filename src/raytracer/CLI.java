@@ -34,6 +34,7 @@ public class CLI {
 
 	public void renderCLI() {
 		trace();
+		tracer.shutdown();
 	}
 
 	public void renderGUI() {
