@@ -43,7 +43,6 @@ public class AreaLight extends Light {
 
 		for (int i = 0; i < POINTS_BY_SIDE; i++) {
 			for (int j = 0; j < POINTS_BY_SIDE; j++) {
-				//Point3D pos = position.add(a.mul(randomizer.nextFloat())).add(b.mul(randomizer.nextFloat()));
 				Point3D pos = position
 						.add(a.mul((randomizer.nextFloat() + i) / POINTS_BY_SIDE))
 						.add(b.mul((randomizer.nextFloat() + j) / POINTS_BY_SIDE));
