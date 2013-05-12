@@ -71,6 +71,9 @@ public class GUI extends JFrame implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		Camera newCamera = null;
 
+		if (drawing)
+			return; // no concurrent drawing
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			newCamera = scene.camera.rotateLeftRight(-MOVE_ANGLE);
