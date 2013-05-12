@@ -12,8 +12,6 @@ import uclouvain.ingi2325.utils.Vector3D;
 
 public class AreaLight extends Light {
 
-	static final int POINTS_BY_SIDE = 8;
-	static final int N_POINTS = POINTS_BY_SIDE * POINTS_BY_SIDE;
 	static final Random randomizer = new Random();
 
 	final Point3D position;
@@ -38,14 +36,15 @@ public class AreaLight extends Light {
 
 	@Override
 	public Color shading(Color base, RayTracer tracer, Material material, Ray shadowRay, Vector3D n, Vector3D v) {
+		final int points_by_side = tracer.soft_shadows_points;
 		Point3D hit = shadowRay.origin;
 		Color color = Color.NONE;
 
-		for (int i = 0; i < POINTS_BY_SIDE; i++) {
-			for (int j = 0; j < POINTS_BY_SIDE; j++) {
+		for (int i = 0; i < points_by_side; i++) {
+			for (int j = 0; j < points_by_side; j++) {
 				Point3D pos = position
-						.add(a.mul((randomizer.nextFloat() + i) / POINTS_BY_SIDE))
-						.add(b.mul((randomizer.nextFloat() + j) / POINTS_BY_SIDE));
+						.add(a.mul((randomizer.nextFloat() + i) / points_by_side))
+						.add(b.mul((randomizer.nextFloat() + j) / points_by_side));
 				Vector3D l = pos.sub(hit).normalized();
 				float d = n.dotProduct(l); // diffuse factor
 				if (d > 0) { // First check if light is not in opposite direction
@@ -57,6 +56,6 @@ public class AreaLight extends Light {
 			}
 		}
 
-		return base.add(color.div(N_POINTS));
+		return base.add(color.div(points_by_side * points_by_side));
 	}
 }

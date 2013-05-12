@@ -25,6 +25,7 @@ public class RayTracer {
 	final int height, width;
 	final boolean shadows;
 	final int super_sampling;
+	public final int soft_shadows_points;
 	final BVH bvh;
 	final int nThreads;
 	final ExecutorService pool;
@@ -36,6 +37,7 @@ public class RayTracer {
 		width = options.width;
 		shadows = options.shadows;
 		super_sampling = options.super_sampling;
+		soft_shadows_points = options.soft_shadows_points;
 
 		List<Shape> shapes = scene.objects;
 		scene.objects = null; // no more needed, the BVH replaces it

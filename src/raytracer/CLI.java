@@ -47,12 +47,13 @@ public class CLI {
 
 	public static void usage() {
 		System.out.println("java raytracer.CLI [OPTIONS] SCENE.sdl OUTPUT.png");
-		System.out.println("  -gui          Render in a window");
+		System.out.println("  -gui            Render in a window");
 		System.out.println("  -width=N");
 		System.out.println("  -height=N");
 		System.out.println("  -noShadows");
-		System.out.println("  -ss=N         Supersampling (N*N samples per pixel)");
-		System.out.println("  -bb           Draw bounding boxes");
+		System.out.println("  -ss=N           Supersampling (N*N samples per pixel)");
+		System.out.println("  -softShadows=N  Soft shadows with N*N rays (you should use -ss as well");
+		System.out.println("  -bb             Draw bounding boxes");
 		System.exit(1);
 	}
 
@@ -85,6 +86,9 @@ public class CLI {
 
 			else if (arg.startsWith("-height="))
 				options.height = Integer.parseInt(arg.substring("-height=".length()));
+
+			else if (arg.startsWith("-softShadows="))
+				options.soft_shadows_points = Integer.parseInt(arg.substring("-softShadows=".length()));
 
 			else if (arg.startsWith("-ss="))
 				options.super_sampling = Integer.parseInt(arg.substring("-ss=".length()));
