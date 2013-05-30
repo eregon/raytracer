@@ -76,7 +76,7 @@ public class Triangle implements Geometry {
 		Intersection inter = new Intersection();
 		inter.distance = t;
 		// (1.0 - (u + v)) * na + nb * u + nc * v
-		inter.normal = (na.mul(1f - (beta + gamma)).add(nb.mul(beta).add(nc.mul(gamma)))).normalized();
+		inter.normal = na.mul(1f - (beta + gamma)).add(nb.mul(beta)).add(nc.mul(gamma)).normalized();
 		return inter;
 	}
 }
