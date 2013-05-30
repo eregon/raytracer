@@ -138,16 +138,17 @@ public class RayTracer {
 			float a = x - width / 2f;
 			float b = y - height / 2f;
 
-			// start at first bottom left pixel center
-			a += 1f / (2 * super_sampling);
-			b += 1f / (2 * super_sampling);
+			if (super_sampling == 1) {
+				ray.setDirection(scene.camera.toScreen(a + 0.5f, b + 0.5f));
+				return shading(ray);
+			}
 
 			Color color = Color.NONE;
 			for (int i = 0; i < super_sampling; i++) {
 				for (int j = 0; j < super_sampling; j++) {
 					ray.setDirection(scene.camera.toScreen(
-							a + i / (float) super_sampling,
-							b + j / (float) super_sampling));
+							a + (i + (float) Math.random()) / super_sampling,
+							b + (j + (float) Math.random()) / super_sampling));
 					color = color.add(shading(ray));
 				}
 			}
