@@ -1,5 +1,7 @@
 # Computer Graphics Project
 
+![Screenshot](screenshot.png)
+
 This is the package of base class provided for the course INGI2325.
 
 Comments, bug fixes and contributions to the package are welcome.
