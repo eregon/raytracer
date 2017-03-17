@@ -1,6 +1,6 @@
 package raytracer.light;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import raytracer.Intersection;
 import raytracer.Material;
@@ -11,8 +11,6 @@ import uclouvain.ingi2325.utils.Point3D;
 import uclouvain.ingi2325.utils.Vector3D;
 
 public class AreaLight extends Light {
-
-	static final Random randomizer = new Random();
 
 	final Point3D position;
 	final Vector3D a, b;
@@ -37,14 +35,15 @@ public class AreaLight extends Light {
 	@Override
 	public Color shading(Color base, RayTracer tracer, Material material, Ray shadowRay, Vector3D n, Vector3D v) {
 		final int points_by_side = tracer.soft_shadows_points;
+		final ThreadLocalRandom random = ThreadLocalRandom.current();
 		Point3D hit = shadowRay.origin;
 		Color color = Color.NONE;
 
 		for (int i = 0; i < points_by_side; i++) {
 			for (int j = 0; j < points_by_side; j++) {
 				Point3D pos = position
-						.add(a.mul((randomizer.nextFloat() + i) / points_by_side))
-						.add(b.mul((randomizer.nextFloat() + j) / points_by_side));
+						.add(a.mul((random.nextFloat() + i) / points_by_side))
+						.add(b.mul((random.nextFloat() + j) / points_by_side));
 				Vector3D l = pos.sub(hit).normalized();
 				float d = n.dotProduct(l); // diffuse factor
 				if (d > 0) { // First check if light is not in opposite direction
