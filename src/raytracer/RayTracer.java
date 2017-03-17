@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadLocalRandom;
 
 import raytracer.enumerator.CircleEnumerator;
 import raytracer.enumerator.Enumerator;
@@ -143,12 +144,13 @@ public class RayTracer {
 				return shading(ray);
 			}
 
+			final ThreadLocalRandom random = ThreadLocalRandom.current();
 			Color color = Color.NONE;
 			for (int i = 0; i < super_sampling; i++) {
 				for (int j = 0; j < super_sampling; j++) {
 					ray.setDirection(scene.camera.toScreen(
-							a + (i + (float) Math.random()) / super_sampling,
-							b + (j + (float) Math.random()) / super_sampling));
+							a + (i + random.nextFloat()) / super_sampling,
+							b + (j + random.nextFloat()) / super_sampling));
 					color = color.add(shading(ray));
 				}
 			}
